@@ -13,11 +13,11 @@ import {
   Calculator,
   LogOut
 } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from '@/hooks/use-toast';
 
 export const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const navigate = useNavigate();
 
   const menuItems = [
     { icon: Hotel, label: 'Hotels', path: '/hotels' },
@@ -30,13 +30,37 @@ export const Navigation = () => {
 
   const handleNavigation = (path: string) => {
     // For now, we'll show a toast since routes aren't implemented yet
-    console.log(`Navigating to ${path}`);
+    toast({
+      title: "Coming Soon",
+      description: `${path.replace('/', '').replace('-', ' ')} feature will be available soon!`,
+    });
     setIsOpen(false);
   };
 
-  const handleLogout = () => {
-    // TODO: Implement logout with Supabase
-    window.location.reload();
+  const handleLogout = async () => {
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) {
+        toast({
+          title: "Logout Failed",
+          description: error.message,
+          variant: "destructive"
+        });
+      } else {
+        toast({
+          title: "Logged Out",
+          description: "You have been successfully logged out.",
+        });
+        // The auth state change will automatically redirect to login
+      }
+    } catch (error) {
+      console.error('Logout error:', error);
+      toast({
+        title: "Logout Failed",
+        description: "An unexpected error occurred.",
+        variant: "destructive"
+      });
+    }
   };
 
   return (

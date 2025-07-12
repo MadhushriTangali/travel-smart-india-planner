@@ -1,16 +1,41 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { MapPin, Plane, Hotel, Utensils, Calendar, Users, Star, Shield } from 'lucide-react';
 import { TripPlanningForm } from '@/components/TripPlanningForm';
 import { AuthModal } from '@/components/AuthModal';
 import { Navigation } from '@/components/Navigation';
+import { supabase } from '@/integrations/supabase/client';
+import { User, Session } from '@supabase/supabase-js';
 
 const Index = () => {
   const [showAuthModal, setShowAuthModal] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
+  const [session, setSession] = useState<Session | null>(null);
   const [showTripForm, setShowTripForm] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Set up auth state listener
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        console.log('Auth state change:', event, session);
+        setSession(session);
+        setUser(session?.user ?? null);
+        setLoading(false);
+      }
+    );
+
+    // Check for existing session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+      setUser(session?.user ?? null);
+      setLoading(false);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
 
   const features = [
     {
@@ -35,7 +60,18 @@ const Index = () => {
     }
   ];
 
-  if (!isAuthenticated) {
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-blue-50 flex items-center justify-center">
+        <div className="text-center">
+          <Plane className="h-12 w-12 mx-auto mb-4 text-orange-500 animate-bounce" />
+          <p className="text-lg text-gray-600">Loading TravelSmart...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!user) {
     return (
       <>
         <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-blue-50">
@@ -61,7 +97,7 @@ const Index = () => {
                     className="bg-white text-orange-600 hover:bg-orange-50 text-lg px-8 py-4"
                     onClick={() => setShowAuthModal(true)}
                   >
-                    Start Your Journey
+                    Sign Up to Start Journey
                   </Button>
                   <Button 
                     size="lg" 
@@ -69,7 +105,7 @@ const Index = () => {
                     className="border-white text-white hover:bg-white/10 text-lg px-8 py-4"
                     onClick={() => setShowAuthModal(true)}
                   >
-                    Sign In
+                    Already have account? Sign In
                   </Button>
                 </div>
               </div>
@@ -184,7 +220,6 @@ const Index = () => {
           open={showAuthModal} 
           onClose={() => setShowAuthModal(false)}
           onAuthenticated={() => {
-            setIsAuthenticated(true);
             setShowAuthModal(false);
           }}
         />

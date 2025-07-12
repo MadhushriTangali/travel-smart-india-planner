@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
@@ -8,6 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Mail, Lock, User, Eye, EyeOff } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 
 interface AuthModalProps {
   open: boolean;
@@ -18,6 +18,7 @@ interface AuthModalProps {
 export const AuthModal = ({ open, onClose, onAuthenticated }: AuthModalProps) => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [activeTab, setActiveTab] = useState('signup');
   const [signUpData, setSignUpData] = useState({
     name: '',
     email: '',
@@ -41,42 +42,130 @@ export const AuthModal = ({ open, onClose, onAuthenticated }: AuthModalProps) =>
       return;
     }
 
+    if (signUpData.password.length < 6) {
+      toast({
+        title: "Password too short",
+        description: "Password must be at least 6 characters long.",
+        variant: "destructive"
+      });
+      return;
+    }
+
     setLoading(true);
     
-    // TODO: Integrate with Supabase authentication
-    // For now, simulate authentication
-    setTimeout(() => {
-      setLoading(false);
-      toast({
-        title: "Account Created!",
-        description: "Welcome to TravelSmart! You can now plan your trips.",
+    try {
+      const { error } = await supabase.auth.signUp({
+        email: signUpData.email,
+        password: signUpData.password,
+        options: {
+          emailRedirectTo: `${window.location.origin}/`,
+          data: {
+            full_name: signUpData.name
+          }
+        }
       });
-      onAuthenticated();
-    }, 1500);
+
+      if (error) {
+        if (error.message.includes('User already registered')) {
+          toast({
+            title: "Account Already Exists",
+            description: "This email is already registered. Please sign in instead.",
+            variant: "destructive"
+          });
+          setActiveTab('signin');
+        } else {
+          toast({
+            title: "Sign Up Failed",
+            description: error.message,
+            variant: "destructive"
+          });
+        }
+      } else {
+        toast({
+          title: "Account Created!",
+          description: "Please check your email to confirm your account.",
+        });
+        onAuthenticated();
+      }
+    } catch (error) {
+      console.error('Sign up error:', error);
+      toast({
+        title: "Sign Up Failed",
+        description: "An unexpected error occurred. Please try again.",
+        variant: "destructive"
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     
-    // TODO: Integrate with Supabase authentication
-    // For now, simulate authentication
-    setTimeout(() => {
-      setLoading(false);
-      toast({
-        title: "Welcome Back!",
-        description: "Successfully signed in to TravelSmart.",
+    try {
+      const { error } = await supabase.auth.signInWithPassword({
+        email: signInData.email,
+        password: signInData.password,
       });
-      onAuthenticated();
-    }, 1500);
+
+      if (error) {
+        if (error.message.includes('Invalid login credentials')) {
+          toast({
+            title: "Invalid Credentials",
+            description: "Please check your email and password, or sign up if you don't have an account.",
+            variant: "destructive"
+          });
+        } else {
+          toast({
+            title: "Sign In Failed",
+            description: error.message,
+            variant: "destructive"
+          });
+        }
+      } else {
+        toast({
+          title: "Welcome Back!",
+          description: "Successfully signed in to TravelSmart.",
+        });
+        onAuthenticated();
+      }
+    } catch (error) {
+      console.error('Sign in error:', error);
+      toast({
+        title: "Sign In Failed",
+        description: "An unexpected error occurred. Please try again.",
+        variant: "destructive"
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handleGoogleAuth = () => {
-    // TODO: Implement Google OAuth with Supabase
-    toast({
-      title: "Google Sign-In",
-      description: "Google authentication will be available after Supabase integration.",
-    });
+  const handleGoogleAuth = async () => {
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: `${window.location.origin}/`
+        }
+      });
+
+      if (error) {
+        toast({
+          title: "Google Sign-In Failed",
+          description: error.message,
+          variant: "destructive"
+        });
+      }
+    } catch (error) {
+      console.error('Google auth error:', error);
+      toast({
+        title: "Google Sign-In Failed",
+        description: "Please try again or use email/password.",
+        variant: "destructive"
+      });
+    }
   };
 
   return (
@@ -88,7 +177,7 @@ export const AuthModal = ({ open, onClose, onAuthenticated }: AuthModalProps) =>
           </DialogTitle>
         </DialogHeader>
 
-        <Tabs defaultValue="signup" className="w-full">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="signup">Sign Up</TabsTrigger>
             <TabsTrigger value="signin">Sign In</TabsTrigger>
@@ -107,6 +196,7 @@ export const AuthModal = ({ open, onClose, onAuthenticated }: AuthModalProps) =>
                   variant="outline" 
                   className="w-full"
                   onClick={handleGoogleAuth}
+                  disabled={loading}
                 >
                   <Mail className="mr-2 h-4 w-4" />
                   Continue with Google
