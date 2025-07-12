@@ -37,7 +37,13 @@ export const HotelRecommendations = ({ tripData, onNext }: HotelRecommendationsP
         { id: '3', name: 'Park Hyatt Hyderabad', rating: 4.6, price: 15000, amenities: ['Pool', 'Spa', 'Restaurant', 'Free WiFi'], distance: '3 km from Banjara Hills', description: 'Modern luxury hotel' },
         { id: '4', name: 'The Westin Hyderabad Mindspace', rating: 4.5, price: 12000, amenities: ['Pool', 'Spa', 'Restaurant', 'Gym'], distance: '1 km from HITEC City', description: 'Contemporary business hotel' },
         { id: '5', name: 'Novotel Hyderabad Airport', rating: 4.4, price: 8000, amenities: ['Free WiFi', 'Restaurant', 'Pool'], distance: '2 km from airport', description: 'Convenient airport hotel' },
-        { id: '6', name: 'Hotel Sitara Grand', rating: 4.2, price: 5000, amenities: ['Free WiFi', 'Restaurant', 'AC'], distance: '1 km from Charminar', description: 'Heritage area budget hotel' }
+        { id: '6', name: 'Hotel Sitara Grand', rating: 4.2, price: 5000, amenities: ['Free WiFi', 'Restaurant', 'AC'], distance: '1 km from Charminar', description: 'Heritage area budget hotel' },
+        { id: '7', name: 'Trident Hyderabad', rating: 4.6, price: 14000, amenities: ['Pool', 'Spa', 'Restaurant', 'Free WiFi'], distance: '4 km from Banjara Hills', description: 'Luxury hotel with excellent service' },
+        { id: '8', name: 'Radisson Blu Plaza Hotel', rating: 4.4, price: 9000, amenities: ['Pool', 'Restaurant', 'Free WiFi'], distance: '3 km from Banjara Hills', description: 'Modern business hotel' },
+        { id: '9', name: 'Vivanta Hyderabad Begumpet', rating: 4.3, price: 11000, amenities: ['Pool', 'Spa', 'Restaurant'], distance: '2 km from Begumpet', description: 'Stylish contemporary hotel' },
+        { id: '10', name: 'Holiday Inn Express Hyderabad', rating: 4.1, price: 6500, amenities: ['Free WiFi', 'Restaurant', 'Gym'], distance: '5 km from HITEC City', description: 'Comfortable mid-range hotel' },
+        { id: '11', name: 'Hotel Golkonda', rating: 4.0, price: 4500, amenities: ['Restaurant', 'Free WiFi', 'AC'], distance: '2 km from Charminar', description: 'Traditional heritage hotel' },
+        { id: '12', name: 'GreenPark Hyderabad', rating: 4.2, price: 7500, amenities: ['Pool', 'Restaurant', 'Free WiFi'], distance: '3 km from Begumpet', description: 'Well-located business hotel' }
       ],
       mumbai: [
         { id: '1', name: 'The Taj Mahal Palace', rating: 4.9, price: 35000, amenities: ['Pool', 'Spa', 'Restaurant', 'Free WiFi'], distance: '0.5 km from Gateway of India', description: 'Iconic luxury hotel' },
@@ -45,7 +51,13 @@ export const HotelRecommendations = ({ tripData, onNext }: HotelRecommendationsP
         { id: '3', name: 'ITC Grand Central', rating: 4.6, price: 20000, amenities: ['Pool', 'Spa', 'Restaurant', 'Free WiFi'], distance: '2 km from CST', description: 'Business district luxury' },
         { id: '4', name: 'Hotel Marine Plaza', rating: 4.3, price: 12000, amenities: ['Restaurant', 'Free WiFi', 'AC'], distance: '0.2 km from Marine Drive', description: 'Seafront heritage hotel' },
         { id: '5', name: 'The Gordon House Hotel', rating: 4.2, price: 8000, amenities: ['Restaurant', 'Free WiFi', 'AC'], distance: '1.5 km from Colaba', description: 'Boutique heritage hotel' },
-        { id: '6', name: 'Hotel Suba Palace', rating: 4.0, price: 4500, amenities: ['Restaurant', 'Free WiFi', 'AC'], distance: '3 km from airport', description: 'Budget business hotel' }
+        { id: '6', name: 'Hotel Suba Palace', rating: 4.0, price: 4500, amenities: ['Restaurant', 'Free WiFi', 'AC'], distance: '3 km from airport', description: 'Budget business hotel' },
+        { id: '7', name: 'JW Marriott Mumbai Sahar', rating: 4.7, price: 16000, amenities: ['Pool', 'Spa', 'Restaurant', 'Gym'], distance: '1 km from airport', description: 'Premium airport hotel' },
+        { id: '8', name: 'The St. Regis Mumbai', rating: 4.8, price: 32000, amenities: ['Pool', 'Spa', 'Restaurant', 'Butler Service'], distance: '2 km from Lower Parel', description: 'Ultra-luxury hotel' },
+        { id: '9', name: 'Trident Bandra Kurla', rating: 4.5, price: 13000, amenities: ['Pool', 'Restaurant', 'Free WiFi'], distance: '1 km from BKC', description: 'Business district hotel' },
+        { id: '10', name: 'ITC Maratha Mumbai', rating: 4.4, price: 11000, amenities: ['Pool', 'Spa', 'Restaurant'], distance: '2 km from airport', description: 'Airport luxury hotel' },
+        { id: '11', name: 'Hyatt Regency Mumbai', rating: 4.3, price: 9500, amenities: ['Pool', 'Restaurant', 'Free WiFi'], distance: '3 km from Sahar', description: 'Modern business hotel' },
+        { id: '12', name: 'Hotel Diplomat', rating: 4.0, price: 5500, amenities: ['Restaurant', 'Free WiFi', 'AC'], distance: '1 km from Colaba', description: 'Heritage area hotel' }
       ],
       delhi: [
         { id: '1', name: 'The Imperial New Delhi', rating: 4.8, price: 25000, amenities: ['Pool', 'Spa', 'Restaurant', 'Free WiFi'], distance: '2 km from Connaught Place', description: 'Colonial era luxury hotel' },
@@ -53,7 +65,13 @@ export const HotelRecommendations = ({ tripData, onNext }: HotelRecommendationsP
         { id: '3', name: 'ITC Maurya', rating: 4.6, price: 18000, amenities: ['Pool', 'Spa', 'Restaurant', 'Free WiFi'], distance: '5 km from India Gate', description: 'Diplomatic enclave hotel' },
         { id: '4', name: 'The Claridges New Delhi', rating: 4.4, price: 15000, amenities: ['Pool', 'Restaurant', 'Free WiFi'], distance: '3 km from India Gate', description: 'Art deco heritage hotel' },
         { id: '5', name: 'Hotel Tara Palace', rating: 4.1, price: 6000, amenities: ['Restaurant', 'Free WiFi', 'AC'], distance: '2 km from Chandni Chowk', description: 'Old Delhi heritage hotel' },
-        { id: '6', name: 'Bloom Hotel', rating: 4.0, price: 4000, amenities: ['Restaurant', 'Free WiFi', 'AC'], distance: '5 km from Red Fort', description: 'Modern budget hotel' }
+        { id: '6', name: 'Bloom Hotel', rating: 4.0, price: 4000, amenities: ['Restaurant', 'Free WiFi', 'AC'], distance: '5 km from Red Fort', description: 'Modern budget hotel' },
+        { id: '7', name: 'The Oberoi New Delhi', rating: 4.9, price: 30000, amenities: ['Pool', 'Spa', 'Restaurant', 'Butler Service'], distance: '1 km from Delhi Golf Club', description: 'Ultra-luxury city hotel' },
+        { id: '8', name: 'JW Marriott Hotel New Delhi Aerocity', rating: 4.6, price: 14000, amenities: ['Pool', 'Spa', 'Restaurant'], distance: '1 km from airport', description: 'Premium airport hotel' },
+        { id: '9', name: 'The Lodhi New Delhi', rating: 4.5, price: 17000, amenities: ['Pool', 'Spa', 'Restaurant'], distance: '3 km from Lodhi Gardens', description: 'Contemporary luxury hotel' },
+        { id: '10', name: 'Radisson Blu Plaza Delhi Airport', rating: 4.3, price: 8500, amenities: ['Pool', 'Restaurant', 'Free WiFi'], distance: '2 km from airport', description: 'Business airport hotel' },
+        { id: '11', name: 'The Park New Delhi', rating: 4.2, price: 10000, amenities: ['Pool', 'Restaurant', 'Free WiFi'], distance: '1 km from Connaught Place', description: 'Stylish city hotel' },
+        { id: '12', name: 'Hotel Broadway', rating: 3.9, price: 3500, amenities: ['Restaurant', 'Free WiFi', 'AC'], distance: '1 km from Old Delhi Railway Station', description: 'Heritage budget hotel' }
       ],
       goa: [
         { id: '1', name: 'Taj Exotica Resort & Spa', rating: 4.8, price: 18000, amenities: ['Beach', 'Pool', 'Spa', 'Restaurant'], distance: '0.1 km from Benaulim Beach', description: 'Beachfront luxury resort' },
@@ -61,7 +79,41 @@ export const HotelRecommendations = ({ tripData, onNext }: HotelRecommendationsP
         { id: '3', name: 'Park Hyatt Goa Resort and Spa', rating: 4.6, price: 14000, amenities: ['Beach', 'Pool', 'Spa', 'Restaurant'], distance: '0.1 km from Arossim Beach', description: 'Luxury beachfront resort' },
         { id: '4', name: 'Alila Diwa Goa', rating: 4.5, price: 12000, amenities: ['Pool', 'Spa', 'Restaurant', 'Free WiFi'], distance: '1 km from Majorda Beach', description: 'Contemporary resort' },
         { id: '5', name: 'Casa De Goa Boutique Resort', rating: 4.2, price: 8000, amenities: ['Pool', 'Restaurant', 'Free WiFi'], distance: '0.5 km from Calangute Beach', description: 'Boutique beach resort' },
-        { id: '6', name: 'Hotel Fidalgo', rating: 4.0, price: 5000, amenities: ['Pool', 'Restaurant', 'Free WiFi'], distance: '1 km from Panaji', description: 'Heritage city hotel' }
+        { id: '6', name: 'Hotel Fidalgo', rating: 4.0, price: 5000, amenities: ['Pool', 'Restaurant', 'Free WiFi'], distance: '1 km from Panaji', description: 'Heritage city hotel' },
+        { id: '7', name: 'Grand Hyatt Goa', rating: 4.6, price: 15000, amenities: ['Beach', 'Pool', 'Spa', 'Golf'], distance: '0.3 km from Bambolim Beach', description: 'Luxury beach resort' },
+        { id: '8', name: 'ITC Grand Goa Resort & Spa', rating: 4.5, price: 13000, amenities: ['Beach', 'Pool', 'Spa', 'Restaurant'], distance: '0.2 km from Arossim Beach', description: 'Premium beachfront resort' },
+        { id: '9', name: 'Zuri White Sands Goa Resort & Casino', rating: 4.3, price: 10000, amenities: ['Beach', 'Pool', 'Casino', 'Restaurant'], distance: '0.1 km from Varca Beach', description: 'Beach resort with casino' },
+        { id: '10', name: 'Taj Holiday Village Resort & Spa', rating: 4.2, price: 9000, amenities: ['Beach', 'Pool', 'Spa', 'Restaurant'], distance: '0.2 km from Sinquerim Beach', description: 'Traditional Goan resort' },
+        { id: '11', name: 'Cidade De Goa', rating: 4.1, price: 7500, amenities: ['Beach', 'Pool', 'Restaurant'], distance: '0.3 km from Dona Paula Beach', description: 'Heritage beach hotel' },
+        { id: '12', name: 'Goa Marriott Resort & Spa', rating: 4.4, price: 11000, amenities: ['Beach', 'Pool', 'Spa', 'Restaurant'], distance: '0.1 km from Miramar Beach', description: 'Beachfront luxury resort' }
+      ],
+      bangalore: [
+        { id: '1', name: 'The Oberoi Bangalore', rating: 4.8, price: 20000, amenities: ['Pool', 'Spa', 'Restaurant', 'Free WiFi'], distance: '2 km from MG Road', description: 'Luxury city hotel' },
+        { id: '2', name: 'ITC Gardenia Bangalore', rating: 4.6, price: 15000, amenities: ['Pool', 'Spa', 'Restaurant', 'Gym'], distance: '3 km from UB City Mall', description: 'Premium business hotel' },
+        { id: '3', name: 'The Leela Palace Bangalore', rating: 4.7, price: 18000, amenities: ['Pool', 'Spa', 'Restaurant', 'Butler Service'], distance: '5 km from Bangalore Palace', description: 'Royal luxury hotel' },
+        { id: '4', name: 'JW Marriott Hotel Bangalore', rating: 4.5, price: 12000, amenities: ['Pool', 'Spa', 'Restaurant'], distance: '4 km from Vittal Mallya Road', description: 'Modern luxury hotel' },
+        { id: '5', name: 'Taj Bangalore', rating: 4.4, price: 11000, amenities: ['Pool', 'Restaurant', 'Free WiFi'], distance: '1 km from MG Road', description: 'Contemporary city hotel' },
+        { id: '6', name: 'Park Hotel Bangalore', rating: 4.2, price: 8000, amenities: ['Pool', 'Restaurant', 'Free WiFi'], distance: '2 km from Commercial Street', description: 'Stylish boutique hotel' },
+        { id: '7', name: 'Grand Mercure Bangalore', rating: 4.3, price: 9500, amenities: ['Pool', 'Restaurant', 'Gym'], distance: '6 km from Electronic City', description: 'Business district hotel' },
+        { id: '8', name: 'Vivanta Bangalore Whitefield', rating: 4.2, price: 9000, amenities: ['Pool', 'Spa', 'Restaurant'], distance: '2 km from ITPL', description: 'IT corridor hotel' },
+        { id: '9', name: 'Sheraton Grand Bangalore Hotel', rating: 4.4, price: 10000, amenities: ['Pool', 'Spa', 'Restaurant'], distance: '3 km from Brigade Road', description: 'Premium city hotel' },
+        { id: '10', name: 'Holiday Inn Bangalore Racecourse', rating: 4.1, price: 7000, amenities: ['Pool', 'Restaurant', 'Free WiFi'], distance: '1 km from Bangalore Turf Club', description: 'Mid-range business hotel' },
+        { id: '11', name: 'Hotel Nandhana Grand', rating: 3.9, price: 4500, amenities: ['Restaurant', 'Free WiFi', 'AC'], distance: '2 km from Majestic Bus Station', description: 'Budget city hotel' },
+        { id: '12', name: 'Goldfinch Hotel Bangalore', rating: 4.0, price: 6000, amenities: ['Pool', 'Restaurant', 'Free WiFi'], distance: '4 km from Cunningham Road', description: 'Comfortable mid-range hotel' }
+      ],
+      kolkata: [
+        { id: '1', name: 'The Oberoi Grand Kolkata', rating: 4.7, price: 16000, amenities: ['Pool', 'Spa', 'Restaurant', 'Free WiFi'], distance: '1 km from Park Street', description: 'Heritage luxury hotel' },
+        { id: '2', name: 'JW Marriott Hotel Kolkata', rating: 4.6, price: 14000, amenities: ['Pool', 'Spa', 'Restaurant'], distance: '2 km from New Market', description: 'Modern luxury hotel' },
+        { id: '3', name: 'ITC Sonar Kolkata', rating: 4.5, price: 12000, amenities: ['Pool', 'Spa', 'Restaurant', 'Golf'], distance: '5 km from Salt Lake', description: 'Premium business hotel' },
+        { id: '4', name: 'The Lalit Great Eastern Kolkata', rating: 4.3, price: 10000, amenities: ['Restaurant', 'Free WiFi', 'Spa'], distance: '0.5 km from Dalhousie Square', description: 'Historic heritage hotel' },
+        { id: '5', name: 'Hyatt Regency Kolkata', rating: 4.4, price: 11000, amenities: ['Pool', 'Restaurant', 'Free WiFi'], distance: '3 km from Salt Lake', description: 'Contemporary business hotel' },
+        { id: '6', name: 'Park Hotel Kolkata', rating: 4.2, price: 8500, amenities: ['Pool', 'Restaurant', 'Free WiFi'], distance: '1 km from Park Street', description: 'Boutique city hotel' },
+        { id: '7', name: 'Taj Bengal Kolkata', rating: 4.6, price: 13000, amenities: ['Pool', 'Spa', 'Restaurant'], distance: '2 km from Alipore', description: 'Luxury heritage hotel' },
+        { id: '8', name: 'Novotel Kolkata Hotel & Residences', rating: 4.3, price: 9000, amenities: ['Pool', 'Restaurant', 'Gym'], distance: '3 km from New Town', description: 'Modern business hotel' },
+        { id: '9', name: 'Swissotel Kolkata', rating: 4.4, price: 10500, amenities: ['Pool', 'Spa', 'Restaurant'], distance: '4 km from New Town', description: 'Swiss hospitality hotel' },
+        { id: '10', name: 'Hotel Hindusthan International', rating: 4.0, price: 6500, amenities: ['Restaurant', 'Free WiFi', 'AC'], distance: '2 km from Esplanade', description: 'Heritage city hotel' },
+        { id: '11', name: 'Peerless Inn Kolkata', rating: 3.9, price: 5000, amenities: ['Restaurant', 'Free WiFi', 'AC'], distance: '1 km from Howrah Bridge', description: 'Budget heritage hotel' },
+        { id: '12', name: 'Hotel Galaxy', rating: 3.8, price: 3500, amenities: ['Restaurant', 'Free WiFi', 'AC'], distance: '1 km from Sealdah Station', description: 'Economy city hotel' }
       ]
     };
 
@@ -69,7 +121,9 @@ export const HotelRecommendations = ({ tripData, onNext }: HotelRecommendationsP
       { id: '1', name: `${city} Palace Hotel`, rating: 4.5, price: Math.floor(tripData.budget * 0.3), amenities: ['Free WiFi', 'Restaurant', 'AC'], distance: '2 km from city center', description: 'Premium city hotel with modern amenities' },
       { id: '2', name: `Heritage ${city} Hotel`, rating: 4.3, price: Math.floor(tripData.budget * 0.25), amenities: ['Restaurant', 'Free WiFi'], distance: '1.5 km from city center', description: 'Traditional hotel with local charm' },
       { id: '3', name: `${city} Business Hotel`, rating: 4.2, price: Math.floor(tripData.budget * 0.2), amenities: ['Free WiFi', 'Restaurant', 'AC'], distance: '3 km from city center', description: 'Modern business hotel' },
-      { id: '4', name: `Budget Stay ${city}`, rating: 4.0, price: Math.floor(tripData.budget * 0.15), amenities: ['Free WiFi', 'AC'], distance: '2.5 km from city center', description: 'Clean and comfortable budget hotel' }
+      { id: '4', name: `Budget Stay ${city}`, rating: 4.0, price: Math.floor(tripData.budget * 0.15), amenities: ['Free WiFi', 'AC'], distance: '2.5 km from city center', description: 'Clean and comfortable budget hotel' },
+      { id: '5', name: `${city} Grand Hotel`, rating: 4.1, price: Math.floor(tripData.budget * 0.18), amenities: ['Pool', 'Restaurant', 'Free WiFi'], distance: '2 km from city center', description: 'Comfortable mid-range hotel' },
+      { id: '6', name: `${city} Comfort Inn`, rating: 3.9, price: Math.floor(tripData.budget * 0.12), amenities: ['Restaurant', 'Free WiFi'], distance: '3 km from city center', description: 'Budget-friendly accommodation' }
     ];
   };
 
@@ -107,6 +161,10 @@ export const HotelRecommendations = ({ tripData, onNext }: HotelRecommendationsP
     }
     console.log('Selected hotel:', selectedHotel);
     onNext();
+  };
+
+  const handleLoadMore = () => {
+    setVisibleCount(prev => Math.min(prev + 6, hotels.length));
   };
 
   if (loading) {
@@ -205,9 +263,9 @@ export const HotelRecommendations = ({ tripData, onNext }: HotelRecommendationsP
           <div className="text-center mt-8">
             <Button 
               className="bg-gradient-to-r from-orange-500 to-blue-600 hover:from-orange-600 hover:to-blue-700 text-white font-semibold px-8 py-3"
-              onClick={() => setVisibleCount(prev => prev + 6)}
+              onClick={handleLoadMore}
             >
-              Load More Hotels
+              Load More Hotels ({hotels.length - visibleCount} more available)
             </Button>
           </div>
         )}
