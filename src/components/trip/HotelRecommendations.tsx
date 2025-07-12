@@ -11,7 +11,6 @@ interface Hotel {
   name: string;
   rating: number;
   price: number;
-  image: string;
   amenities: string[];
   distance: string;
   description: string;
@@ -28,73 +27,55 @@ export const HotelRecommendations = ({ tripData, onNext }: HotelRecommendationsP
   const [selectedHotel, setSelectedHotel] = useState<Hotel | null>(null);
   const [visibleCount, setVisibleCount] = useState(6);
 
-  // Mock hotel data - In a real app, this would fetch from APIs
-  useEffect(() => {
-    const mockHotels: Hotel[] = [
-      {
-        id: '1',
-        name: `Grand ${tripData.destination} Palace`,
-        rating: 4.5,
-        price: Math.floor(tripData.budget * 0.3),
-        image: '/placeholder.svg',
-        amenities: ['Free WiFi', 'Pool', 'Restaurant', 'Parking'],
-        distance: '2.5 km from city center',
-        description: 'Luxury hotel with modern amenities and excellent service.'
-      },
-      {
-        id: '2',
-        name: `${tripData.destination} Heritage Hotel`,
-        rating: 4.2,
-        price: Math.floor(tripData.budget * 0.25),
-        image: '/placeholder.svg',
-        amenities: ['Free WiFi', 'Restaurant', 'Room Service'],
-        distance: '1.8 km from city center',
-        description: 'Traditional architecture with modern comfort.'
-      },
-      {
-        id: '3',
-        name: `Royal ${tripData.destination} Resort`,
-        rating: 4.7,
-        price: Math.floor(tripData.budget * 0.4),
-        image: '/placeholder.svg',
-        amenities: ['Pool', 'Spa', 'Restaurant', 'Free WiFi', 'Gym'],
-        distance: '3.2 km from city center',
-        description: 'Premium resort with world-class facilities.'
-      },
-      {
-        id: '4',
-        name: `Budget Stay ${tripData.destination}`,
-        rating: 4.0,
-        price: Math.floor(tripData.budget * 0.15),
-        image: '/placeholder.svg',
-        amenities: ['Free WiFi', 'AC', 'Room Service'],
-        distance: '1.2 km from city center',
-        description: 'Clean, comfortable and affordable accommodation.'
-      },
-      {
-        id: '5',
-        name: `${tripData.destination} Business Hotel`,
-        rating: 4.3,
-        price: Math.floor(tripData.budget * 0.28),
-        image: '/placeholder.svg',
-        amenities: ['Free WiFi', 'Business Center', 'Restaurant', 'Laundry'],
-        distance: '2.1 km from city center',
-        description: 'Perfect for business and leisure travelers.'
-      },
-      {
-        id: '6',
-        name: `Boutique ${tripData.destination}`,
-        rating: 4.6,
-        price: Math.floor(tripData.budget * 0.35),
-        image: '/placeholder.svg',
-        amenities: ['Free WiFi', 'Rooftop Bar', 'Restaurant', 'Concierge'],
-        distance: '1.5 km from city center',
-        description: 'Stylish boutique hotel with personalized service.'
-      }
-    ];
+  const getHotelsForCity = (city: string): Hotel[] => {
+    const cityLower = city.toLowerCase();
+    
+    const hotelData: { [key: string]: Hotel[] } = {
+      hyderabad: [
+        { id: '1', name: 'Taj Falaknuma Palace', rating: 4.8, price: 25000, amenities: ['Free WiFi', 'Pool', 'Spa', 'Restaurant'], distance: '5 km from city center', description: 'Luxury palace hotel with royal heritage' },
+        { id: '2', name: 'ITC Kohenur', rating: 4.7, price: 18000, amenities: ['Free WiFi', 'Pool', 'Restaurant', 'Gym'], distance: '2 km from HITEC City', description: 'Premium business hotel' },
+        { id: '3', name: 'Park Hyatt Hyderabad', rating: 4.6, price: 15000, amenities: ['Pool', 'Spa', 'Restaurant', 'Free WiFi'], distance: '3 km from Banjara Hills', description: 'Modern luxury hotel' },
+        { id: '4', name: 'The Westin Hyderabad Mindspace', rating: 4.5, price: 12000, amenities: ['Pool', 'Spa', 'Restaurant', 'Gym'], distance: '1 km from HITEC City', description: 'Contemporary business hotel' },
+        { id: '5', name: 'Novotel Hyderabad Airport', rating: 4.4, price: 8000, amenities: ['Free WiFi', 'Restaurant', 'Pool'], distance: '2 km from airport', description: 'Convenient airport hotel' },
+        { id: '6', name: 'Hotel Sitara Grand', rating: 4.2, price: 5000, amenities: ['Free WiFi', 'Restaurant', 'AC'], distance: '1 km from Charminar', description: 'Heritage area budget hotel' }
+      ],
+      mumbai: [
+        { id: '1', name: 'The Taj Mahal Palace', rating: 4.9, price: 35000, amenities: ['Pool', 'Spa', 'Restaurant', 'Free WiFi'], distance: '0.5 km from Gateway of India', description: 'Iconic luxury hotel' },
+        { id: '2', name: 'The Oberoi Mumbai', rating: 4.8, price: 28000, amenities: ['Pool', 'Spa', 'Restaurant', 'Gym'], distance: '1 km from Marine Drive', description: 'Premium oceanfront hotel' },
+        { id: '3', name: 'ITC Grand Central', rating: 4.6, price: 20000, amenities: ['Pool', 'Spa', 'Restaurant', 'Free WiFi'], distance: '2 km from CST', description: 'Business district luxury' },
+        { id: '4', name: 'Hotel Marine Plaza', rating: 4.3, price: 12000, amenities: ['Restaurant', 'Free WiFi', 'AC'], distance: '0.2 km from Marine Drive', description: 'Seafront heritage hotel' },
+        { id: '5', name: 'The Gordon House Hotel', rating: 4.2, price: 8000, amenities: ['Restaurant', 'Free WiFi', 'AC'], distance: '1.5 km from Colaba', description: 'Boutique heritage hotel' },
+        { id: '6', name: 'Hotel Suba Palace', rating: 4.0, price: 4500, amenities: ['Restaurant', 'Free WiFi', 'AC'], distance: '3 km from airport', description: 'Budget business hotel' }
+      ],
+      delhi: [
+        { id: '1', name: 'The Imperial New Delhi', rating: 4.8, price: 25000, amenities: ['Pool', 'Spa', 'Restaurant', 'Free WiFi'], distance: '2 km from Connaught Place', description: 'Colonial era luxury hotel' },
+        { id: '2', name: 'The Leela Palace New Delhi', rating: 4.7, price: 22000, amenities: ['Pool', 'Spa', 'Restaurant', 'Gym'], distance: '8 km from airport', description: 'Royal luxury experience' },
+        { id: '3', name: 'ITC Maurya', rating: 4.6, price: 18000, amenities: ['Pool', 'Spa', 'Restaurant', 'Free WiFi'], distance: '5 km from India Gate', description: 'Diplomatic enclave hotel' },
+        { id: '4', name: 'The Claridges New Delhi', rating: 4.4, price: 15000, amenities: ['Pool', 'Restaurant', 'Free WiFi'], distance: '3 km from India Gate', description: 'Art deco heritage hotel' },
+        { id: '5', name: 'Hotel Tara Palace', rating: 4.1, price: 6000, amenities: ['Restaurant', 'Free WiFi', 'AC'], distance: '2 km from Chandni Chowk', description: 'Old Delhi heritage hotel' },
+        { id: '6', name: 'Bloom Hotel', rating: 4.0, price: 4000, amenities: ['Restaurant', 'Free WiFi', 'AC'], distance: '5 km from Red Fort', description: 'Modern budget hotel' }
+      ],
+      goa: [
+        { id: '1', name: 'Taj Exotica Resort & Spa', rating: 4.8, price: 18000, amenities: ['Beach', 'Pool', 'Spa', 'Restaurant'], distance: '0.1 km from Benaulim Beach', description: 'Beachfront luxury resort' },
+        { id: '2', name: 'The Leela Goa', rating: 4.7, price: 16000, amenities: ['Beach', 'Pool', 'Spa', 'Golf'], distance: '0.2 km from Mobor Beach', description: 'Premium beach resort' },
+        { id: '3', name: 'Park Hyatt Goa Resort and Spa', rating: 4.6, price: 14000, amenities: ['Beach', 'Pool', 'Spa', 'Restaurant'], distance: '0.1 km from Arossim Beach', description: 'Luxury beachfront resort' },
+        { id: '4', name: 'Alila Diwa Goa', rating: 4.5, price: 12000, amenities: ['Pool', 'Spa', 'Restaurant', 'Free WiFi'], distance: '1 km from Majorda Beach', description: 'Contemporary resort' },
+        { id: '5', name: 'Casa De Goa Boutique Resort', rating: 4.2, price: 8000, amenities: ['Pool', 'Restaurant', 'Free WiFi'], distance: '0.5 km from Calangute Beach', description: 'Boutique beach resort' },
+        { id: '6', name: 'Hotel Fidalgo', rating: 4.0, price: 5000, amenities: ['Pool', 'Restaurant', 'Free WiFi'], distance: '1 km from Panaji', description: 'Heritage city hotel' }
+      ]
+    };
 
-    // Filter hotels by budget
-    const filteredHotels = mockHotels.filter(hotel => hotel.price <= tripData.budget * 0.5);
+    return hotelData[cityLower] || [
+      { id: '1', name: `${city} Palace Hotel`, rating: 4.5, price: Math.floor(tripData.budget * 0.3), amenities: ['Free WiFi', 'Restaurant', 'AC'], distance: '2 km from city center', description: 'Premium city hotel with modern amenities' },
+      { id: '2', name: `Heritage ${city} Hotel`, rating: 4.3, price: Math.floor(tripData.budget * 0.25), amenities: ['Restaurant', 'Free WiFi'], distance: '1.5 km from city center', description: 'Traditional hotel with local charm' },
+      { id: '3', name: `${city} Business Hotel`, rating: 4.2, price: Math.floor(tripData.budget * 0.2), amenities: ['Free WiFi', 'Restaurant', 'AC'], distance: '3 km from city center', description: 'Modern business hotel' },
+      { id: '4', name: `Budget Stay ${city}`, rating: 4.0, price: Math.floor(tripData.budget * 0.15), amenities: ['Free WiFi', 'AC'], distance: '2.5 km from city center', description: 'Clean and comfortable budget hotel' }
+    ];
+  };
+
+  useEffect(() => {
+    const cityHotels = getHotelsForCity(tripData.destination);
+    const filteredHotels = cityHotels.filter(hotel => hotel.price <= tripData.budget * 0.5);
     
     setTimeout(() => {
       setHotels(filteredHotels);
@@ -130,15 +111,17 @@ export const HotelRecommendations = ({ tripData, onNext }: HotelRecommendationsP
 
   if (loading) {
     return (
-      <Card>
+      <Card className="shadow-xl border-t-4 border-t-orange-500">
         <CardHeader>
-          <CardTitle>Finding Hotels in {tripData.destination}...</CardTitle>
+          <CardTitle className="text-2xl font-bold bg-gradient-to-r from-orange-500 to-blue-600 bg-clip-text text-transparent">
+            Finding Hotels in {tripData.destination}...
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
             {[1, 2, 3, 4, 5, 6].map((i) => (
               <div key={i} className="animate-pulse">
-                <div className="bg-gray-200 h-48 rounded-lg mb-4"></div>
+                <div className="bg-gradient-to-r from-gray-200 to-gray-300 h-32 rounded-lg mb-4"></div>
                 <div className="bg-gray-200 h-4 rounded mb-2"></div>
                 <div className="bg-gray-200 h-4 rounded w-3/4"></div>
               </div>
@@ -150,38 +133,38 @@ export const HotelRecommendations = ({ tripData, onNext }: HotelRecommendationsP
   }
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <MapPin className="h-5 w-5" />
+    <Card className="shadow-xl border-t-4 border-t-orange-500">
+      <CardHeader className="bg-gradient-to-r from-orange-50 to-blue-50">
+        <CardTitle className="flex items-center gap-2 text-2xl font-bold text-gray-800">
+          <MapPin className="h-6 w-6 text-orange-500" />
           Hotels in {tripData.destination}
         </CardTitle>
-        <p className="text-gray-600">
+        <p className="text-gray-600 font-semibold">
           Found {hotels.length} hotels within your budget of ₹{tripData.budget.toLocaleString()}
         </p>
       </CardHeader>
-      <CardContent>
+      <CardContent className="p-6">
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {hotels.slice(0, visibleCount).map((hotel) => (
             <Card 
               key={hotel.id} 
-              className={`cursor-pointer transition-all hover:shadow-lg ${
-                selectedHotel?.id === hotel.id ? 'ring-2 ring-orange-500' : ''
+              className={`cursor-pointer transition-all duration-300 hover:shadow-xl hover:scale-105 ${
+                selectedHotel?.id === hotel.id 
+                  ? 'ring-2 ring-orange-500 bg-gradient-to-br from-orange-50 to-blue-50' 
+                  : 'hover:bg-gray-50'
               }`}
               onClick={() => handleSelectHotel(hotel)}
             >
-              <div className="relative">
-                <img 
-                  src={hotel.image} 
-                  alt={hotel.name}
-                  className="w-full h-48 object-cover rounded-t-lg"
-                />
-                <Badge className="absolute top-2 right-2 bg-green-500">
-                  ₹{hotel.price.toLocaleString()}/night
-                </Badge>
+              <div className="p-1">
+                <div className="bg-gradient-to-br from-orange-100 to-blue-100 p-4 rounded-t-lg">
+                  <Badge className="bg-green-500 hover:bg-green-600 text-white font-semibold mb-2">
+                    ₹{hotel.price.toLocaleString()}/night
+                  </Badge>
+                </div>
               </div>
+              
               <CardContent className="p-4">
-                <h3 className="font-semibold text-lg mb-2">{hotel.name}</h3>
+                <h3 className="font-bold text-lg mb-2 text-gray-800">{hotel.name}</h3>
                 <div className="flex items-center gap-1 mb-2">
                   {[...Array(5)].map((_, i) => (
                     <Star 
@@ -191,27 +174,37 @@ export const HotelRecommendations = ({ tripData, onNext }: HotelRecommendationsP
                       }`} 
                     />
                   ))}
-                  <span className="ml-1 text-sm text-gray-600">{hotel.rating}</span>
+                  <span className="ml-1 text-sm text-gray-600 font-medium">{hotel.rating}</span>
                 </div>
-                <p className="text-sm text-gray-600 mb-3">{hotel.distance}</p>
-                <p className="text-sm mb-3">{hotel.description}</p>
-                <div className="flex flex-wrap gap-2">
+                <p className="text-sm text-gray-600 mb-3 font-medium">{hotel.distance}</p>
+                <p className="text-sm mb-3 font-medium">{hotel.description}</p>
+                <div className="flex flex-wrap gap-2 mb-4">
                   {hotel.amenities.slice(0, 3).map((amenity) => (
-                    <Badge key={amenity} variant="outline" className="text-xs">
+                    <Badge key={amenity} variant="outline" className="text-xs font-medium">
                       {getAmenityIcon(amenity)}
                       <span className="ml-1">{amenity}</span>
                     </Badge>
                   ))}
                 </div>
+                <Button
+                  className={`w-full font-semibold ${
+                    selectedHotel?.id === hotel.id
+                      ? 'bg-gradient-to-r from-orange-500 to-blue-600 hover:from-orange-600 hover:to-blue-700 text-white'
+                      : 'border-2 border-orange-200 text-orange-600 hover:bg-orange-50'
+                  }`}
+                  variant={selectedHotel?.id === hotel.id ? "default" : "outline"}
+                >
+                  {selectedHotel?.id === hotel.id ? '✓ Selected' : 'Select Hotel'}
+                </Button>
               </CardContent>
             </Card>
           ))}
         </div>
 
         {visibleCount < hotels.length && (
-          <div className="text-center mt-6">
+          <div className="text-center mt-8">
             <Button 
-              variant="outline" 
+              className="bg-gradient-to-r from-orange-500 to-blue-600 hover:from-orange-600 hover:to-blue-700 text-white font-semibold px-8 py-3"
               onClick={() => setVisibleCount(prev => prev + 6)}
             >
               Load More Hotels
@@ -220,16 +213,16 @@ export const HotelRecommendations = ({ tripData, onNext }: HotelRecommendationsP
         )}
 
         {selectedHotel && (
-          <div className="mt-6 p-4 bg-orange-50 rounded-lg border border-orange-200">
-            <h4 className="font-semibold text-lg mb-2">Selected Hotel:</h4>
-            <p className="text-gray-700">{selectedHotel.name} - ₹{selectedHotel.price.toLocaleString()}/night</p>
+          <div className="mt-8 p-6 bg-gradient-to-r from-orange-50 to-blue-50 rounded-xl border-2 border-orange-200">
+            <h4 className="font-bold text-xl mb-2 text-gray-800">Selected Hotel:</h4>
+            <p className="text-gray-700 font-semibold">{selectedHotel.name} - ₹{selectedHotel.price.toLocaleString()}/night</p>
           </div>
         )}
 
-        <div className="flex justify-end mt-6">
-          <Button onClick={handleNext} className="bg-gradient-to-r from-orange-500 to-blue-600">
+        <div className="flex justify-end mt-8">
+          <Button onClick={handleNext} className="bg-gradient-to-r from-orange-500 to-blue-600 hover:from-orange-600 hover:to-blue-700 text-white font-bold px-8 py-3 text-lg">
             Next: Tourist Attractions
-            <ArrowRight className="ml-2 h-4 w-4" />
+            <ArrowRight className="ml-2 h-5 w-5" />
           </Button>
         </div>
       </CardContent>
