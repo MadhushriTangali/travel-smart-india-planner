@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -53,7 +52,7 @@ export const TripSummary = ({ tripData, onSave }: TripSummaryProps) => {
         duration: tripData.duration,
         travel_style: tripData.travel_style,
         notes: tripData.notes,
-        trip_data: tripData,
+        trip_data: tripData as any, // Cast to any to satisfy Json type
         total_cost: Math.floor(tripData.budget * 0.85) // Estimated total cost
       });
 
