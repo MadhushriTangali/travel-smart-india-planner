@@ -31,6 +31,20 @@ export const TripSummary = ({ tripData, onSave }: TripSummaryProps) => {
 
       const tripName = `${tripData.source_location} to ${tripData.destination}`;
       
+      // Calculate consistent estimated cost
+      const days = getDays(tripData.duration);
+      const baseMultiplier = getStyleMultiplier(tripData.travel_style);
+      
+      const accommodationPerDay = Math.floor((tripData.budget * 0.40) / days) * baseMultiplier;
+      const accommodation = accommodationPerDay * days;
+      const transport = Math.floor(tripData.budget * 0.25) * baseMultiplier;
+      const attractions = Math.floor(tripData.budget * 0.15) * baseMultiplier;
+      const foodPerDay = Math.floor((tripData.budget * 0.15) / days) * baseMultiplier;
+      const food = foodPerDay * days;
+      const miscellaneous = Math.floor(tripData.budget * 0.05) * baseMultiplier;
+      
+      const totalCost = Math.floor(accommodation + transport + attractions + food + miscellaneous);
+      
       const { error } = await supabase
         .from('trips')
         .insert({
@@ -43,7 +57,7 @@ export const TripSummary = ({ tripData, onSave }: TripSummaryProps) => {
           travel_style: tripData.travel_style,
           notes: tripData.notes,
           trip_data: tripData as any,
-          total_cost: Math.floor(tripData.budget * 0.85)
+          total_cost: totalCost
         });
 
       if (error) {
@@ -68,7 +82,37 @@ export const TripSummary = ({ tripData, onSave }: TripSummaryProps) => {
     }
   };
 
-  const estimatedCost = Math.floor(tripData.budget * 0.85);
+  const getDays = (duration: string): number => {
+    if (duration.includes('1-2 days')) return 2;
+    if (duration.includes('3-4 days')) return 4;
+    if (duration.includes('5-7 days')) return 6;
+    if (duration.includes('1-2 weeks')) return 10;
+    if (duration.includes('More than 2 weeks')) return 15;
+    return 3; // default
+  };
+
+  const getStyleMultiplier = (style: string): number => {
+    switch (style) {
+      case 'economy': return 0.8;
+      case 'premium': return 1.3;
+      case 'mid-range':
+      default: return 1.0;
+    }
+  };
+
+  // Calculate consistent estimated cost using same logic as CostEstimator
+  const days = getDays(tripData.duration);
+  const baseMultiplier = getStyleMultiplier(tripData.travel_style);
+  
+  const accommodationPerDay = Math.floor((tripData.budget * 0.40) / days) * baseMultiplier;
+  const accommodation = accommodationPerDay * days;
+  const transport = Math.floor(tripData.budget * 0.25) * baseMultiplier;
+  const attractions = Math.floor(tripData.budget * 0.15) * baseMultiplier;
+  const foodPerDay = Math.floor((tripData.budget * 0.15) / days) * baseMultiplier;
+  const food = foodPerDay * days;
+  const miscellaneous = Math.floor(tripData.budget * 0.05) * baseMultiplier;
+  
+  const estimatedCost = Math.floor(accommodation + transport + attractions + food + miscellaneous);
   const remainingBudget = tripData.budget - estimatedCost;
 
   return (
@@ -140,7 +184,7 @@ export const TripSummary = ({ tripData, onSave }: TripSummaryProps) => {
                 <div className="bg-gray-200 rounded-full h-3">
                   <div 
                     className="bg-gradient-to-r from-green-400 to-blue-500 h-3 rounded-full transition-all duration-500"
-                    style={{ width: `${(estimatedCost / tripData.budget) * 100}%` }}
+                    style={{ width: `${Math.min((estimatedCost / tripData.budget) * 100, 100)}%` }}
                   ></div>
                 </div>
                 <p className="text-xs text-gray-600 mt-1">

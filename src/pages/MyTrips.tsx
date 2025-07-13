@@ -3,10 +3,11 @@ import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { MapPin, Calendar, IndianRupee, Trash2, Eye } from 'lucide-react';
+import { MapPin, Calendar, IndianRupee, Trash2, Eye, Edit } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
 import { Navigation } from '@/components/Navigation';
+import { TripDetailModal } from '@/components/trip/TripDetailModal';
 
 interface Trip {
   id: string;
@@ -24,6 +25,8 @@ interface Trip {
 const MyTrips = () => {
   const [trips, setTrips] = useState<Trip[]>([]);
   const [loading, setLoading] = useState(true);
+  const [selectedTrip, setSelectedTrip] = useState<Trip | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     fetchUserTrips();
@@ -87,6 +90,15 @@ const MyTrips = () => {
         variant: "destructive"
       });
     }
+  };
+
+  const handleViewTrip = (trip: Trip) => {
+    setSelectedTrip(trip);
+    setIsModalOpen(true);
+  };
+
+  const handleUpdateTrip = (updatedTrip: Trip) => {
+    setTrips(trips.map(trip => trip.id === updatedTrip.id ? updatedTrip : trip));
   };
 
   const formatDate = (dateString: string) => {
@@ -197,6 +209,15 @@ const MyTrips = () => {
                       <Button
                         variant="outline"
                         size="sm"
+                        className="flex-1 text-blue-600 border-blue-200 hover:bg-blue-50"
+                        onClick={() => handleViewTrip(trip)}
+                      >
+                        <Eye className="h-4 w-4 mr-1" />
+                        View
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
                         className="flex-1 text-red-600 border-red-200 hover:bg-red-50"
                         onClick={() => deleteTrip(trip.id)}
                       >
@@ -211,6 +232,16 @@ const MyTrips = () => {
           )}
         </div>
       </div>
+
+      <TripDetailModal
+        trip={selectedTrip}
+        isOpen={isModalOpen}
+        onClose={() => {
+          setIsModalOpen(false);
+          setSelectedTrip(null);
+        }}
+        onUpdate={handleUpdateTrip}
+      />
     </div>
   );
 };

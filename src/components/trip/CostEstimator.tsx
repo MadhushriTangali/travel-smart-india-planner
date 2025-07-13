@@ -28,21 +28,28 @@ export const CostEstimator = ({ tripData, onNext }: CostEstimatorProps) => {
     // Calculate estimated costs based on trip data
     const calculateCosts = () => {
       const days = getDays(tripData.duration);
+      const baseMultiplier = getStyleMultiplier(tripData.travel_style);
       
-      const accommodation = Math.floor(tripData.budget * 0.35) * days;
-      const transport = Math.floor(tripData.budget * 0.25);
-      const attractions = Math.floor(tripData.budget * 0.15);
-      const food = Math.floor(tripData.budget * 0.20) * days;
-      const miscellaneous = Math.floor(tripData.budget * 0.05);
+      // More accurate cost calculations
+      const accommodationPerDay = Math.floor((tripData.budget * 0.40) / days) * baseMultiplier;
+      const accommodation = accommodationPerDay * days;
       
-      const total = accommodation + transport + attractions + food + miscellaneous;
+      const transport = Math.floor(tripData.budget * 0.25) * baseMultiplier;
+      const attractions = Math.floor(tripData.budget * 0.15) * baseMultiplier;
+      
+      const foodPerDay = Math.floor((tripData.budget * 0.15) / days) * baseMultiplier;
+      const food = foodPerDay * days;
+      
+      const miscellaneous = Math.floor(tripData.budget * 0.05) * baseMultiplier;
+      
+      const total = Math.floor(accommodation + transport + attractions + food + miscellaneous);
       
       return {
-        accommodation,
-        transport,
-        attractions,
-        food,
-        miscellaneous,
+        accommodation: Math.floor(accommodation),
+        transport: Math.floor(transport),
+        attractions: Math.floor(attractions),
+        food: Math.floor(food),
+        miscellaneous: Math.floor(miscellaneous),
         total
       };
     };
@@ -60,6 +67,15 @@ export const CostEstimator = ({ tripData, onNext }: CostEstimatorProps) => {
     if (duration.includes('1-2 weeks')) return 10;
     if (duration.includes('More than 2 weeks')) return 15;
     return 3; // default
+  };
+
+  const getStyleMultiplier = (style: string): number => {
+    switch (style) {
+      case 'economy': return 0.8;
+      case 'premium': return 1.3;
+      case 'mid-range':
+      default: return 1.0;
+    }
   };
 
   const getBudgetStatus = () => {
@@ -141,7 +157,7 @@ export const CostEstimator = ({ tripData, onNext }: CostEstimatorProps) => {
             </div>
             
             <Progress 
-              value={(costBreakdown.total / tripData.budget) * 100} 
+              value={Math.min((costBreakdown.total / tripData.budget) * 100, 100)} 
               className="mb-2"
             />
             
