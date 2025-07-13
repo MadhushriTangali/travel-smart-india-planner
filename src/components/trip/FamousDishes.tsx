@@ -2,18 +2,17 @@ import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Utensils, IndianRupee, ArrowRight, Star } from 'lucide-react';
+import { Utensils, ArrowRight, IndianRupee, MapPin } from 'lucide-react';
 import { TripData } from '@/components/TripPlanningForm';
 
 interface Dish {
   id: string;
   name: string;
+  type: string;
+  price_range: string;
   description: string;
-  price: number;
-  category: string;
-  spiceLevel: string;
-  rating: number;
-  isVegetarian: boolean;
+  best_places: string[];
+  spice_level: 'Mild' | 'Medium' | 'Spicy' | 'Very Spicy';
 }
 
 interface FamousDishesProps {
@@ -24,107 +23,153 @@ interface FamousDishesProps {
 export const FamousDishes = ({ tripData, onNext }: FamousDishesProps) => {
   const [dishes, setDishes] = useState<Dish[]>([]);
   const [loading, setLoading] = useState(true);
+  const [selectedDishes, setSelectedDishes] = useState<Dish[]>([]);
+  const [visibleCount, setVisibleCount] = useState(6);
 
   const getDishesForCity = (city: string): Dish[] => {
     const cityLower = city.toLowerCase();
     
-    const dishesData: { [key: string]: Dish[] } = {
+    const dishData: { [key: string]: Dish[] } = {
       hyderabad: [
-        { id: '1', name: 'Hyderabadi Biryani', description: 'Aromatic basmati rice with tender mutton cooked in dum style', price: 350, category: 'Main Course', spiceLevel: 'Medium', rating: 4.8, isVegetarian: false },
-        { id: '2', name: 'Haleem', description: 'Slow-cooked lentils with meat, traditional Ramadan delicacy', price: 180, category: 'Main Course', spiceLevel: 'Medium', rating: 4.7, isVegetarian: false },
-        { id: '3', name: 'Lukhmi', description: 'Square-shaped samosa filled with spiced minced meat', price: 25, category: 'Snack', spiceLevel: 'Medium', rating: 4.5, isVegetarian: false },
-        { id: '4', name: 'Double Ka Meetha', description: 'Bread pudding with milk, nuts and saffron', price: 120, category: 'Dessert', spiceLevel: 'None', rating: 4.6, isVegetarian: true },
-        { id: '5', name: 'Irani Chai', description: 'Strong tea with milk served with Osmania biscuits', price: 15, category: 'Beverage', spiceLevel: 'None', rating: 4.4, isVegetarian: true },
-        { id: '6', name: 'Nihari', description: 'Slow-cooked beef stew with aromatic spices', price: 280, category: 'Main Course', spiceLevel: 'High', rating: 4.7, isVegetarian: false }
+        { id: '1', name: 'Hyderabadi Biryani', type: 'Main Course', price_range: '₹300-600', description: 'Aromatic basmati rice cooked with tender mutton/chicken in traditional dum style', best_places: ['Paradise', 'Bawarchi', 'Shah Ghouse'], spice_level: 'Medium' },
+        { id: '2', name: 'Haleem', type: 'Main Course', price_range: '₹80-150', description: 'Slow-cooked lentil and meat stew, especially popular during Ramadan', best_places: ['Pista House', 'Sarvi Restaurant', 'Hotel Shadab'], spice_level: 'Medium' },
+        { id: '3', name: 'Hyderabadi Marag', type: 'Soup', price_range: '₹120-200', description: 'Traditional mutton soup with aromatic spices', best_places: ['Hotel Shadab', 'Alpha Hotel', 'Jewel of Nizam'], spice_level: 'Mild' },
+        { id: '4', name: 'Osmania Biscuit', type: 'Snack', price_range: '₹20-40', description: 'Sweet and salty biscuits perfect with Irani chai', best_places: ['Subhan Bakery', 'Karachi Bakery', 'Nimrah Cafe'], spice_level: 'Mild' },
+        { id: '5', name: 'Irani Chai', type: 'Beverage', price_range: '₹15-30', description: 'Strong tea served with milk and sugar in traditional Irani style', best_places: ['Nimrah Cafe', 'Grand Hotel Hyderabad', 'Char Minar Restaurant'], spice_level: 'Mild' },
+        { id: '6', name: 'Keema Samosa', type: 'Snack', price_range: '₹40-70', description: 'Crispy pastry filled with spiced minced meat', best_places: ['Nimrah Cafe', 'Hotel Rumaan', 'Cafe Niloufer'], spice_level: 'Spicy' },
+        { id: '7', name: 'Sheer Khurma', type: 'Dessert', price_range: '₹60-100', description: 'Sweet vermicelli pudding with milk, dates and nuts', best_places: ['Hotel Shadab', 'Paradise', 'Pista House'], spice_level: 'Mild' },
+        { id: '8', name: 'Lukhmi', type: 'Snack', price_range: '₹50-80', description: 'Square-shaped pastry filled with keema and boiled eggs', best_places: ['Hotel Shadab', 'Alpha Hotel', 'Meridian Restaurant'], spice_level: 'Medium' },
+        { id: '9', name: 'Qubani ka Meetha', type: 'Dessert', price_range: '₹80-120', description: 'Sweet apricot dessert served with cream or custard', best_places: ['Paradise', 'Hotel Shadab', 'Bawarchi'], spice_level: 'Mild' },
+        { id: '10', name: 'Chakna', type: 'Appetizer', price_range: '₹100-200', description: 'Spicy mutton fry served as appetizer', best_places: ['Bawarchi', 'Shah Ghouse', 'Paradise'], spice_level: 'Spicy' }
       ],
-      chennai: [
-        { id: '1', name: 'Chettinad Chicken', description: 'Spicy chicken curry with aromatic Chettinad spices', price: 280, category: 'Main Course', spiceLevel: 'High', rating: 4.7, isVegetarian: false },
-        { id: '2', name: 'Dosa', description: 'Crispy fermented crepe made from rice and lentil batter', price: 80, category: 'Main Course', spiceLevel: 'Low', rating: 4.6, isVegetarian: true },
-        { id: '3', name: 'Idli Sambar', description: 'Steamed rice cakes served with lentil curry', price: 60, category: 'Breakfast', spiceLevel: 'Medium', rating: 4.5, isVegetarian: true },
-        { id: '4', name: 'Rasam', description: 'Tangy tamarind-based soup with spices', price: 40, category: 'Soup', spiceLevel: 'Medium', rating: 4.4, isVegetarian: true },
-        { id: '5', name: 'Payasam', description: 'Sweet rice pudding with cardamom and nuts', price: 100, category: 'Dessert', spiceLevel: 'None', rating: 4.3, isVegetarian: true },
-        { id: '6', name: 'Filter Coffee', description: 'Strong coffee brewed in traditional filter', price: 25, category: 'Beverage', spiceLevel: 'None', rating: 4.5, isVegetarian: true }
+      chandigarh: [
+        { id: '1', name: 'Butter Chicken', type: 'Main Course', price_range: '₹250-400', description: 'Creamy tomato-based chicken curry with rich flavor', best_places: ['Pal Dhaba', 'Ghazal Restaurant', 'Bharawan Da Dhaba'], spice_level: 'Medium' },
+        { id: '2', name: 'Chole Bhature', type: 'Main Course', price_range: '₹80-150', description: 'Spicy chickpea curry with deep-fried bread', best_places: ['Sita Ram Diwan Chand', 'Kulcha Land', 'Bharawan Da Dhaba'], spice_level: 'Spicy' },
+        { id: '3', name: 'Amritsari Kulcha', type: 'Bread', price_range: '₹60-120', description: 'Stuffed bread with potato, paneer or mixed vegetables', best_places: ['Kulcha Land', 'Pal Dhaba', 'Kesar Da Dhaba'], spice_level: 'Medium' },
+        { id: '4', name: 'Lassi', type: 'Beverage', price_range: '₹40-80', description: 'Traditional yogurt-based drink, sweet or salty', best_places: ['Gian Chand Lassi Wala', 'Ahuja Lassi', 'Bharawan Da Dhaba'], spice_level: 'Mild' },
+        { id: '5', name: 'Rajma Chawal', type: 'Main Course', price_range: '₹100-180', description: 'Red kidney beans curry served with steamed rice', best_places: ['Pal Dhaba', 'Kesar Da Dhaba', 'Gopal Sweets'], spice_level: 'Medium' },
+        { id: '6', name: 'Sarson da Saag with Makki di Roti', type: 'Main Course', price_range: '₹120-200', description: 'Mustard greens curry with corn flour flatbread', best_places: ['Bharawan Da Dhaba', 'Pal Dhaba', 'Kesar Da Dhaba'], spice_level: 'Medium' },
+        { id: '7', name: 'Patiala Peg', type: 'Beverage', price_range: '₹200-500', description: 'Large measure of whisky, originated in Patiala', best_places: ['Hotel bars', 'Clubs', 'Licensed restaurants'], spice_level: 'Mild' },
+        { id: '8', name: 'Pinni', type: 'Sweet', price_range: '₹30-60', description: 'Traditional Punjabi sweet made with flour, ghee and jaggery', best_places: ['Gopal Sweets', 'Novelty Sweets', 'Kesar Da Dhaba'], spice_level: 'Mild' },
+        { id: '9', name: 'Tandoori Chicken', type: 'Main Course', price_range: '₹300-500', description: 'Chicken marinated in yogurt and spices, cooked in tandoor', best_places: ['Ghazal Restaurant', 'Pal Dhaba', 'Bharawan Da Dhaba'], spice_level: 'Spicy' },
+        { id: '10', name: 'Kulfi', type: 'Dessert', price_range: '₹40-80', description: 'Traditional Indian ice cream with cardamom and pistachios', best_places: ['Gian Chand Lassi Wala', 'Gopal Sweets', 'Street vendors'], spice_level: 'Mild' }
       ],
-      pune: [
-        { id: '1', name: 'Misal Pav', description: 'Spicy sprouted lentil curry with bread rolls', price: 80, category: 'Street Food', spiceLevel: 'High', rating: 4.6, isVegetarian: true },
-        { id: '2', name: 'Puran Poli', description: 'Sweet flatbread stuffed with jaggery and lentil filling', price: 60, category: 'Dessert', spiceLevel: 'None', rating: 4.5, isVegetarian: true },
-        { id: '3', name: 'Bhel Puri', description: 'Crunchy snack mix with chutneys and vegetables', price: 40, category: 'Chaat', spiceLevel: 'Medium', rating: 4.4, isVegetarian: true },
-        { id: '4', name: 'Sabudana Khichdi', description: 'Tapioca pearls cooked with peanuts and spices', price: 70, category: 'Main Course', spiceLevel: 'Low', rating: 4.3, isVegetarian: true },
-        { id: '5', name: 'Modak', description: 'Steamed dumplings filled with jaggery and coconut', price: 80, category: 'Dessert', spiceLevel: 'None', rating: 4.4, isVegetarian: true },
-        { id: '6', name: 'Mastani', description: 'Thick milkshake topped with ice cream and nuts', price: 120, category: 'Beverage', spiceLevel: 'None', rating: 4.2, isVegetarian: true }
+      indore: [
+        { id: '1', name: 'Poha Jalebi', type: 'Breakfast', price_range: '₹40-80', description: 'Flattened rice with onions served with sweet jalebi', best_places: ['Joshi Dada Poha', 'Manik Chandra Jain & Sons', 'Sarafa Bazaar'], spice_level: 'Mild' },
+        { id: '2', name: 'Indori Kachori', type: 'Snack', price_range: '₹30-60', description: 'Deep-fried pastry filled with spiced dal and served with chutneys', best_places: ['Sarafa Bazaar', 'Chappan Dukan', 'Joshi Dada Poha'], spice_level: 'Spicy' },
+        { id: '3', name: 'Dahi Vada', type: 'Snack', price_range: '₹40-70', description: 'Lentil dumplings soaked in yogurt with sweet and tangy chutneys', best_places: ['Sarafa Bazaar', 'Chappan Dukan', 'Guru Kripa'], spice_level: 'Medium' },
+        { id: '4', name: 'Garadu', type: 'Street Food', price_range: '₹30-50', description: 'Fried sweet potato cubes with spices and chutneys', best_places: ['Sarafa Bazaar', 'Chappan Dukan', 'Street vendors'], spice_level: 'Spicy' },
+        { id: '5', name: 'Bhutte ka Kees', type: 'Snack', price_range: '₹50-80', description: 'Grated corn cooked with milk, spices and garnished with coriander', best_places: ['Sarafa Bazaar', 'Chappan Dukan', 'Vijay Chaat House'], spice_level: 'Medium' },
+        { id: '6', name: 'Indori Namkeen', type: 'Snack', price_range: '₹100-200/kg', description: 'Variety of savory snacks unique to Indore', best_places: ['Ratlami Sev Bhandar', 'Shree Krishna Namkeen', 'Gangwal Sweets'], spice_level: 'Spicy' },
+        { id: '7', name: 'Malpua Rabri', type: 'Dessert', price_range: '₹60-100', description: 'Sweet pancakes served with thickened sweetened milk', best_places: ['Sarafa Bazaar', 'Guru Kripa', 'Apna Sweets'], spice_level: 'Mild' },
+        { id: '8', name: 'Sabudana Khichdi', type: 'Main Course', price_range: '₹50-90', description: 'Tapioca pearl preparation with peanuts and potatoes', best_places: ['Chappan Dukan', 'Guru Kripa', 'Local vendors'], spice_level: 'Medium' },
+        { id: '9', name: 'Shikanji', type: 'Beverage', price_range: '₹20-40', description: 'Spiced lemonade with black salt and cumin', best_places: ['Sarafa Bazaar', 'Chappan Dukan', 'Street vendors'], spice_level: 'Mild' },
+        { id: '10', name: 'Khopra Pak', type: 'Sweet', price_range: '₹200-300/kg', description: 'Traditional sweet made with coconut and sugar', best_places: ['Apna Sweets', 'Gangwal Sweets', 'Guru Kripa'], spice_level: 'Mild' }
       ],
-      jaipur: [
-        { id: '1', name: 'Dal Baati Churma', description: 'Traditional Rajasthani meal with lentils, wheat balls, and sweet crumble', price: 200, category: 'Main Course', spiceLevel: 'Medium', rating: 4.7, isVegetarian: true },
-        { id: '2', name: 'Laal Maas', description: 'Fiery red mutton curry with Mathania chilies', price: 380, category: 'Main Course', spiceLevel: 'High', rating: 4.6, isVegetarian: false },
-        { id: '3', name: 'Ghevar', description: 'Round sweet made from flour and soaked in sugar syrup', price: 150, category: 'Dessert', spiceLevel: 'None', rating: 4.5, isVegetarian: true },
-        { id: '4', name: 'Kachori', description: 'Deep-fried pastry filled with spiced lentils', price: 30, category: 'Snack', spiceLevel: 'Medium', rating: 4.4, isVegetarian: true },
-        { id: '5', name: 'Pyaaz Kachori', description: 'Crispy pastry filled with spiced onions', price: 35, category: 'Snack', spiceLevel: 'Medium', rating: 4.3, isVegetarian: true },
-        { id: '6', name: 'Lassi', description: 'Traditional yogurt-based drink served in clay pot', price: 60, category: 'Beverage', spiceLevel: 'None', rating: 4.2, isVegetarian: true }
+      nagpur: [
+        { id: '1', name: 'Nagpur Orange', type: 'Fruit', price_range: '₹100-200/kg', description: 'World-famous sweet and juicy oranges', best_places: ['Local markets', 'Orange vendors', 'Fruit stalls'], spice_level: 'Mild' },
+        { id: '2', name: 'Tarri Poha', type: 'Breakfast', price_range: '₹30-60', description: 'Flattened rice served with spicy curry (tarri)', best_places: ['Haldiram\'s', 'Local vendors', 'Shree Krishna'], spice_level: 'Medium' },
+        { id: '3', name: 'Patodi', type: 'Snack', price_range: '₹40-80', description: 'Gram flour rolls cooked in spicy curry', best_places: ['Haldiram\'s', 'Shree Krishna', 'Local restaurants'], spice_level: 'Spicy' },
+        { id: '4', name: 'Nagpuri Mutton Curry', type: 'Main Course', price_range: '₹200-350', description: 'Spicy mutton curry with traditional Vidarbha flavors', best_places: ['Tuli Imperial', 'Hotel Hardeo', 'Local restaurants'], spice_level: 'Very Spicy' },
+        { id: '5', name: 'Saoji Chicken', type: 'Main Course', price_range: '₹150-300', description: 'Fiery chicken curry from Saoji community', best_places: ['Nandanvan Saoji', 'Rajkamal Saoji', 'Ameya Saoji'], spice_level: 'Very Spicy' },
+        { id: '6', name: 'Orange Barfi', type: 'Sweet', price_range: '₹250-400/kg', description: 'Traditional sweet made with orange flavor', best_places: ['Chitale Bandhu', 'Haldiram\'s', 'Sweet shops'], spice_level: 'Mild' },
+        { id: '7', name: 'Zunka Bhakar', type: 'Main Course', price_range: '₹80-120', description: 'Gram flour curry with jowar flatbread', best_places: ['Local restaurants', 'Shree Krishna', 'Hotel Hardeo'], spice_level: 'Medium' },
+        { id: '8', name: 'Puran Poli', type: 'Sweet Bread', price_range: '₹60-100', description: 'Sweet flatbread stuffed with jaggery and lentils', best_places: ['Chitale Bandhu', 'Haldiram\'s', 'Home-style restaurants'], spice_level: 'Mild' },
+        { id: '9', name: 'Kokum Sherbet', type: 'Beverage', price_range: '₹30-50', description: 'Refreshing drink made from kokum fruit', best_places: ['Juice centers', 'Restaurants', 'Street vendors'], spice_level: 'Mild' },
+        { id: '10', name: 'Kachori Sabzi', type: 'Breakfast', price_range: '₹40-70', description: 'Spiced kachori served with potato curry', best_places: ['Local vendors', 'Haldiram\'s', 'Morning stalls'], spice_level: 'Spicy' }
       ],
-      ahmedabad: [
-        { id: '1', name: 'Dhokla', description: 'Steamed fermented cake made from chickpea flour', price: 50, category: 'Snack', spiceLevel: 'Low', rating: 4.6, isVegetarian: true },
-        { id: '2', name: 'Thepla', description: 'Spiced flatbread made with fenugreek leaves', price: 40, category: 'Breakfast', spiceLevel: 'Medium', rating: 4.5, isVegetarian: true },
-        { id: '3', name: 'Khandvi', description: 'Rolled gram flour snack with mustard seed tempering', price: 80, category: 'Snack', spiceLevel: 'Low', rating: 4.4, isVegetarian: true },
-        { id: '4', name: 'Gujarati Thali', description: 'Complete meal with various curries, breads, and sweets', price: 300, category: 'Main Course', spiceLevel: 'Medium', rating: 4.7, isVegetarian: true },
-        { id: '5', name: 'Fafda Jalebi', description: 'Crispy chickpea flour strips with sweet spiral pretzels', price: 70, category: 'Snack', spiceLevel: 'Low', rating: 4.3, isVegetarian: true },
-        { id: '6', name: 'Aam Ras', description: 'Sweet mango pulp served as dessert', price: 90, category: 'Dessert', spiceLevel: 'None', rating: 4.2, isVegetarian: true }
+      vadodara: [
+        { id: '1', name: 'Gujarati Thali', type: 'Main Course', price_range: '₹150-300', description: 'Complete meal with variety of Gujarati dishes, unlimited servings', best_places: ['Mandap Restaurant', 'Sankalp', 'Rajwadu'], spice_level: 'Medium' },
+        { id: '2', name: 'Khaman Dhokla', type: 'Snack', price_range: '₹40-80', description: 'Steamed fermented chickpea flour cake with chutneys', best_places: ['Das Khaman', 'Anand Sweets', 'Local vendors'], spice_level: 'Mild' },
+        { id: '3', name: 'Fafda Jalebi', type: 'Breakfast', price_range: '₹60-100', description: 'Crispy gram flour strips with sweet spiral-shaped jalebi', best_places: ['Das Khaman', 'Jalaram Khaman House', 'Street vendors'], spice_level: 'Medium' },
+        { id: '4', name: 'Sev Mamra', type: 'Snack', price_range: '₹30-60', description: 'Spicy mixture of puffed rice, sev and vegetables', best_places: ['Street vendors', 'Snack shops', 'Beach vendors'], spice_level: 'Spicy' },
+        { id: '5', name: 'Undhiyu', type: 'Main Course', price_range: '₹120-200', description: 'Mixed vegetable curry with purple yam, beans and spices', best_places: ['Rajwadu', 'Sankalp', 'Mandap Restaurant'], spice_level: 'Medium' },
+        { id: '6', name: 'Khandvi', type: 'Snack', price_range: '₹80-120', description: 'Rolled gram flour sheets with mustard seed tempering', best_places: ['Anand Sweets', 'Das Khaman', 'Jalaram Khaman House'], spice_level: 'Mild' },
+        { id: '7', name: 'Shrikhand', type: 'Dessert', price_range: '₹60-100', description: 'Sweetened strained yogurt flavored with cardamom and saffron', best_places: ['Anand Sweets', 'Milk parlors', 'Sweet shops'], spice_level: 'Mild' },
+        { id: '8', name: 'Locho', type: 'Snack', price_range: '₹40-70', description: 'Steamed spiced gram flour topped with farsan and chutneys', best_places: ['Local vendors', 'Das Khaman', 'Street food stalls'], spice_level: 'Medium' },
+        { id: '9', name: 'Handvo', type: 'Snack', price_range: '₹50-90', description: 'Savory cake made from mixed lentils and rice', best_places: ['Anand Sweets', 'Home-style restaurants', 'Local vendors'], spice_level: 'Medium' },
+        { id: '10', name: 'Masala Chai', type: 'Beverage', price_range: '₹10-25', description: 'Spiced tea with milk, perfect with Gujarati snacks', best_places: ['Tea stalls', 'Restaurants', 'Street vendors'], spice_level: 'Mild' }
       ],
-      kochi: [
-        { id: '1', name: 'Appam with Stew', description: 'Bowl-shaped rice pancake with coconut vegetable stew', price: 120, category: 'Main Course', spiceLevel: 'Low', rating: 4.6, isVegetarian: true },
-        { id: '2', name: 'Karimeen Fish Curry', description: 'Pearl spot fish cooked in coconut curry', price: 320, category: 'Main Course', spiceLevel: 'Medium', rating: 4.7, isVegetarian: false },
-        { id: '3', name: 'Puttu and Kadala', description: 'Steamed rice cylinders with spiced black chickpeas', price: 80, category: 'Breakfast', spiceLevel: 'Medium', rating: 4.5, isVegetarian: true },
-        { id: '4', name: 'Banana Chips', description: 'Crispy fried banana slices, Kerala specialty', price: 60, category: 'Snack', spiceLevel: 'Low', rating: 4.3, isVegetarian: true },
-        { id: '5', name: 'Payasam', description: 'Traditional sweet pudding made with rice and milk', price: 100, category: 'Dessert', spiceLevel: 'None', rating: 4.4, isVegetarian: true },
-        { id: '6', name: 'Tender Coconut Water', description: 'Fresh coconut water served directly from coconut', price: 30, category: 'Beverage', spiceLevel: 'None', rating: 4.2, isVegetarian: true }
+      agra: [
+        { id: '1', name: 'Agra ka Petha', type: 'Sweet', price_range: '₹200-500/kg', description: 'Famous translucent candy made from ash gourd', best_places: ['Panchhi Petha', 'Panchi Petha Store', 'Bhimsain Petha Wala'], spice_level: 'Mild' },
+        { id: '2', name: 'Mughlai Biryani', type: 'Main Course', price_range: '₹200-400', description: 'Aromatic rice dish with meat, cooked in Mughlai style', best_places: ['Pinch of Spice', 'Joney\'s Place', 'Dasaprakash'], spice_level: 'Medium' },
+        { id: '3', name: 'Agra Dalmoth', type: 'Snack', price_range: '₹150-300/kg', description: 'Spicy mixture of lentils, nuts and spices', best_places: ['Local markets', 'Namkeen shops', 'Street vendors'], spice_level: 'Spicy' },
+        { id: '4', name: 'Bedai Kachori', type: 'Breakfast', price_range: '₹40-80', description: 'Spiced deep-fried bread served with potato curry', best_places: ['Deviram Bedai Kachori', 'Panchi Petha Store', 'Local vendors'], spice_level: 'Spicy' },
+        { id: '5', name: 'Chaat', type: 'Street Food', price_range: '₹30-70', description: 'Variety of spicy street foods with chutneys', best_places: ['Sadar Bazaar', 'Kinari Bazaar', 'Street vendors'], spice_level: 'Spicy' },
+        { id: '6', name: 'Gajak', type: 'Sweet', price_range: '₹100-200/kg', description: 'Sesame and jaggery brittle, winter specialty', best_places: ['Panchi Petha Store', 'Sweet shops', 'Local markets'], spice_level: 'Mild' },
+        { id: '7', name: 'Paratha', type: 'Bread', price_range: '₹50-100', description: 'Stuffed flatbread with various fillings', best_places: ['Paratha Gali', 'Local dhabas', 'Street vendors'], spice_level: 'Medium' },
+        { id: '8', name: 'Mutton Korma', type: 'Main Course', price_range: '₹250-400', description: 'Rich mutton curry with aromatic spices', best_places: ['Pinch of Spice', 'Joney\'s Place', 'Mughal restaurants'], spice_level: 'Medium' },
+        { id: '9', name: 'Kulfi Faluda', type: 'Dessert', price_range: '₹50-100', description: 'Traditional ice cream with vermicelli and rose syrup', best_places: ['Street vendors', 'Sweet shops', 'Restaurants'], spice_level: 'Mild' },
+        { id: '10', name: 'Rabri', type: 'Dessert', price_range: '₹80-150', description: 'Thickened sweetened milk with nuts', best_places: ['Sweet shops', 'Restaurants', 'Panchi Petha Store'], spice_level: 'Mild' }
       ],
-      thiruvananthapuram: [
-        { id: '1', name: 'Sadya', description: 'Traditional vegetarian feast served on banana leaf', price: 250, category: 'Main Course', spiceLevel: 'Medium', rating: 4.8, isVegetarian: true },
-        { id: '2', name: 'Fish Molee', description: 'Mild fish curry cooked in coconut milk', price: 280, category: 'Main Course', spiceLevel: 'Low', rating: 4.6, isVegetarian: false },
-        { id: '3', name: 'Ela Ada', description: 'Rice flour dumpling with jaggery filling wrapped in banana leaf', price: 40, category: 'Dessert', spiceLevel: 'None', rating: 4.5, isVegetarian: true },
-        { id: '4', name: 'Kozhi Varuthathu', description: 'Spicy roasted chicken Kerala style', price: 320, category: 'Main Course', spiceLevel: 'High', rating: 4.4, isVegetarian: false },
-        { id: '5', name: 'Unniyappam', description: 'Sweet rice balls deep-fried in coconut oil', price: 60, category: 'Dessert', spiceLevel: 'None', rating: 4.3, isVegetarian: true },
-        { id: '6', name: 'Sambharam', description: 'Spiced buttermilk drink with curry leaves', price: 25, category: 'Beverage', spiceLevel: 'Low', rating: 4.2, isVegetarian: true }
+      varanasi: [
+        { id: '1', name: 'Banarasi Paan', type: 'Digestive', price_range: '₹20-100', description: 'Betel leaf preparation with various fillings, a cultural tradition', best_places: ['Keshav Paan Bhandar', 'Pradip Paan Shop', 'Vishwanath Gali'], spice_level: 'Medium' },
+        { id: '2', name: 'Kachori Sabzi', type: 'Breakfast', price_range: '₹30-60', description: 'Spicy deep-fried pastry served with potato curry', best_places: ['Ram Bhandar', 'Ksheer Sagar', 'Local vendors'], spice_level: 'Spicy' },
+        { id: '3', name: 'Banarasi Thandai', type: 'Beverage', price_range: '₹40-80', description: 'Cold drink made with milk, nuts, and spices', best_places: ['Blue Lassi Shop', 'Godowlia market', 'Festival vendors'], spice_level: 'Mild' },
+        { id: '4', name: 'Chhole Bhature', type: 'Main Course', price_range: '₹80-150', description: 'Spicy chickpea curry with fried bread', best_places: ['Keshav Chaat Bhandar', 'Deena Chaat Bhandar', 'Local dhabas'], spice_level: 'Spicy' },
+        { id: '5', name: 'Malaiyo', type: 'Dessert', price_range: '₹30-60', description: 'Winter delicacy made from milk foam, only available in winter', best_places: ['Street vendors (winter only)', 'Ksheer Sagar', 'Local sweet shops'], spice_level: 'Mild' },
+        { id: '6', name: 'Banarasi Lassi', type: 'Beverage', price_range: '₹40-80', description: 'Thick yogurt drink served in kulhads (clay pots)', best_places: ['Blue Lassi Shop', 'Ramu Lassi Shop', 'Dashashwamedh Ghat area'], spice_level: 'Mild' },
+        { id: '7', name: 'Tamatar Chaat', type: 'Street Food', price_range: '₹30-50', description: 'Tangy tomato-based street food with spices', best_places: ['Dashashwamedh Ghat', 'Godowlia market', 'Street vendors'], spice_level: 'Spicy' },
+        { id: '8', name: 'Banarasi Dum Aloo', type: 'Main Course', price_range: '₹100-180', description: 'Potato curry cooked in aromatic spices', best_places: ['Keshav Chaat Bhandar', 'Local restaurants', 'Ganga view restaurants'], spice_level: 'Medium' },
+        { id: '9', name: 'Jalebi', type: 'Sweet', price_range: '₹150-250/kg', description: 'Spiral-shaped sweet soaked in sugar syrup', best_places: ['Ram Bhandar', 'Ksheer Sagar', 'Sweet shops'], spice_level: 'Mild' },
+        { id: '10', name: 'Baati Chokha', type: 'Main Course', price_range: '₹80-150', description: 'Baked wheat dough balls with mashed vegetables', best_places: ['Local restaurants', 'Dhabas', 'Traditional eateries'], spice_level: 'Medium' }
       ],
-      lucknow: [
-        { id: '1', name: 'Tunday Kababi', description: 'Legendary minced meat kebabs that melt in mouth', price: 180, category: 'Main Course', spiceLevel: 'Medium', rating: 4.8, isVegetarian: false },
-        { id: '2', name: 'Lucknowi Biryani', description: 'Aromatic rice dish with tender meat and saffron', price: 320, category: 'Main Course', spiceLevel: 'Medium', rating: 4.7, isVegetarian: false },
-        { id: '3', name: 'Basket Chaat', description: 'Crispy potato basket filled with tangy chaat', price: 80, category: 'Chaat', spiceLevel: 'Medium', rating: 4.5, isVegetarian: true },
-        { id: '4', name: 'Kulfi Faluda', description: 'Traditional ice cream with vermicelli and rose syrup', price: 70, category: 'Dessert', spiceLevel: 'None', rating: 4.4, isVegetarian: true },
-        { id: '5', name: 'Sheermal', description: 'Sweet bread flavored with saffron and cardamom', price: 50, category: 'Bread', spiceLevel: 'None', rating: 4.3, isVegetarian: true },
-        { id: '6', name: 'Nimbu Paani', description: 'Fresh lime water with mint and spices', price: 30, category: 'Beverage', spiceLevel: 'Low', rating: 4.2, isVegetarian: true }
-      ],
-      bhopal: [
-        { id: '1', name: 'Bhopali Mutton Korma', description: 'Rich mutton curry with yogurt and aromatic spices', price: 300, category: 'Main Course', spiceLevel: 'Medium', rating: 4.6, isVegetarian: false },
-        { id: '2', name: 'Poha Jalebi', description: 'Flattened rice with onions served with sweet jalebi', price: 60, category: 'Breakfast', spiceLevel: 'Low', rating: 4.5, isVegetarian: true },
-        { id: '3', name: 'Dal Bafla', description: 'Steamed wheat balls served with spiced lentil curry', price: 150, category: 'Main Course', spiceLevel: 'Medium', rating: 4.4, isVegetarian: true },
-        { id: '4', name: 'Bhopali Paan', description: 'Betel leaf preparation with various sweet fillings', price: 40, category: 'After Meal', spiceLevel: 'None', rating: 4.2, isVegetarian: true },
-        { id: '5', name: 'Lavang Lata', description: 'Crispy pastry filled with cardamom-flavored khoya', price: 80, category: 'Dessert', spiceLevel: 'None', rating: 4.3, isVegetarian: true },
-        { id: '6', name: 'Malpua', description: 'Sweet pancake soaked in sugar syrup', price: 70, category: 'Dessert', spiceLevel: 'None', rating: 4.1, isVegetarian: true }
+      amritsar: [
+        { id: '1', name: 'Amritsari Kulcha', type: 'Bread', price_range: '₹60-120', description: 'Stuffed flatbread baked in tandoor, served with chole', best_places: ['Kulcha Land', 'Bharawan Da Dhaba', 'Kesar Da Dhaba'], spice_level: 'Medium' },
+        { id: '2', name: 'Amritsari Fish', type: 'Appetizer', price_range: '₹200-350', description: 'Crispy fried fish with gram flour coating and spices', best_places: ['Makhan Fish Corner', 'Beera Chicken House', 'Local dhabas'], spice_level: 'Spicy' },
+        { id: '3', name: 'Chole Bhature', type: 'Main Course', price_range: '₹80-150', description: 'Spicy chickpea curry with large fried bread', best_places: ['Bharawan Da Dhaba', 'Kesar Da Dhaba', 'Gurdas Ram Jalebi Wala'], spice_level: 'Spicy' },
+        { id: '4', name: 'Punjabi Lassi', type: 'Beverage', price_range: '₹40-80', description: 'Thick sweet yogurt drink, often topped with cream', best_places: ['Gian Chand Lassi Wala', 'Ahuja Lassi', 'Golden Temple complex'], spice_level: 'Mild' },
+        { id: '5', name: 'Amritsari Papad Wadian', type: 'Side Dish', price_range: '₹50-100', description: 'Sun-dried lentil dumplings, fried and served as side', best_places: ['Local markets', 'Traditional restaurants', 'Bharawan Da Dhaba'], spice_level: 'Medium' },
+        { id: '6', name: 'Sarson da Saag', type: 'Main Course', price_range: '₹120-200', description: 'Mustard greens curry served with makki di roti', best_places: ['Bharawan Da Dhaba', 'Kesar Da Dhaba', 'Traditional Punjabi restaurants'], spice_level: 'Medium' },
+        { id: '7', name: 'Jalebi', type: 'Sweet', price_range: '₹150-250/kg', description: 'Crispy spiral sweets soaked in sugar syrup', best_places: ['Gurdas Ram Jalebi Wala', 'Sweet shops', 'Local vendors'], spice_level: 'Mild' },
+        { id: '8', name: 'Punjabi Kadhi', type: 'Curry', price_range: '₹80-140', description: 'Yogurt-based curry with gram flour dumplings', best_places: ['Bharawan Da Dhaba', 'Home-style restaurants', 'Local dhabas'], spice_level: 'Medium' },
+        { id: '9', name: 'Peda', type: 'Sweet', price_range: '₹200-350/kg', description: 'Milk-based sweet, soft and creamy', best_places: ['Sweet shops', 'Local vendors', 'Gurdas Ram Jalebi Wala'], spice_level: 'Mild' },
+        { id: '10', name: 'Phirni', type: 'Dessert', price_range: '₹60-100', description: 'Rice pudding served in earthen pots', best_places: ['Sweet shops', 'Traditional restaurants', 'Festival vendors'], spice_level: 'Mild' }
       ]
     };
 
-    return dishesData[cityLower] || [
-      { id: '1', name: `${city} Special Curry`, description: 'Local specialty curry with regional spices', price: 200, category: 'Main Course', spiceLevel: 'Medium', rating: 4.4, isVegetarian: true },
-      { id: '2', name: `Traditional ${city} Sweet`, description: 'Famous local dessert made with milk and sugar', price: 120, category: 'Dessert', spiceLevel: 'None', rating: 4.3, isVegetarian: true },
-      { id: '3', name: `${city} Street Snack`, description: 'Popular local street food snack', price: 80, category: 'Street Food', spiceLevel: 'Medium', rating: 4.2, isVegetarian: true },
-      { id: '4', name: `${city} Tea`, description: 'Local style tea preparation', price: 20, category: 'Beverage', spiceLevel: 'None', rating: 4.1, isVegetarian: true }
+    return dishData[cityLower] || [
+      { id: '1', name: `${city} Special Curry`, type: 'Main Course', price_range: '₹150-250', description: 'Traditional local curry with authentic spices', best_places: ['Local restaurants', 'Traditional eateries'], spice_level: 'Medium' },
+      { id: '2', name: `${city} Street Food`, type: 'Snack', price_range: '₹40-80', description: 'Popular local street food delicacy', best_places: ['Street vendors', 'Local markets'], spice_level: 'Spicy' },
+      { id: '3', name: `${city} Sweet`, type: 'Dessert', price_range: '₹200-350/kg', description: 'Traditional sweet preparation of the region', best_places: ['Sweet shops', 'Local vendors'], spice_level: 'Mild' },
+      { id: '4', name: `${city} Tea`, type: 'Beverage', price_range: '₹15-30', description: 'Local style tea preparation', best_places: ['Tea stalls', 'Local cafes'], spice_level: 'Mild' },
+      { id: '5', name: `${city} Bread`, type: 'Bread', price_range: '₹30-60', description: 'Regional bread variety', best_places: ['Local bakeries', 'Traditional eateries'], spice_level: 'Mild' },
+      { id: '6', name: `${city} Beverage`, type: 'Beverage', price_range: '₹30-60', description: 'Refreshing local drink', best_places: ['Juice centers', 'Local vendors'], spice_level: 'Mild' }
     ];
   };
 
   useEffect(() => {
     const cityDishes = getDishesForCity(tripData.destination);
-
+    
     setTimeout(() => {
       setDishes(cityDishes);
       setLoading(false);
-    }, 800);
+    }, 1000);
   }, [tripData]);
 
+  const handleSelectDish = (dish: Dish) => {
+    if (selectedDishes.find(d => d.id === dish.id)) {
+      setSelectedDishes(selectedDishes.filter(d => d.id !== dish.id));
+    } else {
+      setSelectedDishes([...selectedDishes, dish]);
+    }
+  };
+
+  const handleNext = () => {
+    console.log('Selected dishes:', selectedDishes);
+    onNext();
+  };
+
+  const handleLoadMore = () => {
+    setVisibleCount(prev => Math.min(prev + 6, dishes.length));
+  };
+
   const getSpiceLevelColor = (level: string) => {
-    switch (level.toLowerCase()) {
-      case 'high': return 'bg-red-500';
-      case 'medium': return 'bg-yellow-500';
-      case 'low': return 'bg-green-500';
+    switch (level) {
+      case 'Mild': return 'bg-green-500';
+      case 'Medium': return 'bg-yellow-500';
+      case 'Spicy': return 'bg-orange-500';
+      case 'Very Spicy': return 'bg-red-500';
       default: return 'bg-gray-500';
     }
   };
@@ -134,7 +179,7 @@ export const FamousDishes = ({ tripData, onNext }: FamousDishesProps) => {
       <Card className="shadow-xl border-t-4 border-t-orange-500">
         <CardHeader>
           <CardTitle className="text-2xl font-bold bg-gradient-to-r from-orange-500 to-blue-600 bg-clip-text text-transparent">
-            Discovering Famous Dishes of {tripData.destination}...
+            Finding Famous Dishes in {tripData.destination}...
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -160,79 +205,104 @@ export const FamousDishes = ({ tripData, onNext }: FamousDishesProps) => {
           Famous Dishes of {tripData.destination}
         </CardTitle>
         <p className="text-gray-600 font-semibold">
-          Explore the authentic flavors and must-try local specialties
+          Discover {dishes.length} authentic local delicacies
         </p>
       </CardHeader>
       <CardContent className="p-6">
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {dishes.map((dish) => (
-            <Card key={dish.id} className="hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-gray-100">
+          {dishes.slice(0, visibleCount).map((dish) => (
+            <Card 
+              key={dish.id} 
+              className={`cursor-pointer transition-all duration-300 hover:shadow-xl hover:scale-105 ${
+                selectedDishes.find(d => d.id === dish.id)
+                  ? 'ring-2 ring-orange-500 bg-gradient-to-br from-orange-50 to-blue-50' 
+                  : 'hover:bg-gray-50'
+              }`}
+              onClick={() => handleSelectDish(dish)}
+            >
               <div className="p-1">
                 <div className="bg-gradient-to-br from-orange-100 to-blue-100 p-4 rounded-t-lg">
-                  <div className="flex justify-between items-start mb-2">
-                    <Badge className="bg-green-600 hover:bg-green-700 text-white font-semibold">
-                      ₹{dish.price}
-                    </Badge>
+                  <div className="flex justify-between items-center mb-2">
                     <Badge className="bg-purple-500 hover:bg-purple-600 text-white font-semibold">
-                      {dish.category}
+                      {dish.type}
+                    </Badge>
+                    <Badge className={`${getSpiceLevelColor(dish.spice_level)} text-white font-semibold`}>
+                      {dish.spice_level}
                     </Badge>
                   </div>
-                  {dish.isVegetarian && (
-                    <Badge className="bg-green-500 hover:bg-green-600 text-white font-semibold">
-                      Veg
-                    </Badge>
-                  )}
                 </div>
               </div>
               
               <CardContent className="p-4">
                 <h3 className="font-bold text-lg mb-2 text-gray-800">{dish.name}</h3>
-                <p className="text-sm text-gray-600 mb-3 font-medium">{dish.description}</p>
-                
-                <div className="flex items-center justify-between mb-3">
-                  <div className="flex items-center gap-1">
-                    {[...Array(5)].map((_, i) => (
-                      <Star 
-                        key={i} 
-                        className={`h-4 w-4 ${
-                          i < Math.floor(dish.rating) ? 'text-yellow-400 fill-current' : 'text-gray-300'
-                        }`} 
-                      />
+                <p className="text-sm mb-3 font-medium text-gray-700">{dish.description}</p>
+                <div className="flex items-center gap-2 mb-3">
+                  <IndianRupee className="h-4 w-4 text-green-600" />
+                  <span className="font-semibold text-green-600">{dish.price_range}</span>
+                </div>
+                <div className="mb-4">
+                  <h4 className="font-semibold text-sm text-gray-800 mb-2">Best Places:</h4>
+                  <div className="flex flex-wrap gap-1">
+                    {dish.best_places.slice(0, 2).map((place, index) => (
+                      <Badge key={index} variant="outline" className="text-xs">
+                        <MapPin className="h-3 w-3 mr-1" />
+                        {place}
+                      </Badge>
                     ))}
-                    <span className="ml-1 text-sm text-gray-600 font-medium">{dish.rating}</span>
-                  </div>
-                  
-                  <div className="flex items-center gap-2">
-                    <IndianRupee className="h-4 w-4 text-gray-500" />
-                    <span className="font-semibold">₹{dish.price}</span>
+                    {dish.best_places.length > 2 && (
+                      <Badge variant="outline" className="text-xs">
+                        +{dish.best_places.length - 2} more
+                      </Badge>
+                    )}
                   </div>
                 </div>
-
-                <div className="flex justify-between items-center">
-                  <Badge 
-                    className={`${getSpiceLevelColor(dish.spiceLevel)} text-white font-semibold`}
-                  >
-                    {dish.spiceLevel} Spice
-                  </Badge>
-                  <span className="text-sm text-gray-500 font-medium">{dish.category}</span>
-                </div>
+                <Button
+                  className={`w-full font-semibold ${
+                    selectedDishes.find(d => d.id === dish.id)
+                      ? 'bg-gradient-to-r from-orange-500 to-blue-600 hover:from-orange-600 hover:to-blue-700 text-white'
+                      : 'border-2 border-orange-200 text-orange-600 hover:bg-orange-50'
+                  }`}
+                  variant={selectedDishes.find(d => d.id === dish.id) ? "default" : "outline"}
+                >
+                  {selectedDishes.find(d => d.id === dish.id) ? '✓ Must Try!' : 'Add to Food List'}
+                </Button>
               </CardContent>
             </Card>
           ))}
         </div>
 
-        <div className="mt-8 p-6 bg-gradient-to-r from-orange-50 to-blue-50 rounded-xl border-2 border-orange-200">
-          <h4 className="font-bold text-xl mb-4 text-gray-800">💡 Food Tips for {tripData.destination}:</h4>
-          <ul className="text-sm text-gray-700 space-y-2 font-medium">
-            <li>• Try local street food for authentic flavors</li>
-            <li>• Budget ₹300-500 per person for a good meal</li>
-            <li>• Ask locals for the best food spots</li>
-            <li>• Carry water if you're not used to spicy food</li>
-          </ul>
-        </div>
+        {visibleCount < dishes.length && (
+          <div className="text-center mt-8">
+            <Button 
+              className="bg-gradient-to-r from-orange-500 to-blue-600 hover:from-orange-600 hover:to-blue-700 text-white font-semibold px-8 py-3"
+              onClick={handleLoadMore}
+            >
+              Load More Dishes ({dishes.length - visibleCount} more available)
+            </Button>
+          </div>
+        )}
+
+        {selectedDishes.length > 0 && (
+          <div className="mt-8 p-6 bg-gradient-to-r from-orange-50 to-blue-50 rounded-xl border-2 border-orange-200">
+            <h4 className="font-bold text-xl mb-4 text-gray-800">Must-Try Dishes ({selectedDishes.length}):</h4>
+            <div className="grid md:grid-cols-2 gap-4">
+              {selectedDishes.map((dish) => (
+                <div key={dish.id} className="flex justify-between items-center p-3 bg-white rounded-lg">
+                  <div>
+                    <span className="font-semibold text-gray-800">{dish.name}</span>
+                    <p className="text-sm text-gray-600">{dish.type}</p>
+                  </div>
+                  <Badge variant="outline" className="text-green-600 border-green-600">
+                    {dish.price_range}
+                  </Badge>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         <div className="flex justify-end mt-8">
-          <Button onClick={onNext} className="bg-gradient-to-r from-orange-500 to-blue-600 hover:from-orange-600 hover:to-blue-700 text-white font-bold px-8 py-3 text-lg">
+          <Button onClick={handleNext} className="bg-gradient-to-r from-orange-500 to-blue-600 hover:from-orange-600 hover:to-blue-700 text-white font-bold px-8 py-3 text-lg">
             Next: Culture & Traditions
             <ArrowRight className="ml-2 h-5 w-5" />
           </Button>

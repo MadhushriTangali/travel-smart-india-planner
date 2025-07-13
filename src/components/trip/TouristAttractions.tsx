@@ -2,18 +2,18 @@ import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { MapPin, Clock, IndianRupee, ArrowRight, Camera } from 'lucide-react';
+import { MapPin, Clock, IndianRupee, ArrowRight, Star } from 'lucide-react';
 import { TripData } from '@/components/TripPlanningForm';
 
 interface Attraction {
   id: string;
   name: string;
-  description: string;
-  entryFee: number;
-  openHours: string;
-  category: string;
+  type: string;
+  entry_fee: string;
+  timings: string;
   rating: number;
-  timeNeeded: string;
+  description: string;
+  duration: string;
 }
 
 interface TouristAttractionsProps {
@@ -30,137 +30,112 @@ export const TouristAttractions = ({ tripData, onNext }: TouristAttractionsProps
   const getAttractionsForCity = (city: string): Attraction[] => {
     const cityLower = city.toLowerCase();
     
-    const attractionsData: { [key: string]: Attraction[] } = {
+    const attractionData: { [key: string]: Attraction[] } = {
       hyderabad: [
-        { id: '1', name: 'Charminar', description: 'Iconic four-minaret monument', entryFee: 25, openHours: '9:00 AM - 5:30 PM', category: 'Historical', rating: 4.6, timeNeeded: '1-2 hours' },
-        { id: '2', name: 'Golconda Fort', description: 'Historic fortress complex', entryFee: 15, openHours: '9:00 AM - 5:30 PM', category: 'Historical', rating: 4.5, timeNeeded: '2-3 hours' },
-        { id: '3', name: 'Salar Jung Museum', description: "World's largest private collection", entryFee: 20, openHours: '10:00 AM - 5:00 PM', category: 'Cultural', rating: 4.4, timeNeeded: '2-3 hours' },
-        { id: '4', name: 'Mecca Masjid', description: "One of India's largest mosques", entryFee: 0, openHours: '5:00 AM - 9:00 PM', category: 'Religious', rating: 4.3, timeNeeded: '1 hour' },
-        { id: '5', name: 'Ramoji Film City', description: 'Largest film studio complex', entryFee: 1200, openHours: '9:00 AM - 5:30 PM', category: 'Entertainment', rating: 4.2, timeNeeded: '6-8 hours' },
-        { id: '6', name: 'Hussain Sagar Lake', description: 'Heart-shaped lake with Buddha statue', entryFee: 0, openHours: '24 hours', category: 'Nature', rating: 4.1, timeNeeded: '1-2 hours' },
-        { id: '7', name: 'Qutb Shahi Tombs', description: 'Royal necropolis with architectural beauty', entryFee: 15, openHours: '9:00 AM - 4:30 PM', category: 'Historical', rating: 4.3, timeNeeded: '1-2 hours' },
-        { id: '8', name: 'Birla Mandir', description: 'Modern marble temple on hilltop', entryFee: 0, openHours: '7:00 AM - 12:00 PM, 3:00 PM - 9:00 PM', category: 'Religious', rating: 4.2, timeNeeded: '1 hour' }
+        { id: '1', name: 'Charminar', type: 'Historical Monument', entry_fee: '₹30 (Indians), ₹300 (Foreigners)', timings: '9:00 AM - 5:30 PM', rating: 4.3, description: 'Iconic 16th-century mosque and monument', duration: '1-2 hours' },
+        { id: '2', name: 'Golconda Fort', type: 'Historical Fort', entry_fee: '₹30 (Indians), ₹300 (Foreigners)', timings: '9:00 AM - 5:30 PM', rating: 4.2, description: 'Medieval fort famous for acoustics', duration: '2-3 hours' },
+        { id: '3', name: 'Ramoji Film City', type: 'Entertainment', entry_fee: '₹1,200 - ₹2,500', timings: '9:00 AM - 5:30 PM', rating: 4.4, description: 'World\'s largest film studio complex', duration: '6-8 hours' },
+        { id: '4', name: 'Hussain Sagar Lake', type: 'Lake', entry_fee: 'Free (Boat rides extra)', timings: '24 hours', rating: 4.1, description: 'Heart-shaped lake with Buddha statue', duration: '1-2 hours' },
+        { id: '5', name: 'Salar Jung Museum', type: 'Museum', entry_fee: '₹20 (Indians), ₹500 (Foreigners)', timings: '10:00 AM - 5:00 PM', rating: 4.3, description: 'One of India\'s largest museums', duration: '2-3 hours' },
+        { id: '6', name: 'Birla Mandir', type: 'Temple', entry_fee: 'Free', timings: '7:00 AM - 12:00 PM, 3:00 PM - 9:00 PM', rating: 4.2, description: 'Beautiful white marble temple', duration: '1-2 hours' },
+        { id: '7', name: 'Nehru Zoological Park', type: 'Zoo', entry_fee: '₹50 (Adults), ₹30 (Children)', timings: '8:30 AM - 5:00 PM', rating: 4.0, description: 'Large zoo with diverse wildlife', duration: '3-4 hours' },
+        { id: '8', name: 'Chowmahalla Palace', type: 'Palace', entry_fee: '₹80 (Indians), ₹200 (Foreigners)', timings: '10:00 AM - 5:00 PM', rating: 4.4, description: 'Nizams\' official residence', duration: '2-3 hours' },
+        { id: '9', name: 'Lumbini Park', type: 'Park', entry_fee: '₹30', timings: '9:00 AM - 9:00 PM', rating: 3.9, description: 'Lakeside park with musical fountain', duration: '1-2 hours' },
+        { id: '10', name: 'Mecca Masjid', type: 'Mosque', entry_fee: 'Free', timings: '4:00 AM - 10:00 PM', rating: 4.1, description: 'One of India\'s largest mosques', duration: '1 hour' }
       ],
-      mumbai: [
-        { id: '1', name: 'Gateway of India', description: 'Iconic colonial monument', entryFee: 0, openHours: '24 hours', category: 'Historical', rating: 4.5, timeNeeded: '1 hour' },
-        { id: '2', name: 'Marine Drive', description: 'Famous waterfront promenade', entryFee: 0, openHours: '24 hours', category: 'Nature', rating: 4.4, timeNeeded: '1-2 hours' },
-        { id: '3', name: 'Elephanta Caves', description: 'Ancient rock-cut caves', entryFee: 40, openHours: '9:00 AM - 5:30 PM', category: 'Historical', rating: 4.3, timeNeeded: '3-4 hours' },
-        { id: '4', name: 'Chhatrapati Shivaji Terminus', description: 'UNESCO World Heritage railway station', entryFee: 0, openHours: '24 hours', category: 'Historical', rating: 4.2, timeNeeded: '30 minutes' },
-        { id: '5', name: 'Siddhivinayak Temple', description: 'Famous Ganesha temple', entryFee: 0, openHours: '5:30 AM - 10:00 PM', category: 'Religious', rating: 4.6, timeNeeded: '1 hour' },
-        { id: '6', name: 'Haji Ali Dargah', description: 'Mosque and tomb on islet', entryFee: 0, openHours: '5:30 AM - 10:00 PM', category: 'Religious', rating: 4.3, timeNeeded: '1-2 hours' },
-        { id: '7', name: 'Sanjay Gandhi National Park', description: 'Large protected area with wildlife and caves', entryFee: 50, openHours: '7:00 AM - 6:00 PM', category: 'Nature', rating: 4.4, timeNeeded: '3-4 hours' },
-        { id: '8', name: 'Juhu Beach', description: 'Popular beach with street food stalls', entryFee: 0, openHours: '24 hours', category: 'Nature', rating: 4.1, timeNeeded: '1-2 hours' }
+      chandigarh: [
+        { id: '1', name: 'Rock Garden', type: 'Art Installation', entry_fee: '₹30', timings: '9:00 AM - 7:00 PM', rating: 4.3, description: 'Unique sculpture garden made from recycled materials', duration: '2-3 hours' },
+        { id: '2', name: 'Sukhna Lake', type: 'Lake', entry_fee: 'Free', timings: '5:00 AM - 10:00 PM', rating: 4.2, description: 'Artificial lake perfect for boating and morning walks', duration: '1-2 hours' },
+        { id: '3', name: 'Rose Garden', type: 'Garden', entry_fee: '₹10', timings: '6:00 AM - 10:00 PM', rating: 4.1, description: 'Asia\'s largest rose garden with 1600 varieties', duration: '1-2 hours' },
+        { id: '4', name: 'Capitol Complex', type: 'Architecture', entry_fee: '₹30', timings: '9:00 AM - 4:30 PM', rating: 4.0, description: 'Le Corbusier designed government buildings', duration: '1-2 hours' },
+        { id: '5', name: 'Pinjore Gardens', type: 'Mughal Garden', entry_fee: '₹25', timings: '8:00 AM - 8:00 PM', rating: 4.2, description: '17th-century Mughal garden with fountains', duration: '2-3 hours' },
+        { id: '6', name: 'International Dolls Museum', type: 'Museum', entry_fee: '₹20', timings: '10:00 AM - 4:30 PM', rating: 3.8, description: 'Collection of dolls from around the world', duration: '1-2 hours' },
+        { id: '7', name: 'Cactus Garden', type: 'Garden', entry_fee: '₹10', timings: '9:00 AM - 6:00 PM', rating: 4.0, description: 'Unique garden with 3500 species of cacti', duration: '1 hour' },
+        { id: '8', name: 'Government Museum and Art Gallery', type: 'Museum', entry_fee: '₹10', timings: '10:00 AM - 4:30 PM', rating: 3.9, description: 'Rich collection of Gandhara sculptures', duration: '2 hours' },
+        { id: '9', name: 'Timber Trail', type: 'Cable Car', entry_fee: '₹200-400', timings: '10:00 AM - 6:00 PM', rating: 4.1, description: 'Cable car ride through pine forests', duration: '2-3 hours' },
+        { id: '10', name: 'ChattBir Zoo', type: 'Zoo', entry_fee: '₹25', timings: '9:00 AM - 5:00 PM', rating: 3.8, description: 'Large zoo with Bengal tigers and lions', duration: '2-3 hours' }
       ],
-      delhi: [
-        { id: '1', name: 'Red Fort', description: 'Mughal fortress and UNESCO site', entryFee: 35, openHours: '9:30 AM - 4:30 PM', category: 'Historical', rating: 4.4, timeNeeded: '2-3 hours' },
-        { id: '2', name: 'India Gate', description: 'War memorial arch', entryFee: 0, openHours: '24 hours', category: 'Historical', rating: 4.3, timeNeeded: '1 hour' },
-        { id: '3', name: 'Qutub Minar', description: 'Tallest brick minaret in world', entryFee: 30, openHours: '7:00 AM - 5:00 PM', category: 'Historical', rating: 4.2, timeNeeded: '1-2 hours' },
-        { id: '4', name: 'Lotus Temple', description: 'Bahai House of Worship', entryFee: 0, openHours: '9:00 AM - 7:00 PM', category: 'Religious', rating: 4.5, timeNeeded: '1-2 hours' },
-        { id: '5', name: 'Humayuns Tomb', description: 'Mughal emperor tomb complex', entryFee: 30, openHours: '6:00 AM - 6:00 PM', category: 'Historical', rating: 4.3, timeNeeded: '1-2 hours' },
-        { id: '6', name: 'Chandni Chowk', description: 'Historic market street', entryFee: 0, openHours: '10:00 AM - 9:00 PM', category: 'Shopping', rating: 4.1, timeNeeded: '2-3 hours' },
-        { id: '7', name: 'Akshardham Temple', description: 'Modern Hindu temple complex', entryFee: 0, openHours: '9:30 AM - 6:30 PM', category: 'Religious', rating: 4.7, timeNeeded: '2-3 hours' },
-        { id: '8', name: 'National Museum', description: 'Extensive collection of Indian art and history', entryFee: 20, openHours: '10:00 AM - 5:00 PM', category: 'Cultural', rating: 4.4, timeNeeded: '2-3 hours' }
+      indore: [
+        { id: '1', name: 'Rajwada Palace', type: 'Historical Palace', entry_fee: '₹25', timings: '10:00 AM - 5:00 PM', rating: 4.1, description: '7-story palace of Holkar dynasty', duration: '1-2 hours' },
+        { id: '2', name: 'Lal Bagh Palace', type: 'Palace Museum', entry_fee: '₹10', timings: '10:00 AM - 5:00 PM', rating: 4.2, description: 'Opulent palace with European architecture', duration: '2-3 hours' },
+        { id: '3', name: 'Khajrana Ganesh Temple', type: 'Temple', entry_fee: 'Free', timings: '5:00 AM - 11:00 PM', rating: 4.3, description: 'Famous Ganesh temple with miraculous powers', duration: '1-2 hours' },
+        { id: '4', name: 'Sarafa Bazaar', type: 'Street Food Market', entry_fee: 'Free', timings: '8:00 PM - 2:00 AM', rating: 4.4, description: 'Famous night food market', duration: '2-3 hours' },
+        { id: '5', name: 'Central Museum', type: 'Museum', entry_fee: '₹10', timings: '10:00 AM - 5:00 PM', rating: 3.9, description: 'Rich collection of sculptures and artifacts', duration: '1-2 hours' },
+        { id: '6', name: 'Annapurna Temple', type: 'Temple', entry_fee: 'Free', timings: '6:00 AM - 12:00 PM, 4:00 PM - 10:00 PM', rating: 4.2, description: 'Beautiful temple dedicated to Goddess Annapurna', duration: '1 hour' },
+        { id: '7', name: 'Indore White Church', type: 'Church', entry_fee: 'Free', timings: '6:00 AM - 7:00 PM', rating: 4.0, description: 'Historic Catholic church', duration: '30 minutes' },
+        { id: '8', name: 'Kanch Mandir', type: 'Jain Temple', entry_fee: 'Free', timings: '6:00 AM - 12:00 PM, 3:00 PM - 8:00 PM', rating: 4.1, description: 'Jain temple decorated with mirrors', duration: '1 hour' },
+        { id: '9', name: 'Treasure Island Mall', type: 'Shopping Mall', entry_fee: 'Free', timings: '11:00 AM - 10:00 PM', rating: 3.8, description: 'Modern shopping and entertainment complex', duration: '2-3 hours' },
+        { id: '10', name: 'Chappan Dukan', type: 'Food Street', entry_fee: 'Free', timings: '10:00 AM - 11:00 PM', rating: 4.3, description: 'Famous food street with 56 shops', duration: '1-2 hours' }
       ],
-      goa: [
-        { id: '1', name: 'Basilica of Bom Jesus', description: 'UNESCO World Heritage church', entryFee: 0, openHours: '9:00 AM - 6:30 PM', category: 'Religious', rating: 4.5, timeNeeded: '1 hour' },
-        { id: '2', name: 'Fort Aguada', description: 'Portuguese fort overlooking sea', entryFee: 25, openHours: '9:30 AM - 5:30 PM', category: 'Historical', rating: 4.3, timeNeeded: '1-2 hours' },
-        { id: '3', name: 'Dudhsagar Falls', description: 'Four-tiered waterfall', entryFee: 30, openHours: '9:00 AM - 5:00 PM', category: 'Nature', rating: 4.6, timeNeeded: '4-5 hours' },
-        { id: '4', name: 'Se Cathedral', description: 'Largest church in Asia', entryFee: 0, openHours: '7:30 AM - 6:00 PM', category: 'Religious', rating: 4.2, timeNeeded: '45 minutes' },
-        { id: '5', name: 'Calangute Beach', description: 'Queen of beaches in Goa', entryFee: 0, openHours: '24 hours', category: 'Nature', rating: 4.1, timeNeeded: '2-3 hours' },
-        { id: '6', name: 'Spice Plantation Tour', description: 'Authentic spice farm experience', entryFee: 400, openHours: '9:00 AM - 5:00 PM', category: 'Nature', rating: 4.4, timeNeeded: '3-4 hours' },
-        { id: '7', name: 'Anjuna Flea Market', description: 'Vibrant market with local crafts and food', entryFee: 0, openHours: 'Wednesdays 9:00 AM - 6:00 PM', category: 'Shopping', rating: 4.3, timeNeeded: '2-3 hours' },
-        { id: '8', name: 'Baga Beach', description: 'Popular beach with nightlife and water sports', entryFee: 0, openHours: '24 hours', category: 'Nature', rating: 4.2, timeNeeded: '2-3 hours' }
+      nagpur: [
+        { id: '1', name: 'Deekshabhoomi', type: 'Buddhist Monument', entry_fee: 'Free', timings: '6:00 AM - 10:00 PM', rating: 4.4, description: 'Sacred Buddhist monument and stupa', duration: '1-2 hours' },
+        { id: '2', name: 'Sitabuldi Fort', type: 'Historical Fort', entry_fee: 'Free', timings: '6:00 AM - 6:00 PM', rating: 4.0, description: 'Historic hilltop fort with city views', duration: '1-2 hours' },
+        { id: '3', name: 'Ambazari Lake', type: 'Lake', entry_fee: 'Free', timings: '24 hours', rating: 4.1, description: 'Largest lake in Nagpur with garden', duration: '1-2 hours' },
+        { id: '4', name: 'Zero Mile Stone', type: 'Historical Marker', entry_fee: 'Free', timings: '24 hours', rating: 3.8, description: 'Geographical center of India marker', duration: '30 minutes' },
+        { id: '5', name: 'Maharaj Bagh Zoo', type: 'Zoo', entry_fee: '₹20 (Adults), ₹10 (Children)', timings: '9:00 AM - 5:30 PM', rating: 3.9, description: 'Historic zoo with diverse wildlife', duration: '2-3 hours' },
+        { id: '6', name: 'Ramtek Temple', type: 'Temple Complex', entry_fee: 'Free', timings: '5:00 AM - 9:00 PM', rating: 4.3, description: 'Ancient hilltop temple complex', duration: '2-3 hours' },
+        { id: '7', name: 'Dragon Palace Temple', type: 'Buddhist Temple', entry_fee: 'Free', timings: '8:00 AM - 8:00 PM', rating: 4.0, description: 'Beautiful Buddhist temple with Japanese architecture', duration: '1 hour' },
+        { id: '8', name: 'Futala Lake', type: 'Lake', entry_fee: 'Free', timings: '24 hours', rating: 4.2, description: 'Popular lake with walking track and food stalls', duration: '1-2 hours' },
+        { id: '9', name: 'Raman Science Centre', type: 'Science Museum', entry_fee: '₹40', timings: '10:00 AM - 8:00 PM', rating: 4.1, description: 'Interactive science museum with planetarium', duration: '2-3 hours' },
+        { id: '10', name: 'Swaminarayan Temple', type: 'Temple', entry_fee: 'Free', timings: '5:00 AM - 12:00 PM, 4:00 PM - 9:00 PM', rating: 4.2, description: 'Beautiful modern temple with intricate carvings', duration: '1 hour' }
       ],
-      chennai: [
-        { id: '1', name: 'Marina Beach', description: 'Second longest beach in the world', entryFee: 0, openHours: '24 hours', category: 'Nature', rating: 4.2, timeNeeded: '2-3 hours' },
-        { id: '2', name: 'Kapaleeshwarar Temple', description: 'Ancient Dravidian architecture temple', entryFee: 0, openHours: '5:30 AM - 12:00 PM, 4:00 PM - 9:00 PM', category: 'Religious', rating: 4.5, timeNeeded: '1-2 hours' },
-        { id: '3', name: 'Government Museum', description: 'Second oldest museum in India', entryFee: 15, openHours: '9:30 AM - 5:00 PM', category: 'Cultural', rating: 4.1, timeNeeded: '2-3 hours' },
-        { id: '4', name: 'Fort St. George', description: 'First British fortress in India', entryFee: 5, openHours: '10:00 AM - 5:00 PM', category: 'Historical', rating: 4.0, timeNeeded: '1-2 hours' },
-        { id: '5', name: 'San Thome Cathedral', description: 'Neo-Gothic Roman Catholic cathedral', entryFee: 0, openHours: '6:00 AM - 8:00 PM', category: 'Religious', rating: 4.3, timeNeeded: '1 hour' },
-        { id: '6', name: 'Elliot Beach', description: 'Peaceful beach less crowded than Marina', entryFee: 0, openHours: '24 hours', category: 'Nature', rating: 4.1, timeNeeded: '1-2 hours' },
-        { id: '7', name: 'Vadapalani Murugan Temple', description: 'Popular temple dedicated to Lord Murugan', entryFee: 0, openHours: '4:00 AM - 10:00 PM', category: 'Religious', rating: 4.4, timeNeeded: '1 hour' },
-        { id: '8', name: 'DakshinaChitra', description: 'Living museum of South Indian heritage', entryFee: 120, openHours: '10:00 AM - 6:00 PM', category: 'Cultural', rating: 4.2, timeNeeded: '2-3 hours' }
+      vadodara: [
+        { id: '1', name: 'Laxmi Vilas Palace', type: 'Royal Palace', entry_fee: '₹300 (Indians), ₹500 (Foreigners)', timings: '9:30 AM - 5:00 PM', rating: 4.5, description: 'Magnificent palace of Gaekwad rulers', duration: '2-3 hours' },
+        { id: '2', name: 'Sayaji Baug', type: 'Garden & Zoo', entry_fee: '₹15', timings: '8:00 AM - 8:00 PM', rating: 4.1, description: 'Large garden with zoo and planetarium', duration: '2-3 hours' },
+        { id: '3', name: 'Baroda Museum', type: 'Museum', entry_fee: '₹15', timings: '10:30 AM - 5:30 PM', rating: 4.0, description: 'Art and archaeological museum', duration: '1-2 hours' },
+        { id: '4', name: 'EME Temple', type: 'Modern Temple', entry_fee: 'Free', timings: '6:00 AM - 12:00 PM, 3:00 PM - 9:00 PM', rating: 4.2, description: 'Unique temple built by Indian Army', duration: '1 hour' },
+        { id: '5', name: 'Kirti Mandir', type: 'Memorial', entry_fee: 'Free', timings: '8:00 AM - 12:00 PM, 3:00 PM - 7:00 PM', rating: 3.9, description: 'Memorial dedicated to Mahatma Gandhi\'s family', duration: '1 hour' },
+        { id: '6', name: 'Sursagar Lake', type: 'Lake', entry_fee: 'Free', timings: '24 hours', rating: 4.0, description: 'Central lake with Shiva statue', duration: '1 hour' },
+        { id: '7', name: 'Nazarbaug Palace', type: 'Palace', entry_fee: '₹20', timings: '9:00 AM - 6:00 PM', rating: 3.8, description: 'Former royal residence with beautiful architecture', duration: '1-2 hours' },
+        { id: '8', name: 'Maharaja Fateh Singh Museum', type: 'Art Museum', entry_fee: '₹50', timings: '10:00 AM - 5:00 PM', rating: 4.1, description: 'Museum showcasing royal art collection', duration: '1-2 hours' },
+        { id: '9', name: 'Ajwa Water Park', type: 'Water Park', entry_fee: '₹200-400', timings: '10:00 AM - 6:00 PM', rating: 4.0, description: 'Popular water park and resort', duration: '4-6 hours' },
+        { id: '10', name: 'Champaner-Pavagadh', type: 'UNESCO Site', entry_fee: '₹25', timings: '6:00 AM - 6:00 PM', rating: 4.3, description: 'UNESCO World Heritage archaeological site', duration: '4-5 hours' }
       ],
-      pune: [
-        { id: '1', name: 'Shaniwar Wada', description: 'Historic fortified palace of Peshwas', entryFee: 25, openHours: '8:00 AM - 6:30 PM', category: 'Historical', rating: 4.1, timeNeeded: '1-2 hours' },
-        { id: '2', name: 'Aga Khan Palace', description: 'Italianate palace and Gandhi memorial', entryFee: 25, openHours: '9:00 AM - 5:30 PM', category: 'Historical', rating: 4.3, timeNeeded: '1-2 hours' },
-        { id: '3', name: 'Sinhagad Fort', description: 'Historic hill fortress with panoramic views', entryFee: 0, openHours: '6:00 AM - 6:00 PM', category: 'Historical', rating: 4.4, timeNeeded: '3-4 hours' },
-        { id: '4', name: 'Dagdusheth Halwai Ganpati Temple', description: 'Famous Ganesha temple', entryFee: 0, openHours: '5:00 AM - 11:30 PM', category: 'Religious', rating: 4.5, timeNeeded: '1 hour' },
-        { id: '5', name: 'Raja Dinkar Kelkar Museum', description: 'Collection of Indian decorative arts', entryFee: 50, openHours: '10:00 AM - 5:30 PM', category: 'Cultural', rating: 4.2, timeNeeded: '1-2 hours' },
-        { id: '6', name: 'Osho Ashram', description: 'International meditation resort', entryFee: 0, openHours: '6:00 AM - 9:00 PM', category: 'Spiritual', rating: 4.0, timeNeeded: '2-3 hours' },
-        { id: '7', name: 'Pataleshwar Cave Temple', description: 'Rock-cut cave temple dedicated to Shiva', entryFee: 0, openHours: '5:00 AM - 9:00 PM', category: 'Religious', rating: 4.1, timeNeeded: '30 minutes' },
-        { id: '8', name: 'Katraj Snake Park', description: 'Reptile park and zoo', entryFee: 25, openHours: '9:30 AM - 5:00 PM', category: 'Nature', rating: 3.9, timeNeeded: '2-3 hours' }
+      agra: [
+        { id: '1', name: 'Taj Mahal', type: 'UNESCO World Heritage', entry_fee: '₹50 (Indians), ₹1300 (Foreigners)', timings: '6:00 AM - 6:30 PM', rating: 4.7, description: 'Iconic white marble mausoleum', duration: '2-3 hours' },
+        { id: '2', name: 'Agra Fort', type: 'UNESCO Fort', entry_fee: '₹35 (Indians), ₹550 (Foreigners)', timings: '6:00 AM - 6:00 PM', rating: 4.4, description: 'Red sandstone Mughal fort', duration: '2-3 hours' },
+        { id: '3', name: 'Fatehpur Sikri', type: 'UNESCO Ghost City', entry_fee: '₹35 (Indians), ₹550 (Foreigners)', timings: '6:00 AM - 6:00 PM', rating: 4.3, description: 'Abandoned Mughal capital city', duration: '3-4 hours' },
+        { id: '4', name: 'Itimad-ud-Daulah Tomb', type: 'Mughal Tomb', entry_fee: '₹25 (Indians), ₹310 (Foreigners)', timings: '6:00 AM - 6:00 PM', rating: 4.2, description: 'Baby Taj - beautiful marble tomb', duration: '1-2 hours' },
+        { id: '5', name: 'Mehtab Bagh', type: 'Mughal Garden', entry_fee: '₹25 (Indians), ₹300 (Foreigners)', timings: '6:00 AM - 6:30 PM', rating: 4.1, description: 'Garden with perfect Taj Mahal views', duration: '1-2 hours' },
+        { id: '6', name: 'Akbar\'s Tomb, Sikandra', type: 'Mughal Tomb', entry_fee: '₹25 (Indians), ₹310 (Foreigners)', timings: '6:00 AM - 6:00 PM', rating: 4.0, description: 'Emperor Akbar\'s magnificent tomb', duration: '1-2 hours' },
+        { id: '7', name: 'Jama Masjid', type: 'Mosque', entry_fee: 'Free', timings: '6:00 AM - 7:00 PM', rating: 4.1, description: 'Large mosque built by Shah Jahan\'s daughter', duration: '1 hour' },
+        { id: '8', name: 'Chini Ka Rauza', type: 'Tomb', entry_fee: '₹15', timings: '6:00 AM - 6:00 PM', rating: 3.8, description: 'Tomb of Allama Afzal Khan with glazed tile work', duration: '1 hour' },
+        { id: '9', name: 'Ram Bagh', type: 'Mughal Garden', entry_fee: '₹15', timings: '6:00 AM - 6:00 PM', rating: 3.9, description: 'First Mughal garden in India', duration: '1 hour' },
+        { id: '10', name: 'Wildlife SOS Bear Sanctuary', type: 'Wildlife Sanctuary', entry_fee: '₹200', timings: '11:00 AM - 4:00 PM', rating: 4.2, description: 'Sanctuary for rescued dancing bears', duration: '2 hours' }
       ],
-      jaipur: [
-        { id: '1', name: 'Amber Palace', description: 'Magnificent hilltop palace complex', entryFee: 100, openHours: '8:00 AM - 6:00 PM', category: 'Historical', rating: 4.6, timeNeeded: '2-3 hours' },
-        { id: '2', name: 'Hawa Mahal', description: 'Palace of Winds with intricate facade', entryFee: 50, openHours: '9:00 AM - 4:30 PM', category: 'Historical', rating: 4.4, timeNeeded: '1 hour' },
-        { id: '3', name: 'City Palace', description: 'Royal residence with museums', entryFee: 300, openHours: '9:30 AM - 5:00 PM', category: 'Historical', rating: 4.5, timeNeeded: '2-3 hours' },
-        { id: '4', name: 'Jantar Mantar', description: 'UNESCO World Heritage astronomical observatory', entryFee: 50, openHours: '9:00 AM - 4:30 PM', category: 'Historical', rating: 4.3, timeNeeded: '1-2 hours' },
-        { id: '5', name: 'Nahargarh Fort', description: 'Fort with panoramic city views', entryFee: 50, openHours: '10:00 AM - 5:30 PM', category: 'Historical', rating: 4.2, timeNeeded: '2-3 hours' },
-        { id: '6', name: 'Jaigarh Fort', description: 'Fort housing worlds largest cannon', entryFee: 85, openHours: '9:00 AM - 4:30 PM', category: 'Historical', rating: 4.3, timeNeeded: '2-3 hours' },
-        { id: '7', name: 'Albert Hall Museum', description: 'Oldest museum in Rajasthan', entryFee: 40, openHours: '9:00 AM - 5:00 PM', category: 'Cultural', rating: 4.1, timeNeeded: '1-2 hours' },
-        { id: '8', name: 'Birla Mandir', description: 'Beautiful white marble temple', entryFee: 0, openHours: '6:00 AM - 12:00 PM, 3:00 PM - 9:00 PM', category: 'Religious', rating: 4.2, timeNeeded: '1 hour' }
+      varanasi: [
+        { id: '1', name: 'Kashi Vishwanath Temple', type: 'Hindu Temple', entry_fee: 'Free', timings: '3:00 AM - 11:00 PM', rating: 4.6, description: 'Most sacred Shiva temple', duration: '1-2 hours' },
+        { id: '2', name: 'Dashashwamedh Ghat', type: 'Sacred Ghat', entry_fee: 'Free', timings: '24 hours', rating: 4.5, description: 'Main ghat famous for evening aarti', duration: '2-3 hours' },
+        { id: '3', name: 'Sarnath', type: 'Buddhist Site', entry_fee: '₹15 (Indians), ₹200 (Foreigners)', timings: '9:00 AM - 5:00 PM', rating: 4.4, description: 'Where Buddha gave his first sermon', duration: '2-3 hours' },
+        { id: '4', name: 'Assi Ghat', type: 'Sacred Ghat', entry_fee: 'Free', timings: '24 hours', rating: 4.3, description: 'Popular ghat for morning prayers and yoga', duration: '1-2 hours' },
+        { id: '5', name: 'Manikarnika Ghat', type: 'Cremation Ghat', entry_fee: 'Free', timings: '24 hours', rating: 4.1, description: 'Most sacred cremation ghat', duration: '1 hour' },
+        { id: '6', name: 'Banaras Hindu University', type: 'University Campus', entry_fee: 'Free', timings: '6:00 AM - 6:00 PM', rating: 4.2, description: 'One of India\'s largest universities', duration: '2-3 hours' },
+        { id: '7', name: 'Ramnagar Fort', type: 'Historical Fort', entry_fee: '₹15', timings: '9:00 AM - 6:00 PM', rating: 3.9, description: 'Fort and museum of Kashi Naresh', duration: '1-2 hours' },
+        { id: '8', name: 'Tulsi Manas Temple', type: 'Temple', entry_fee: 'Free', timings: '5:00 AM - 12:00 PM, 1:00 PM - 9:00 PM', rating: 4.0, description: 'Temple where Tulsidas wrote Ramcharitmanas', duration: '1 hour' },
+        { id: '9', name: 'Bharat Mata Temple', type: 'Unique Temple', entry_fee: '₹5', timings: '6:00 AM - 12:00 PM, 1:00 PM - 9:00 PM', rating: 3.8, description: 'Temple dedicated to Mother India', duration: '1 hour' },
+        { id: '10', name: 'New Kashi Vishwanath Temple (BHU)', type: 'Modern Temple', entry_fee: 'Free', timings: '4:00 AM - 11:00 PM', rating: 4.2, description: 'Replica of original Kashi Vishwanath', duration: '1 hour' }
       ],
-      ahmedabad: [
-        { id: '1', name: 'Sabarmati Ashram', description: 'Mahatma Gandhis residence and museum', entryFee: 0, openHours: '8:30 AM - 6:30 PM', category: 'Historical', rating: 4.5, timeNeeded: '1-2 hours' },
-        { id: '2', name: 'Sidi Saiyyed Mosque', description: 'Famous for intricate stone lattice work', entryFee: 0, openHours: '24 hours', category: 'Historical', rating: 4.3, timeNeeded: '30 minutes' },
-        { id: '3', name: 'Adalaj Stepwell', description: 'Intricately carved five-story stepwell', entryFee: 0, openHours: '7:00 AM - 6:00 PM', category: 'Historical', rating: 4.4, timeNeeded: '1 hour' },
-        { id: '4', name: 'Akshardham Temple', description: 'Modern Hindu temple complex', entryFee: 0, openHours: '9:30 AM - 6:30 PM', category: 'Religious', rating: 4.6, timeNeeded: '2-3 hours' },
-        { id: '5', name: 'Calico Museum of Textiles', description: 'Premier textile museum', entryFee: 0, openHours: '10:30 AM - 12:30 PM, 2:30 PM - 4:30 PM', category: 'Cultural', rating: 4.2, timeNeeded: '2 hours' },
-        { id: '6', name: 'Kankaria Lake', description: 'Largest lake in Ahmedabad with activities', entryFee: 0, openHours: '24 hours', category: 'Nature', rating: 4.1, timeNeeded: '2-3 hours' },
-        { id: '7', name: 'Jama Masjid', description: 'Beautiful Indo-Islamic mosque', entryFee: 0, openHours: '24 hours', category: 'Religious', rating: 4.2, timeNeeded: '30 minutes' },
-        { id: '8', name: 'Auto World Vintage Car Museum', description: 'Collection of vintage automobiles', entryFee: 80, openHours: '10:00 AM - 7:00 PM', category: 'Cultural', rating: 4.0, timeNeeded: '1-2 hours' }
-      ],
-      kochi: [
-        { id: '1', name: 'Chinese Fishing Nets', description: 'Iconic cantilevered fishing nets', entryFee: 0, openHours: '24 hours', category: 'Cultural', rating: 4.2, timeNeeded: '1 hour' },
-        { id: '2', name: 'Mattancherry Palace', description: 'Portuguese palace with Kerala murals', entryFee: 5, openHours: '10:00 AM - 5:00 PM', category: 'Historical', rating: 4.1, timeNeeded: '1-2 hours' },
-        { id: '3', name: 'Paradesi Synagogue', description: 'Oldest active synagogue in Commonwealth', entryFee: 5, openHours: '10:00 AM - 12:00 PM, 3:00 PM - 5:00 PM', category: 'Religious', rating: 4.3, timeNeeded: '30 minutes' },
-        { id: '4', name: 'Santa Cruz Cathedral Basilica', description: 'Historic cathedral with Gothic architecture', entryFee: 0, openHours: '6:00 AM - 7:30 PM', category: 'Religious', rating: 4.2, timeNeeded: '30 minutes' },
-        { id: '5', name: 'Kerala Folklore Museum', description: 'Architectural gem showcasing Kerala culture', entryFee: 100, openHours: '9:00 AM - 6:00 PM', category: 'Cultural', rating: 4.4, timeNeeded: '1-2 hours' },
-        { id: '6', name: 'Marine Drive', description: 'Scenic promenade facing backwaters', entryFee: 0, openHours: '24 hours', category: 'Nature', rating: 4.3, timeNeeded: '1-2 hours' },
-        { id: '7', name: 'Hill Palace Museum', description: 'Largest archaeological museum in Kerala', entryFee: 20, openHours: '9:00 AM - 1:00 PM, 2:00 PM - 4:30 PM', category: 'Cultural', rating: 4.0, timeNeeded: '2 hours' },
-        { id: '8', name: 'Cherai Beach', description: 'Golden sand beach with backwater views', entryFee: 0, openHours: '24 hours', category: 'Nature', rating: 4.1, timeNeeded: '2-3 hours' }
-      ],
-      thiruvananthapuram: [
-        { id: '1', name: 'Padmanabhaswamy Temple', description: 'Richest temple in the world', entryFee: 0, openHours: '3:30 AM - 4:45 AM, 6:30 AM - 7:00 AM, 8:30 AM - 10:00 AM, 10:30 AM - 11:15 AM, 11:45 AM - 12:00 PM, 5:00 PM - 6:15 PM, 6:45 PM - 7:20 PM', category: 'Religious', rating: 4.6, timeNeeded: '1-2 hours' },
-        { id: '2', name: 'Kovalam Beach', description: 'Crescent-shaped beach with lighthouse', entryFee: 0, openHours: '24 hours', category: 'Nature', rating: 4.3, timeNeeded: '3-4 hours' },
-        { id: '3', name: 'Napier Museum', description: 'Indo-Saracenic architecture museum', entryFee: 20, openHours: '10:00 AM - 4:45 PM', category: 'Cultural', rating: 4.1, timeNeeded: '1-2 hours' },
-        { id: '4', name: 'Kuthira Malika Palace', description: 'Traditional Kerala palace architecture', entryFee: 20, openHours: '8:30 AM - 12:30 PM, 3:00 PM - 5:30 PM', category: 'Historical', rating: 4.2, timeNeeded: '1 hour' },
-        { id: '5', name: 'Vellayani Lake', description: 'Largest freshwater lake in Trivandrum', entryFee: 0, openHours: '24 hours', category: 'Nature', rating: 4.0, timeNeeded: '1-2 hours' },
-        { id: '6', name: 'Agasthyakoodam Peak', description: 'Second highest peak in Kerala', entryFee: 0, openHours: '6:00 AM - 6:00 PM', category: 'Nature', rating: 4.4, timeNeeded: '6-8 hours' },
-        { id: '7', name: 'Shangumugham Beach', description: 'Urban beach with Matsya sculpture', entryFee: 0, openHours: '24 hours', category: 'Nature', rating: 3.9, timeNeeded: '1-2 hours' },
-        { id: '8', name: 'Priyadarshini Planetarium', description: 'Space science education center', entryFee: 25, openHours: '10:30 AM - 5:15 PM', category: 'Educational', rating: 4.0, timeNeeded: '1-2 hours' }
-      ],
-      lucknow: [
-        { id: '1', name: 'Bara Imambara', description: 'Architectural marvel with largest arched hall', entryFee: 25, openHours: '6:00 AM - 5:00 PM', category: 'Historical', rating: 4.4, timeNeeded: '2-3 hours' },
-        { id: '2', name: 'Chota Imambara', description: 'Golden dome imambara with chandeliers', entryFee: 25, openHours: '6:00 AM - 5:00 PM', category: 'Historical', rating: 4.3, timeNeeded: '1-2 hours' },
-        { id: '3', name: 'Rumi Darwaza', description: 'Gateway to Old Lucknow', entryFee: 0, openHours: '24 hours', category: 'Historical', rating: 4.2, timeNeeded: '30 minutes' },
-        { id: '4', name: 'British Residency', description: 'Ruins from 1857 revolt', entryFee: 25, openHours: '6:00 AM - 5:00 PM', category: 'Historical', rating: 4.1, timeNeeded: '1-2 hours' },
-        { id: '5', name: 'Ambedkar Memorial Park', description: 'Memorial dedicated to social reformers', entryFee: 0, openHours: '6:00 AM - 10:00 PM', category: 'Cultural', rating: 4.0, timeNeeded: '1-2 hours' },
-        { id: '6', name: 'Dilkusha Kothi', description: 'Ruins of country house in English style', entryFee: 15, openHours: '6:00 AM - 5:00 PM', category: 'Historical', rating: 3.9, timeNeeded: '1 hour' },
-        { id: '7', name: 'Clock Tower', description: 'Victorian Gothic clock tower', entryFee: 0, openHours: '24 hours', category: 'Historical', rating: 4.0, timeNeeded: '30 minutes' },
-        { id: '8', name: 'Janeshwar Mishra Park', description: 'One of Asias largest parks', entryFee: 0, openHours: '5:00 AM - 9:00 PM', category: 'Nature', rating: 4.2, timeNeeded: '2-3 hours' }
-      ],
-      bhopal: [
-        { id: '1', name: 'Taj-ul-Masajid', description: 'One of the largest mosques in Asia', entryFee: 0, openHours: '6:00 AM - 9:00 PM', category: 'Religious', rating: 4.3, timeNeeded: '1 hour' },
-        { id: '2', name: 'Bhojpur Temple', description: 'Incomplete 11th century Shiva temple', entryFee: 0, openHours: '6:00 AM - 6:00 PM', category: 'Religious', rating: 4.2, timeNeeded: '1-2 hours' },
-        { id: '3', name: 'Upper Lake', description: 'Artificial lake and major water source', entryFee: 0, openHours: '24 hours', category: 'Nature', rating: 4.1, timeNeeded: '1-2 hours' },
-        { id: '4', name: 'Van Vihar National Park', description: 'Urban national park and zoo', entryFee: 20, openHours: '6:30 AM - 6:30 PM', category: 'Nature', rating: 4.0, timeNeeded: '2-3 hours' },
-        { id: '5', name: 'Bharat Bhavan', description: 'Multi-arts center and museum', entryFee: 10, openHours: '2:00 PM - 8:00 PM', category: 'Cultural', rating: 4.2, timeNeeded: '1-2 hours' },
-        { id: '6', name: 'Gohar Mahal', description: 'Blend of Hindu and Mughal architecture', entryFee: 5, openHours: '10:00 AM - 5:00 PM', category: 'Historical', rating: 3.9, timeNeeded: '1 hour' },
-        { id: '7', name: 'Regional Science Centre', description: 'Interactive science museum', entryFee: 30, openHours: '10:00 AM - 6:00 PM', category: 'Educational', rating: 4.1, timeNeeded: '2-3 hours' },
-        { id: '8', name: 'Lower Lake', description: 'Smaller lake connected to Upper Lake', entryFee: 0, openHours: '24 hours', category: 'Nature', rating: 3.8, timeNeeded: '1 hour' }
+      amritsar: [
+        { id: '1', name: 'Golden Temple (Harmandir Sahib)', type: 'Sikh Temple', entry_fee: 'Free', timings: '24 hours', rating: 4.8, description: 'Most sacred Sikh shrine', duration: '2-3 hours' },
+        { id: '2', name: 'Jallianwala Bagh', type: 'Historical Memorial', entry_fee: 'Free', timings: '6:30 AM - 7:30 PM', rating: 4.3, description: 'Memorial of 1919 massacre', duration: '1-2 hours' },
+        { id: '3', name: 'Wagah Border', type: 'International Border', entry_fee: 'Free', timings: '4:00 PM - 6:00 PM', rating: 4.4, description: 'Famous flag lowering ceremony', duration: '3-4 hours' },
+        { id: '4', name: 'Akal Takht', type: 'Sikh Throne', entry_fee: 'Free', timings: '24 hours', rating: 4.5, description: 'Highest temporal seat of Sikhs', duration: '1 hour' },
+        { id: '5', name: 'Partition Museum', type: 'Historical Museum', entry_fee: '₹25 (Indians), ₹250 (Foreigners)', timings: '10:00 AM - 6:00 PM', rating: 4.2, description: 'Museum on 1947 partition', duration: '2 hours' },
+        { id: '6', name: 'Durgiana Temple', type: 'Hindu Temple', entry_fee: 'Free', timings: '6:00 AM - 10:00 PM', rating: 4.1, description: 'Hindu temple similar to Golden Temple', duration: '1-2 hours' },
+        { id: '7', name: 'Ram Bagh Palace', type: 'Heritage Hotel/Museum', entry_fee: '₹30', timings: '10:00 AM - 5:00 PM', rating: 4.0, description: 'Summer palace of Maharaja Ranjit Singh', duration: '1-2 hours' },
+        { id: '8', name: 'Gobindgarh Fort', type: 'Historical Fort', entry_fee: '₹30 (Indians), ₹100 (Foreigners)', timings: '10:00 AM - 10:00 PM', rating: 3.9, description: 'Historic Sikh fort with museums', duration: '2-3 hours' },
+        { id: '9', name: 'Hall Bazaar', type: 'Shopping Market', entry_fee: 'Free', timings: '10:00 AM - 9:00 PM', rating: 4.0, description: 'Traditional market for Punjabi items', duration: '1-2 hours' },
+        { id: '10', name: 'Mata Lal Devi Temple', type: 'Cave Temple', entry_fee: 'Free', timings: '6:00 AM - 10:00 PM', rating: 3.8, description: 'Unique underground cave temple', duration: '1 hour' }
       ]
     };
 
-    // Return city-specific attractions or generic ones
-    return attractionsData[cityLower] || [
-      { id: '1', name: `${tripData.destination} Palace`, description: 'Historical palace with stunning architecture and rich cultural heritage.', entryFee: 200, openHours: '9:00 AM - 6:00 PM', category: 'Historical', rating: 4.6, timeNeeded: '2-3 hours' },
-      { id: '2', name: `${tripData.destination} Museum`, description: 'Premier museum showcasing local art, culture, and history.', entryFee: 150, openHours: '10:00 AM - 5:00 PM', category: 'Cultural', rating: 4.3, timeNeeded: '1-2 hours' },
-      { id: '3', name: `${tripData.destination} Gardens`, description: 'Beautiful botanical gardens perfect for relaxation and photography.', entryFee: 50, openHours: '6:00 AM - 8:00 PM', category: 'Nature', rating: 4.4, timeNeeded: '1-2 hours' },
-      { id: '4', name: `${tripData.destination} Temple`, description: 'Ancient temple with intricate carvings and spiritual significance.', entryFee: 0, openHours: '5:00 AM - 9:00 PM', category: 'Religious', rating: 4.7, timeNeeded: '1 hour' },
-      { id: '5', name: `${tripData.destination} Market`, description: 'Vibrant local market for shopping and experiencing local life.', entryFee: 0, openHours: '8:00 AM - 10:00 PM', category: 'Shopping', rating: 4.2, timeNeeded: '2-3 hours' },
-      { id: '6', name: `${tripData.destination} Fort`, description: 'Historic fort offering panoramic views and fascinating history.', entryFee: 300, openHours: '9:00 AM - 6:00 PM', category: 'Historical', rating: 4.5, timeNeeded: '2-4 hours' },
+    return attractionData[cityLower] || [
+      { id: '1', name: `${city} Fort`, type: 'Historical Fort', entry_fee: '₹25', timings: '9:00 AM - 6:00 PM', rating: 4.2, description: 'Historic fort with panoramic city views', duration: '2-3 hours' },
+      { id: '2', name: `${city} Museum`, type: 'Museum', entry_fee: '₹20', timings: '10:00 AM - 5:00 PM', rating: 4.0, description: 'Local history and cultural artifacts', duration: '1-2 hours' },
+      { id: '3', name: `${city} Temple`, type: 'Temple', entry_fee: 'Free', timings: '6:00 AM - 9:00 PM', rating: 4.3, description: 'Ancient temple with beautiful architecture', duration: '1-2 hours' },
+      { id: '4', name: `${city} Palace`, type: 'Palace', entry_fee: '₹50', timings: '9:00 AM - 5:00 PM', rating: 4.1, description: 'Royal palace showcasing local heritage', duration: '2-3 hours' },
+      { id: '5', name: `${city} Garden`, type: 'Garden', entry_fee: '₹15', timings: '6:00 AM - 8:00 PM', rating: 3.9, description: 'Beautiful garden perfect for relaxation', duration: '1-2 hours' },
+      { id: '6', name: `${city} Market`, type: 'Market', entry_fee: 'Free', timings: '10:00 AM - 9:00 PM', rating: 4.0, description: 'Traditional market for local shopping', duration: '1-2 hours' }
     ];
   };
 
@@ -174,25 +149,20 @@ export const TouristAttractions = ({ tripData, onNext }: TouristAttractionsProps
   }, [tripData]);
 
   const handleSelectAttraction = (attraction: Attraction) => {
-    const isSelected = selectedAttractions.find(a => a.id === attraction.id);
-    if (isSelected) {
-      setSelectedAttractions(prev => prev.filter(a => a.id !== attraction.id));
+    if (selectedAttractions.find(a => a.id === attraction.id)) {
+      setSelectedAttractions(selectedAttractions.filter(a => a.id !== attraction.id));
     } else {
-      setSelectedAttractions(prev => [...prev, attraction]);
+      setSelectedAttractions([...selectedAttractions, attraction]);
     }
-  };
-
-  const getTotalCost = () => {
-    return selectedAttractions.reduce((total, attraction) => total + attraction.entryFee, 0);
   };
 
   const handleNext = () => {
-    if (selectedAttractions.length === 0) {
-      alert('Please select at least one attraction to continue.');
-      return;
-    }
     console.log('Selected attractions:', selectedAttractions);
     onNext();
+  };
+
+  const handleLoadMore = () => {
+    setVisibleCount(prev => Math.min(prev + 6, attractions.length));
   };
 
   if (loading) {
@@ -200,7 +170,7 @@ export const TouristAttractions = ({ tripData, onNext }: TouristAttractionsProps
       <Card className="shadow-xl border-t-4 border-t-orange-500">
         <CardHeader>
           <CardTitle className="text-2xl font-bold bg-gradient-to-r from-orange-500 to-blue-600 bg-clip-text text-transparent">
-            Finding Attractions in {tripData.destination}...
+            Finding Tourist Attractions in {tripData.destination}...
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -222,20 +192,20 @@ export const TouristAttractions = ({ tripData, onNext }: TouristAttractionsProps
     <Card className="shadow-xl border-t-4 border-t-orange-500">
       <CardHeader className="bg-gradient-to-r from-orange-50 to-blue-50">
         <CardTitle className="flex items-center gap-2 text-2xl font-bold text-gray-800">
-          <Camera className="h-6 w-6 text-orange-500" />
+          <MapPin className="h-6 w-6 text-orange-500" />
           Tourist Attractions in {tripData.destination}
         </CardTitle>
         <p className="text-gray-600 font-semibold">
-          Select the attractions you'd like to visit. Total selected: {selectedAttractions.length}
+          Discover {attractions.length} amazing places to visit
         </p>
       </CardHeader>
       <CardContent className="p-6">
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {attractions.slice(0, visibleCount).map((attraction) => (
             <Card 
-              key={attraction.id}
+              key={attraction.id} 
               className={`cursor-pointer transition-all duration-300 hover:shadow-xl hover:scale-105 ${
-                selectedAttractions.find(a => a.id === attraction.id) 
+                selectedAttractions.find(a => a.id === attraction.id)
                   ? 'ring-2 ring-orange-500 bg-gradient-to-br from-orange-50 to-blue-50' 
                   : 'hover:bg-gray-50'
               }`}
@@ -243,52 +213,49 @@ export const TouristAttractions = ({ tripData, onNext }: TouristAttractionsProps
             >
               <div className="p-1">
                 <div className="bg-gradient-to-br from-orange-100 to-blue-100 p-4 rounded-t-lg">
-                  <div className="flex justify-between items-start mb-2">
-                    <Badge className={`${
-                      attraction.entryFee === 0 ? 'bg-green-500 hover:bg-green-600' : 'bg-blue-500 hover:bg-blue-600'
-                    } text-white font-semibold`}>
-                      {attraction.entryFee === 0 ? 'Free Entry' : `₹${attraction.entryFee}`}
-                    </Badge>
-                    <Badge className="bg-purple-500 hover:bg-purple-600 text-white font-semibold">
-                      {attraction.category}
-                    </Badge>
-                  </div>
+                  <Badge className="bg-blue-500 hover:bg-blue-600 text-white font-semibold mb-2">
+                    {attraction.type}
+                  </Badge>
                 </div>
               </div>
               
               <CardContent className="p-4">
                 <h3 className="font-bold text-lg mb-2 text-gray-800">{attraction.name}</h3>
-                <p className="text-sm text-gray-600 mb-3 font-medium">{attraction.description}</p>
-                
-                <div className="space-y-2 text-sm">
-                  <div className="flex items-center gap-2">
-                    <Clock className="h-4 w-4 text-orange-500" />
-                    <span className="font-medium">{attraction.openHours}</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <MapPin className="h-4 w-4 text-blue-500" />
-                    <span className="font-medium">Time needed: {attraction.timeNeeded}</span>
-                  </div>
-                  {attraction.entryFee > 0 && (
-                    <div className="flex items-center gap-2">
-                      <IndianRupee className="h-4 w-4 text-green-500" />
-                      <span className="font-medium">Entry fee: ₹{attraction.entryFee}</span>
-                    </div>
-                  )}
+                <div className="flex items-center gap-1 mb-2">
+                  {[...Array(5)].map((_, i) => (
+                    <Star 
+                      key={i} 
+                      className={`h-4 w-4 ${
+                        i < Math.floor(attraction.rating) ? 'text-yellow-400 fill-current' : 'text-gray-300'
+                      }`} 
+                    />
+                  ))}
+                  <span className="ml-1 text-sm text-gray-600 font-medium">{attraction.rating}</span>
                 </div>
-
-                <div className="mt-4">
-                  <Button
-                    className={`w-full font-semibold ${
-                      selectedAttractions.find(a => a.id === attraction.id)
-                        ? 'bg-gradient-to-r from-orange-500 to-blue-600 hover:from-orange-600 hover:to-blue-700 text-white'
-                        : 'border-2 border-orange-200 text-orange-600 hover:bg-orange-50'
-                    }`}
-                    variant={selectedAttractions.find(a => a.id === attraction.id) ? "default" : "outline"}
-                  >
-                    {selectedAttractions.find(a => a.id === attraction.id) ? '✓ Selected' : 'Select Attraction'}
-                  </Button>
+                <p className="text-sm mb-3 font-medium">{attraction.description}</p>
+                <div className="space-y-2 mb-4">
+                  <div className="flex items-center gap-2 text-sm">
+                    <IndianRupee className="h-4 w-4 text-green-600" />
+                    <span className="font-medium">{attraction.entry_fee}</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm">
+                    <Clock className="h-4 w-4 text-blue-600" />
+                    <span className="font-medium">{attraction.timings}</span>
+                  </div>
+                  <div className="text-sm text-gray-600 font-medium">
+                    Duration: {attraction.duration}
+                  </div>
                 </div>
+                <Button
+                  className={`w-full font-semibold ${
+                    selectedAttractions.find(a => a.id === attraction.id)
+                      ? 'bg-gradient-to-r from-orange-500 to-blue-600 hover:from-orange-600 hover:to-blue-700 text-white'
+                      : 'border-2 border-orange-200 text-orange-600 hover:bg-orange-50'
+                  }`}
+                  variant={selectedAttractions.find(a => a.id === attraction.id) ? "default" : "outline"}
+                >
+                  {selectedAttractions.find(a => a.id === attraction.id) ? '✓ Selected' : 'Add to Itinerary'}
+                </Button>
               </CardContent>
             </Card>
           ))}
@@ -298,9 +265,9 @@ export const TouristAttractions = ({ tripData, onNext }: TouristAttractionsProps
           <div className="text-center mt-8">
             <Button 
               className="bg-gradient-to-r from-orange-500 to-blue-600 hover:from-orange-600 hover:to-blue-700 text-white font-semibold px-8 py-3"
-              onClick={() => setVisibleCount(prev => prev + 6)}
+              onClick={handleLoadMore}
             >
-              Load More Attractions
+              Load More Attractions ({attractions.length - visibleCount} more available)
             </Button>
           </div>
         )}
@@ -308,28 +275,24 @@ export const TouristAttractions = ({ tripData, onNext }: TouristAttractionsProps
         {selectedAttractions.length > 0 && (
           <div className="mt-8 p-6 bg-gradient-to-r from-orange-50 to-blue-50 rounded-xl border-2 border-orange-200">
             <h4 className="font-bold text-xl mb-4 text-gray-800">Selected Attractions ({selectedAttractions.length}):</h4>
-            <div className="space-y-2">
-              {selectedAttractions.map(attraction => (
-                <div key={attraction.id} className="flex justify-between items-center bg-white p-3 rounded-lg">
-                  <span className="font-semibold text-gray-700">{attraction.name}</span>
-                  <span className="font-bold text-green-600">₹{attraction.entryFee}</span>
+            <div className="grid md:grid-cols-2 gap-4">
+              {selectedAttractions.map((attraction) => (
+                <div key={attraction.id} className="flex justify-between items-center p-3 bg-white rounded-lg">
+                  <div>
+                    <span className="font-semibold text-gray-800">{attraction.name}</span>
+                    <p className="text-sm text-gray-600">{attraction.type}</p>
+                  </div>
+                  <Badge variant="outline" className="text-green-600 border-green-600">
+                    {attraction.entry_fee}
+                  </Badge>
                 </div>
               ))}
-            </div>
-            <div className="border-t-2 border-orange-200 pt-4 mt-4">
-              <div className="flex justify-between font-bold text-lg">
-                <span className="text-gray-800">Total Entry Fees:</span>
-                <span className="text-green-600">₹{getTotalCost()}</span>
-              </div>
             </div>
           </div>
         )}
 
         <div className="flex justify-end mt-8">
-          <Button 
-            onClick={handleNext} 
-            className="bg-gradient-to-r from-orange-500 to-blue-600 hover:from-orange-600 hover:to-blue-700 text-white font-bold px-8 py-3 text-lg"
-          >
+          <Button onClick={handleNext} className="bg-gradient-to-r from-orange-500 to-blue-600 hover:from-orange-600 hover:to-blue-700 text-white font-bold px-8 py-3 text-lg">
             Next: Famous Dishes
             <ArrowRight className="ml-2 h-5 w-5" />
           </Button>

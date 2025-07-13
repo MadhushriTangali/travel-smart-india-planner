@@ -44,117 +44,103 @@ export const HotelRecommendations = ({ tripData, onNext }: HotelRecommendationsP
         { id: '11', name: 'Hotel Golkonda', rating: 4.0, price: 4500, amenities: ['Restaurant', 'Free WiFi', 'AC'], distance: '2 km from Charminar', description: 'Traditional heritage hotel' },
         { id: '12', name: 'GreenPark Hyderabad', rating: 4.2, price: 7500, amenities: ['Pool', 'Restaurant', 'Free WiFi'], distance: '3 km from Begumpet', description: 'Well-located business hotel' }
       ],
-      chennai: [
-        { id: '1', name: 'ITC Grand Chola', rating: 4.8, price: 20000, amenities: ['Pool', 'Spa', 'Restaurant', 'Free WiFi'], distance: '3 km from airport', description: 'Luxury business hotel' },
-        { id: '2', name: 'The Leela Palace Chennai', rating: 4.7, price: 18000, amenities: ['Pool', 'Spa', 'Restaurant', 'Butler Service'], distance: '2 km from Marina Beach', description: 'Beachfront luxury hotel' },
-        { id: '3', name: 'Taj Coromandel', rating: 4.6, price: 15000, amenities: ['Pool', 'Restaurant', 'Free WiFi'], distance: '1 km from city center', description: 'Heritage luxury hotel' },
-        { id: '4', name: 'Hyatt Regency Chennai', rating: 4.5, price: 12000, amenities: ['Pool', 'Spa', 'Restaurant'], distance: '4 km from T Nagar', description: 'Modern business hotel' },
-        { id: '5', name: 'The Park Chennai', rating: 4.3, price: 9000, amenities: ['Pool', 'Restaurant', 'Free WiFi'], distance: '2 km from Anna Nagar', description: 'Contemporary city hotel' },
-        { id: '6', name: 'Radisson Blu Hotel Chennai', rating: 4.2, price: 8000, amenities: ['Pool', 'Restaurant', 'Gym'], distance: '5 km from Egmore', description: 'Business district hotel' },
-        { id: '7', name: 'Taj Club House', rating: 4.4, price: 11000, amenities: ['Restaurant', 'Free WiFi', 'Gym'], distance: '1 km from Mount Road', description: 'Classic heritage hotel' },
-        { id: '8', name: 'Vivanta Chennai IT Expressway', rating: 4.3, price: 10000, amenities: ['Pool', 'Spa', 'Restaurant'], distance: '2 km from OMR', description: 'IT corridor hotel' },
-        { id: '9', name: 'Sheraton Grand Chennai Resort & Spa', rating: 4.5, price: 13000, amenities: ['Beach', 'Pool', 'Spa'], distance: '1 km from ECR Beach', description: 'Beach resort hotel' },
-        { id: '10', name: 'Accord Metropolitan', rating: 4.1, price: 7000, amenities: ['Pool', 'Restaurant', 'Free WiFi'], distance: '3 km from Central Station', description: 'Mid-range business hotel' },
-        { id: '11', name: 'Hotel Savera', rating: 4.0, price: 5500, amenities: ['Restaurant', 'Free WiFi', 'AC'], distance: '2 km from Express Avenue', description: 'Comfortable city hotel' },
-        { id: '12', name: 'GRT Grand', rating: 4.2, price: 8500, amenities: ['Pool', 'Restaurant', 'Spa'], distance: '4 km from airport', description: 'Airport vicinity hotel' }
+      chandigarh: [
+        { id: '1', name: 'JW Marriott Hotel Chandigarh', rating: 4.7, price: 15000, amenities: ['Pool', 'Spa', 'Restaurant', 'Gym'], distance: '2 km from Sector 17', description: 'Luxury business hotel' },
+        { id: '2', name: 'Hyatt Regency Chandigarh', rating: 4.6, price: 12000, amenities: ['Pool', 'Spa', 'Restaurant'], distance: '3 km from Sukhna Lake', description: 'Premium city hotel' },
+        { id: '3', name: 'The Lalit Chandigarh', rating: 4.5, price: 10000, amenities: ['Pool', 'Restaurant', 'Free WiFi'], distance: '4 km from Rock Garden', description: 'Contemporary hotel' },
+        { id: '4', name: 'Taj Chandigarh', rating: 4.4, price: 9000, amenities: ['Pool', 'Restaurant', 'Spa'], distance: '2 km from Sector 17', description: 'Heritage business hotel' },
+        { id: '5', name: 'Lemon Tree Hotel Chandigarh', rating: 4.2, price: 6000, amenities: ['Restaurant', 'Free WiFi', 'Gym'], distance: '5 km from Punjab University', description: 'Mid-range business hotel' },
+        { id: '6', name: 'Hotel Sunbeam', rating: 4.0, price: 4500, amenities: ['Restaurant', 'Free WiFi', 'AC'], distance: '3 km from Sector 22', description: 'Budget city hotel' },
+        { id: '7', name: 'Red Fox Hotel Chandigarh', rating: 4.1, price: 5500, amenities: ['Restaurant', 'Free WiFi', 'Gym'], distance: '6 km from airport', description: 'Modern budget hotel' },
+        { id: '8', name: 'Hotel Shivalik View', rating: 3.9, price: 4000, amenities: ['Restaurant', 'Free WiFi'], distance: '4 km from Sector 35', description: 'Economy hotel' },
+        { id: '9', name: 'Hometel Chandigarh', rating: 4.0, price: 5000, amenities: ['Free WiFi', 'Restaurant', 'AC'], distance: '5 km from Elante Mall', description: 'Extended stay hotel' },
+        { id: '10', name: 'Hotel Parkview', rating: 3.8, price: 3500, amenities: ['Restaurant', 'AC'], distance: '3 km from Sector 24', description: 'Budget accommodation' },
+        { id: '11', name: 'OYO Townhouse Chandigarh', rating: 4.0, price: 4200, amenities: ['Free WiFi', 'AC'], distance: '2 km from Sector 17', description: 'Budget chain hotel' },
+        { id: '12', name: 'Hotel Mountview', rating: 3.9, price: 4800, amenities: ['Restaurant', 'Free WiFi', 'AC'], distance: '4 km from Rose Garden', description: 'Heritage-style hotel' }
       ],
-      pune: [
-        { id: '1', name: 'JW Marriott Hotel Pune', rating: 4.7, price: 16000, amenities: ['Pool', 'Spa', 'Restaurant', 'Gym'], distance: '2 km from Koregaon Park', description: 'Luxury business hotel' },
-        { id: '2', name: 'The Westin Pune Koregaon Park', rating: 4.6, price: 14000, amenities: ['Pool', 'Spa', 'Restaurant'], distance: '1 km from Koregaon Park', description: 'Premium city hotel' },
-        { id: '3', name: 'Conrad Pune', rating: 4.8, price: 18000, amenities: ['Pool', 'Spa', 'Restaurant', 'Butler Service'], distance: '3 km from MG Road', description: 'Ultra-luxury hotel' },
-        { id: '4', name: 'Hyatt Regency Pune', rating: 4.5, price: 12000, amenities: ['Pool', 'Restaurant', 'Free WiFi'], distance: '4 km from Kalyani Nagar', description: 'Modern business hotel' },
-        { id: '5', name: 'Taj Blue Diamond', rating: 4.4, price: 11000, amenities: ['Pool', 'Restaurant', 'Spa'], distance: '2 km from Pune Station', description: 'Heritage business hotel' },
-        { id: '6', name: 'The Orchid Hotel Pune', rating: 4.2, price: 8000, amenities: ['Pool', 'Restaurant', 'Free WiFi'], distance: '5 km from Hinjewadi', description: 'Eco-friendly hotel' },
-        { id: '7', name: 'Radisson Blu Hotel Pune Kharadi', rating: 4.3, price: 9500, amenities: ['Pool', 'Spa', 'Restaurant'], distance: '6 km from IT parks', description: 'IT corridor hotel' },
-        { id: '8', name: 'Vivanta Pune Hinjawadi', rating: 4.2, price: 9000, amenities: ['Pool', 'Restaurant', 'Gym'], distance: '2 km from Hinjawadi IT Park', description: 'Business district hotel' },
-        { id: '9', name: 'Courtyard by Marriott Pune Chakan', rating: 4.1, price: 7500, amenities: ['Pool', 'Restaurant', 'Free WiFi'], distance: '8 km from Chakan', description: 'Industrial area hotel' },
-        { id: '10', name: 'Lemon Tree Hotel Pune', rating: 4.0, price: 6000, amenities: ['Restaurant', 'Free WiFi', 'Gym'], distance: '3 km from Viman Nagar', description: 'Mid-range business hotel' },
-        { id: '11', name: 'Hotel Deccan Rendezvous', rating: 3.9, price: 4500, amenities: ['Restaurant', 'Free WiFi', 'AC'], distance: '1 km from Deccan Gymkhana', description: 'Budget city hotel' },
-        { id: '12', name: 'Treebo Trend Deccan Rendezvous', rating: 4.0, price: 5000, amenities: ['Free WiFi', 'Restaurant', 'AC'], distance: '2 km from FC Road', description: 'Modern budget hotel' }
+      indore: [
+        { id: '1', name: 'Radisson Blu Hotel Indore', rating: 4.5, price: 8500, amenities: ['Pool', 'Spa', 'Restaurant'], distance: '3 km from Rajwada', description: 'Premium business hotel' },
+        { id: '2', name: 'Marriott Indore', rating: 4.6, price: 10000, amenities: ['Pool', 'Spa', 'Restaurant', 'Gym'], distance: '4 km from Sarafa Bazaar', description: 'International luxury hotel' },
+        { id: '3', name: 'Lemon Tree Hotel Indore', rating: 4.2, price: 5500, amenities: ['Restaurant', 'Free WiFi', 'Gym'], distance: '2 km from Khajrana Ganesh Temple', description: 'Mid-range business hotel' },
+        { id: '4', name: 'Sayaji Hotel Indore', rating: 4.3, price: 7000, amenities: ['Pool', 'Restaurant', 'Free WiFi'], distance: '5 km from Devi Ahilya Bai Airport', description: 'Heritage business hotel' },
+        { id: '5', name: 'The Park Indore', rating: 4.1, price: 6000, amenities: ['Restaurant', 'Free WiFi', 'Pool'], distance: '3 km from Lal Bagh Palace', description: 'Contemporary city hotel' },
+        { id: '6', name: 'Hotel President', rating: 4.0, price: 4500, amenities: ['Restaurant', 'Free WiFi', 'AC'], distance: '1 km from Rajwada', description: 'Heritage area hotel' },
+        { id: '7', name: 'Effotel Hotel Indore', rating: 4.2, price: 5800, amenities: ['Pool', 'Restaurant', 'Free WiFi'], distance: '6 km from Treasure Island Mall', description: 'Business district hotel' },
+        { id: '8', name: 'Hotel Shreemaya', rating: 3.9, price: 3800, amenities: ['Restaurant', 'Free WiFi'], distance: '2 km from Chappan Dukan', description: 'Budget city hotel' },
+        { id: '9', name: 'OYO Flagship MG Road', rating: 3.8, price: 3200, amenities: ['Free WiFi', 'AC'], distance: '4 km from Indore Junction', description: 'Budget chain hotel' },
+        { id: '10', name: 'Hotel Apna Avenue', rating: 3.7, price: 3000, amenities: ['Restaurant', 'AC'], distance: '5 km from Geeta Bhawan', description: 'Economy accommodation' },
+        { id: '11', name: 'Treebo Trend O2', rating: 4.0, price: 4000, amenities: ['Free WiFi', 'Restaurant', 'AC'], distance: '3 km from Central Mall', description: 'Modern budget hotel' },
+        { id: '12', name: 'Hotel Decent', rating: 3.9, price: 3600, amenities: ['Restaurant', 'Free WiFi', 'AC'], distance: '2 km from Holkar Stadium', description: 'Family hotel' }
       ],
-      jaipur: [
-        { id: '1', name: 'Taj Rambagh Palace', rating: 4.9, price: 35000, amenities: ['Pool', 'Spa', 'Restaurant', 'Butler Service'], distance: '8 km from city center', description: 'Former royal palace turned luxury hotel' },
-        { id: '2', name: 'The Oberoi Rajvilas', rating: 4.8, price: 32000, amenities: ['Pool', 'Spa', 'Restaurant', 'Golf'], distance: '12 km from Pink City', description: 'Luxury resort with traditional architecture' },
-        { id: '3', name: 'ITC Rajputana', rating: 4.6, price: 15000, amenities: ['Pool', 'Spa', 'Restaurant', 'Free WiFi'], distance: '2 km from railway station', description: 'Premium business hotel' },
-        { id: '4', name: 'Fairmont Jaipur', rating: 4.7, price: 20000, amenities: ['Pool', 'Spa', 'Restaurant', 'Golf'], distance: '15 km from airport', description: 'Luxury resort hotel' },
-        { id: '5', name: 'Trident Jaipur', rating: 4.5, price: 12000, amenities: ['Pool', 'Restaurant', 'Free WiFi'], distance: '5 km from Amber Fort', description: 'Heritage-style luxury hotel' },
-        { id: '6', name: 'Radisson Blu Jaipur', rating: 4.3, price: 9000, amenities: ['Pool', 'Restaurant', 'Spa'], distance: '3 km from city center', description: 'Modern business hotel' },
-        { id: '7', name: 'Crowne Plaza Jaipur Tonk Road', rating: 4.4, price: 10000, amenities: ['Pool', 'Spa', 'Restaurant'], distance: '4 km from World Trade Park', description: 'Contemporary business hotel' },
-        { id: '8', name: 'Hilton Jaipur', rating: 4.2, price: 8500, amenities: ['Pool', 'Restaurant', 'Free WiFi'], distance: '6 km from Hawa Mahal', description: 'International chain hotel' },
-        { id: '9', name: 'Hotel Clarks Amer', rating: 4.1, price: 7000, amenities: ['Pool', 'Restaurant', 'Free WiFi'], distance: '2 km from railway station', description: 'Heritage business hotel' },
-        { id: '10', name: 'Lemon Tree Premier Jaipur', rating: 4.0, price: 6000, amenities: ['Restaurant', 'Free WiFi', 'Gym'], distance: '5 km from Birla Mandir', description: 'Mid-range business hotel' },
-        { id: '11', name: 'Hotel Arya Niwas', rating: 3.9, price: 3500, amenities: ['Restaurant', 'Free WiFi', 'AC'], distance: '3 km from City Palace', description: 'Heritage budget hotel' },
-        { id: '12', name: 'Umaid Bhawan Heritage House Hotel', rating: 4.0, price: 4500, amenities: ['Restaurant', 'Free WiFi', 'Heritage'], distance: '4 km from Jantar Mantar', description: 'Traditional heritage hotel' }
+      nagpur: [
+        { id: '1', name: 'Radisson Blu Hotel Nagpur', rating: 4.4, price: 8000, amenities: ['Pool', 'Spa', 'Restaurant'], distance: '3 km from Sitabuldi', description: 'Premium business hotel' },
+        { id: '2', name: 'The Pride Hotel Nagpur', rating: 4.3, price: 7000, amenities: ['Pool', 'Restaurant', 'Free WiFi'], distance: '2 km from Deekshabhoomi', description: 'Heritage business hotel' },
+        { id: '3', name: 'Lemon Tree Hotel Nagpur', rating: 4.1, price: 5500, amenities: ['Restaurant', 'Free WiFi', 'Gym'], distance: '4 km from Ambazari Lake', description: 'Mid-range business hotel' },
+        { id: '4', name: 'Hotel Centre Point', rating: 4.0, price: 4500, amenities: ['Restaurant', 'Free WiFi', 'AC'], distance: '1 km from Sitabuldi Fort', description: 'City center hotel' },
+        { id: '5', name: 'Tuli Imperial', rating: 4.2, price: 6500, amenities: ['Pool', 'Restaurant', 'Spa'], distance: '5 km from airport', description: 'Airport vicinity hotel' },
+        { id: '6', name: 'Hotel Hardeo', rating: 3.9, price: 3800, amenities: ['Restaurant', 'Free WiFi'], distance: '2 km from Kasturchand Park', description: 'Budget city hotel' },
+        { id: '7', name: 'Chitakore Hotel', rating: 3.8, price: 3500, amenities: ['Restaurant', 'AC'], distance: '3 km from Seminary Hills', description: 'Heritage hotel' },
+        { id: '8', name: 'Hotel Ashoka', rating: 3.7, price: 3200, amenities: ['Restaurant', 'Free WiFi'], distance: '4 km from Zero Mile Stone', description: 'Economy hotel' },
+        { id: '9', name: 'OYO Hotel Civil Lines', rating: 3.9, price: 3600, amenities: ['Free WiFi', 'AC'], distance: '2 km from High Court', description: 'Budget chain hotel' },
+        { id: '10', name: 'Hotel Regency', rating: 3.8, price: 3400, amenities: ['Restaurant', 'AC'], distance: '5 km from Futala Lake', description: 'Mid-range hotel' },
+        { id: '11', name: 'Treebo Trend Residency', rating: 4.0, price: 4200, amenities: ['Free WiFi', 'Restaurant', 'AC'], distance: '3 km from Empress Mall', description: 'Modern budget hotel' },
+        { id: '12', name: 'Hotel Blue Moon', rating: 3.6, price: 2800, amenities: ['Restaurant', 'AC'], distance: '6 km from Raman Science Centre', description: 'Budget accommodation' }
       ],
-      ahmedabad: [
-        { id: '1', name: 'The Fern Residency Ahmedabad', rating: 4.5, price: 8000, amenities: ['Pool', 'Restaurant', 'Free WiFi'], distance: '5 km from airport', description: 'Eco-friendly business hotel' },
-        { id: '2', name: 'Hyatt Regency Ahmedabad', rating: 4.6, price: 12000, amenities: ['Pool', 'Spa', 'Restaurant'], distance: '3 km from Sarkhej', description: 'Luxury business hotel' },
-        { id: '3', name: 'Radisson Blu Hotel Ahmedabad', rating: 4.4, price: 9500, amenities: ['Pool', 'Restaurant', 'Spa'], distance: '2 km from SG Highway', description: 'Modern business hotel' },
-        { id: '4', name: 'Novotel Ahmedabad', rating: 4.3, price: 8500, amenities: ['Pool', 'Restaurant', 'Free WiFi'], distance: '4 km from ISCON Temple', description: 'International chain hotel' },
-        { id: '5', name: 'Four Points by Sheraton Ahmedabad', rating: 4.2, price: 7500, amenities: ['Pool', 'Restaurant', 'Gym'], distance: '6 km from Mahatma Mandir', description: 'Business district hotel' },
-        { id: '6', name: 'Lemon Tree Hotel Ahmedabad', rating: 4.1, price: 6000, amenities: ['Restaurant', 'Free WiFi', 'AC'], distance: '3 km from Ashram Road', description: 'Mid-range city hotel' },
-        { id: '7', name: 'Crowne Plaza Ahmedabad City Centre', rating: 4.4, price: 10000, amenities: ['Pool', 'Spa', 'Restaurant'], distance: '2 km from city center', description: 'Premium city hotel' },
-        { id: '8', name: 'The Grand Bhagwati Ahmedabad', rating: 4.0, price: 5500, amenities: ['Pool', 'Restaurant', 'Free WiFi'], distance: '7 km from Sabarmati Ashram', description: 'Heritage-style hotel' },
-        { id: '9', name: 'Hotel Express Residency', rating: 3.9, price: 4000, amenities: ['Restaurant', 'Free WiFi', 'AC'], distance: '4 km from Law Garden', description: 'Budget business hotel' },
-        { id: '10', name: 'Treebo Trend Amber', rating: 4.0, price: 4500, amenities: ['Free WiFi', 'Restaurant', 'AC'], distance: '5 km from Ellis Bridge', description: 'Modern budget hotel' },
-        { id: '11', name: 'Hotel Royal Highness', rating: 3.8, price: 3500, amenities: ['Restaurant', 'Free WiFi', 'AC'], distance: '3 km from CG Road', description: 'Economy city hotel' },
-        { id: '12', name: 'Ginger Ahmedabad', rating: 4.1, price: 5000, amenities: ['Restaurant', 'Free WiFi', 'Gym'], distance: '8 km from Gandhinagar', description: 'Smart budget hotel' }
+      vadodara: [
+        { id: '1', name: 'Four Points by Sheraton Vadodara', rating: 4.4, price: 8500, amenities: ['Pool', 'Spa', 'Restaurant'], distance: '3 km from Laxmi Vilas Palace', description: 'International business hotel' },
+        { id: '2', name: 'Welcomhotel Vadodara', rating: 4.3, price: 7500, amenities: ['Pool', 'Restaurant', 'Free WiFi'], distance: '2 km from Sayaji Gardens', description: 'Heritage business hotel' },
+        { id: '3', name: 'Lemon Tree Hotel Vadodara', rating: 4.1, price: 5000, amenities: ['Restaurant', 'Free WiFi', 'Gym'], distance: '4 km from Kirti Mandir', description: 'Mid-range business hotel' },
+        { id: '4', name: 'Hotel Express Residency', rating: 4.0, price: 4200, amenities: ['Restaurant', 'Free WiFi', 'AC'], distance: '1 km from Vadodara Junction', description: 'Railway station hotel' },
+        { id: '5', name: 'GenX Vadodara 1589', rating: 4.2, price: 6000, amenities: ['Pool', 'Restaurant', 'Spa'], distance: '5 km from Akota Gardens', description: 'Contemporary hotel' },
+        { id: '6', name: 'Hotel Surya Palace', rating: 3.9, price: 3500, amenities: ['Restaurant', 'Free WiFi'], distance: '2 km from Mandvi Gate', description: 'Heritage area hotel' },
+        { id: '7', name: 'OYO Townhouse Alkapuri', rating: 3.8, price: 3800, amenities: ['Free WiFi', 'AC'], distance: '3 km from Alkapuri', description: 'Budget chain hotel' },
+        { id: '8', name: 'Hotel Suba Palace', rating: 3.7, price: 3200, amenities: ['Restaurant', 'AC'], distance: '4 km from Nazarbaug Palace', description: 'Heritage hotel' },
+        { id: '9', name: 'Treebo Trend Shree Krishna', rating: 4.0, price: 4000, amenities: ['Free WiFi', 'Restaurant', 'AC'], distance: '2 km from Fateh Singh Museum', description: 'Modern budget hotel' },
+        { id: '10', name: 'Hotel Anand', rating: 3.6, price: 2800, amenities: ['Restaurant', 'AC'], distance: '5 km from Sursagar Lake', description: 'Budget accommodation' },
+        { id: '11', name: 'Hotel Tulsi', rating: 3.8, price: 3400, amenities: ['Restaurant', 'Free WiFi', 'AC'], distance: '3 km from Baroda Museum', description: 'City hotel' },
+        { id: '12', name: 'Hotel Royale Residency', rating: 3.9, price: 3600, amenities: ['Restaurant', 'Free WiFi'], distance: '6 km from EME Temple', description: 'Residential area hotel' }
       ],
-      kochi: [
-        { id: '1', name: 'Grand Hyatt Kochi Bolgatty', rating: 4.7, price: 16000, amenities: ['Pool', 'Spa', 'Restaurant', 'Golf'], distance: '2 km from Marine Drive', description: 'Luxury island resort' },
-        { id: '2', name: 'Taj Malabar Resort & Spa', rating: 4.6, price: 14000, amenities: ['Pool', 'Spa', 'Restaurant', 'Beach'], distance: '1 km from Willingdon Island', description: 'Heritage beachfront hotel' },
-        { id: '3', name: 'Crowne Plaza Kochi', rating: 4.5, price: 12000, amenities: ['Pool', 'Restaurant', 'Free WiFi'], distance: '3 km from airport', description: 'Business district hotel' },
-        { id: '4', name: 'Radisson Blu Kochi', rating: 4.4, price: 10000, amenities: ['Pool', 'Spa', 'Restaurant'], distance: '4 km from Fort Kochi', description: 'Modern city hotel' },
-        { id: '5', name: 'Hotel Presidency', rating: 4.2, price: 7000, amenities: ['Restaurant', 'Free WiFi', 'AC'], distance: '2 km from Ernakulam Junction', description: 'Heritage city hotel' },
-        { id: '6', name: 'The Gateway Hotel Marine Drive', rating: 4.3, price: 8500, amenities: ['Pool', 'Restaurant', 'Free WiFi'], distance: '1 km from Marine Drive', description: 'Waterfront hotel' },
-        { id: '7', name: 'Le Meridien Kochi', rating: 4.8, price: 18000, amenities: ['Pool', 'Spa', 'Restaurant', 'Art Gallery'], distance: '2 km from Chinese Fishing Nets', description: 'Art-themed luxury hotel' },
-        { id: '8', name: 'Fragrant Nature Kochi', rating: 4.1, price: 6500, amenities: ['Pool', 'Restaurant', 'Free WiFi'], distance: '5 km from Mattancherry', description: 'Eco-friendly hotel' },
-        { id: '9', name: 'Casino Hotel', rating: 4.0, price: 5500, amenities: ['Pool', 'Restaurant', 'Heritage'], distance: '3 km from Jew Town', description: 'Heritage casino hotel' },
-        { id: '10', name: 'Lemon Tree Hotel Kochi', rating: 4.1, price: 6000, amenities: ['Restaurant', 'Free WiFi', 'Gym'], distance: '6 km from Kochi Metro', description: 'Mid-range business hotel' },
-        { id: '11', name: 'Hotel Abad Plaza', rating: 3.9, price: 4500, amenities: ['Restaurant', 'Free WiFi', 'AC'], distance: '4 km from Edapally', description: 'Budget city hotel' },
-        { id: '12', name: 'Treebo Trend Fort Queen', rating: 4.0, price: 5000, amenities: ['Free WiFi', 'Restaurant', 'AC'], distance: '1 km from Fort Kochi Beach', description: 'Heritage area hotel' }
+      agra: [
+        { id: '1', name: 'The Oberoi Amarvilas', rating: 4.9, price: 45000, amenities: ['Pool', 'Spa', 'Restaurant', 'Butler Service'], distance: '600m from Taj Mahal', description: 'Luxury resort with Taj Mahal views' },
+        { id: '2', name: 'ITC Mughal Agra', rating: 4.7, price: 18000, amenities: ['Pool', 'Spa', 'Restaurant', 'Golf'], distance: '2 km from Taj Mahal', description: 'Mughal-themed luxury hotel' },
+        { id: '3', name: 'Taj Hotel & Convention Centre', rating: 4.5, price: 12000, amenities: ['Pool', 'Restaurant', 'Free WiFi'], distance: '3 km from Taj Mahal', description: 'Heritage business hotel' },
+        { id: '4', name: 'Trident Agra', rating: 4.4, price: 10000, amenities: ['Pool', 'Restaurant', 'Spa'], distance: '4 km from Fatehpur Sikri Road', description: 'Luxury hotel with gardens' },
+        { id: '5', name: 'Radisson Blu Agra', rating: 4.3, price: 8500, amenities: ['Pool', 'Restaurant', 'Free WiFi'], distance: '5 km from Agra Cantt', description: 'Modern business hotel' },
+        { id: '6', name: 'Hotel Clarks Shiraz', rating: 4.1, price: 6500, amenities: ['Pool', 'Restaurant', 'Free WiFi'], distance: '2 km from Taj Mahal', description: 'Heritage hotel' },
+        { id: '7', name: 'Howard Plaza The Fern', rating: 4.0, price: 5500, amenities: ['Restaurant', 'Free WiFi', 'Pool'], distance: '3 km from Agra Fort', description: 'Eco-friendly hotel' },
+        { id: '8', name: 'Hotel Atulyaa Taj', rating: 3.9, price: 4500, amenities: ['Restaurant', 'Free WiFi', 'AC'], distance: '1.5 km from Taj Mahal', description: 'Taj view hotel' },
+        { id: '9', name: 'Crystal Sarovar Premiere', rating: 4.2, price: 7000, amenities: ['Pool', 'Restaurant', 'Spa'], distance: '4 km from Sikandra', description: 'Premium hotel' },
+        { id: '10', name: 'Hotel Parador', rating: 3.8, price: 3800, amenities: ['Restaurant', 'Free WiFi'], distance: '2.5 km from Taj Mahal', description: 'Budget hotel with Taj views' },
+        { id: '11', name: 'OYO Flagship Taj East Gate', rating: 3.7, price: 3200, amenities: ['Free WiFi', 'AC'], distance: '1 km from Taj Mahal', description: 'Budget chain hotel' },
+        { id: '12', name: 'Treebo Trend Taj Plaza', rating: 3.9, price: 4000, amenities: ['Free WiFi', 'Restaurant', 'AC'], distance: '1.8 km from Taj Mahal', description: 'Modern budget hotel' }
       ],
-      thiruvananthapuram: [
-        { id: '1', name: 'Taj Green Cove Resort & Spa', rating: 4.6, price: 14000, amenities: ['Beach', 'Pool', 'Spa', 'Restaurant'], distance: '15 km from Kovalam Beach', description: 'Beachfront luxury resort' },
-        { id: '2', name: 'Vivanta Trivandrum', rating: 4.5, price: 12000, amenities: ['Pool', 'Spa', 'Restaurant'], distance: '3 km from Technopark', description: 'Modern business hotel' },
-        { id: '3', name: 'The Leela Kovalam', rating: 4.8, price: 20000, amenities: ['Beach', 'Pool', 'Spa', 'Ayurveda'], distance: '1 km from Lighthouse Beach', description: 'Clifftop luxury resort' },
-        { id: '4', name: 'Hilton Garden Inn Trivandrum', rating: 4.3, price: 8000, amenities: ['Pool', 'Restaurant', 'Free WiFi'], distance: '2 km from airport', description: 'International business hotel' },
-        { id: '5', name: 'Hotel Residency Tower', rating: 4.1, price: 6000, amenities: ['Restaurant', 'Free WiFi', 'AC'], distance: '1 km from Central Station', description: 'City center hotel' },
-        { id: '6', name: 'Uday Suites', rating: 4.0, price: 5000, amenities: ['Restaurant', 'Free WiFi', 'Pool'], distance: '4 km from Padmanabhaswamy Temple', description: 'Heritage area hotel' },
-        { id: '7', name: 'Turtle on the Beach', rating: 4.2, price: 7500, amenities: ['Beach', 'Restaurant', 'Ayurveda'], distance: '0.5 km from Varkala Beach', description: 'Beachfront boutique hotel' },
-        { id: '8', name: 'The South Park', rating: 3.9, price: 4500, amenities: ['Restaurant', 'Free WiFi', 'AC'], distance: '5 km from Napier Museum', description: 'Budget city hotel' },
-        { id: '9', name: 'Hotel Horizon', rating: 4.0, price: 5500, amenities: ['Pool', 'Restaurant', 'Free WiFi'], distance: '3 km from Shangumugham Beach', description: 'Mid-range hotel' },
-        { id: '10', name: 'Pankaj Hotel', rating: 3.8, price: 3500, amenities: ['Restaurant', 'Free WiFi', 'AC'], distance: '2 km from Thampanoor', description: 'Economy hotel' },
-        { id: '11', name: 'Greenland Lodging', rating: 3.7, price: 3000, amenities: ['Restaurant', 'Free WiFi'], distance: '6 km from Kanakakunnu Palace', description: 'Budget accommodation' },
-        { id: '12', name: 'YMCA International Guest House', rating: 3.9, price: 2500, amenities: ['Restaurant', 'Free WiFi'], distance: '4 km from Zoo', description: 'Institutional guest house' }
+      varanasi: [
+        { id: '1', name: 'Taj Ganges Varanasi', rating: 4.5, price: 12000, amenities: ['Pool', 'Spa', 'Restaurant', 'River View'], distance: '2 km from Dashashwamedh Ghat', description: 'Luxury hotel overlooking Ganges' },
+        { id: '2', name: 'Radisson Hotel Varanasi', rating: 4.4, price: 9000, amenities: ['Pool', 'Restaurant', 'Free WiFi'], distance: '5 km from Sarnath', description: 'Modern business hotel' },
+        { id: '3', name: 'Ramada Plaza by Wyndham', rating: 4.3, price: 7500, amenities: ['Pool', 'Restaurant', 'Spa'], distance: '3 km from Kashi Vishwanath Temple', description: 'International chain hotel' },
+        { id: '4', name: 'Hotel Hindusthan International', rating: 4.1, price: 5500, amenities: ['Restaurant', 'Free WiFi', 'AC'], distance: '1 km from Varanasi Junction', description: 'Heritage business hotel' },
+        { id: '5', name: 'BrijRama Palace', rating: 4.6, price: 15000, amenities: ['Heritage', 'Restaurant', 'River View'], distance: '0.5 km from Darbhanga Ghat', description: 'Heritage palace on Ganges' },
+        { id: '6', name: 'Hotel Surya', rating: 4.0, price: 4500, amenities: ['Restaurant', 'Free WiFi', 'AC'], distance: '2 km from Godowlia', description: 'City center hotel' },
+        { id: '7', name: 'Rivatas by Ideal', rating: 4.2, price: 8000, amenities: ['Pool', 'Restaurant', 'River View'], distance: '1.5 km from Assi Ghat', description: 'Boutique river hotel' },
+        { id: '8', name: 'Hotel Buddha', rating: 3.9, price: 3800, amenities: ['Restaurant', 'Free WiFi'], distance: '3 km from Sarnath Museum', description: 'Buddhist heritage hotel' },
+        { id: '9', name: 'Zostel Varanasi', rating: 4.0, price: 1200, amenities: ['Hostel', 'Free WiFi', 'Common Area'], distance: '2 km from Lanka', description: 'Backpacker hostel' },
+        { id: '10', name: 'Hotel Temple on Ganges', rating: 3.8, price: 3500, amenities: ['Restaurant', 'River View'], distance: '0.8 km from Manikarnika Ghat', description: 'Heritage ghat hotel' },
+        { id: '11', name: 'OYO Flagship Cantonment', rating: 3.7, price: 2800, amenities: ['Free WiFi', 'AC'], distance: '4 km from BHU', description: 'Budget chain hotel' },
+        { id: '12', name: 'Treebo Trend Amrita', rating: 3.9, price: 3200, amenities: ['Free WiFi', 'Restaurant', 'AC'], distance: '2.5 km from Dashashwamedh Ghat', description: 'Modern budget hotel' }
       ],
-      lucknow: [
-        { id: '1', name: 'Taj Mahal Lucknow', rating: 4.6, price: 12000, amenities: ['Pool', 'Spa', 'Restaurant', 'Heritage'], distance: '2 km from Hazratganj', description: 'Heritage luxury hotel' },
-        { id: '2', name: 'Renaissance Lucknow Hotel', rating: 4.5, price: 10000, amenities: ['Pool', 'Spa', 'Restaurant'], distance: '5 km from Gomti Nagar', description: 'Modern luxury hotel' },
-        { id: '3', name: 'Hyatt Regency Lucknow', rating: 4.4, price: 9500, amenities: ['Pool', 'Restaurant', 'Free WiFi'], distance: '3 km from Ambedkar Park', description: 'Contemporary business hotel' },
-        { id: '4', name: 'Hotel Clarks Avadh', rating: 4.2, price: 7000, amenities: ['Pool', 'Restaurant', 'Free WiFi'], distance: '1 km from Charbagh Station', description: 'Heritage business hotel' },
-        { id: '5', name: 'Lemon Tree Hotel Lucknow', rating: 4.1, price: 5500, amenities: ['Restaurant', 'Free WiFi', 'Gym'], distance: '4 km from Residency', description: 'Mid-range business hotel' },
-        { id: '6', name: 'Radisson Hotel Lucknow', rating: 4.3, price: 8000, amenities: ['Pool', 'Restaurant', 'Spa'], distance: '6 km from Janeshwar Mishra Park', description: 'Business district hotel' },
-        { id: '7', name: 'Dayal Gateway', rating: 4.0, price: 4500, amenities: ['Restaurant', 'Free WiFi', 'AC'], distance: '3 km from Bara Imambara', description: 'Heritage area hotel' },
-        { id: '8', name: 'Piccadily Hotel', rating: 3.9, price: 4000, amenities: ['Restaurant', 'Free WiFi', 'AC'], distance: '2 km from La Martiniere', description: 'City center hotel' },
-        { id: '9', name: 'Hotel Lineage', rating: 3.8, price: 3500, amenities: ['Restaurant', 'Free WiFi'], distance: '5 km from Aminabad', description: 'Budget city hotel' },
-        { id: '10', name: 'Treebo Trend Dayal Gateway', rating: 4.0, price: 4200, amenities: ['Free WiFi', 'Restaurant', 'AC'], distance: '4 km from Rumi Darwaza', description: 'Modern budget hotel' },
-        { id: '11', name: 'Hotel Levana Suites', rating: 3.9, price: 3800, amenities: ['Restaurant', 'Free WiFi', 'AC'], distance: '7 km from Phoenix United Mall', description: 'Business hotel' },
-        { id: '12', name: 'OYO Townhouse Hazratganj', rating: 3.7, price: 3000, amenities: ['Free WiFi', 'AC'], distance: '1 km from GPO', description: 'Budget chain hotel' }
-      ],
-      bhopal: [
-        { id: '1', name: 'Jehan Numa Palace Hotel', rating: 4.5, price: 8000, amenities: ['Pool', 'Restaurant', 'Heritage', 'Free WiFi'], distance: '2 km from Van Vihar', description: 'Heritage palace hotel' },
-        { id: '2', name: 'Noor-Us-Sabah Palace', rating: 4.3, price: 6500, amenities: ['Pool', 'Restaurant', 'Heritage'], distance: '4 km from Upper Lake', description: 'Royal heritage hotel' },
-        { id: '3', name: 'WelcomHotel Bella Vista', rating: 4.2, price: 7000, amenities: ['Pool', 'Restaurant', 'Free WiFi'], distance: '3 km from DB City Mall', description: 'Business hotel with lake view' },
-        { id: '4', name: 'Marriott Bhopal', rating: 4.4, price: 9000, amenities: ['Pool', 'Spa', 'Restaurant'], distance: '5 km from airport', description: 'International luxury hotel' },
-        { id: '5', name: 'Hotel Lake View Ashok', rating: 4.0, price: 4500, amenities: ['Restaurant', 'Free WiFi', 'Lake View'], distance: '1 km from Boat Club', description: 'ITDC heritage hotel' },
-        { id: '6', name: 'Lemon Tree Hotel Bhopal', rating: 4.1, price: 5000, amenities: ['Restaurant', 'Free WiFi', 'Gym'], distance: '6 km from Bhopal Junction', description: 'Mid-range business hotel' },
-        { id: '7', name: 'Hotel Residency', rating: 3.9, price: 3500, amenities: ['Restaurant', 'Free WiFi', 'AC'], distance: '2 km from New Market', description: 'City center budget hotel' },
-        { id: '8', name: 'Surya Palace Hotel', rating: 3.8, price: 3200, amenities: ['Restaurant', 'Free WiFi'], distance: '4 km from Taj-ul-Masajid', description: 'Heritage area hotel' },
-        { id: '9', name: 'Hotel Amer Palace', rating: 3.7, price: 2800, amenities: ['Restaurant', 'AC'], distance: '3 km from Chowk Bazaar', description: 'Budget heritage hotel' },
-        { id: '10', name: 'OYO Flagship Hamidia Road', rating: 3.9, price: 3000, amenities: ['Free WiFi', 'AC'], distance: '1 km from Hamidia Hospital', description: 'Budget chain hotel' },
-        { id: '11', name: 'Hotel Palash Residency', rating: 3.8, price: 3400, amenities: ['Restaurant', 'Free WiFi', 'AC'], distance: '5 km from Regional Science Centre', description: 'Family hotel' },
-        { id: '12', name: 'Treebo Trend Amer Palace', rating: 4.0, price: 3600, amenities: ['Free WiFi', 'Restaurant', 'AC'], distance: '7 km from Bharat Bhavan', description: 'Modern budget hotel' }
+      amritsar: [
+        { id: '1', name: 'Hyatt Regency Amritsar', rating: 4.6, price: 12000, amenities: ['Pool', 'Spa', 'Restaurant', 'Gym'], distance: '3 km from Golden Temple', description: 'Luxury business hotel' },
+        { id: '2', name: 'Taj Swarna Amritsar', rating: 4.5, price: 10000, amenities: ['Pool', 'Restaurant', 'Free WiFi'], distance: '2 km from Golden Temple', description: 'Heritage luxury hotel' },
+        { id: '3', name: 'Radisson Blu Hotel Amritsar', rating: 4.4, price: 8500, amenities: ['Pool', 'Restaurant', 'Spa'], distance: '4 km from Jallianwala Bagh', description: 'International business hotel' },
+        { id: '4', name: 'Hotel City Heart Premium', rating: 4.2, price: 6000, amenities: ['Restaurant', 'Free WiFi', 'AC'], distance: '1 km from Golden Temple', description: 'Premium city hotel' },
+        { id: '5', name: 'Country Inn & Suites Amritsar', rating: 4.3, price: 7000, amenities: ['Pool', 'Restaurant', 'Free WiFi'], distance: '5 km from airport', description: 'Airport vicinity hotel' },
+        { id: '6', name: 'Hotel Hong Kong Inn', rating: 4.0, price: 4500, amenities: ['Restaurant', 'Free WiFi', 'AC'], distance: '1.5 km from Golden Temple', description: 'Heritage area hotel' },
+        { id: '7', name: 'Ritz Plaza Amritsar', rating: 4.1, price: 5500, amenities: ['Restaurant', 'Free WiFi', 'Pool'], distance: '2.5 km from Durgiana Temple', description: 'Business hotel' },
+        { id: '8', name: 'Hotel CJ International', rating: 3.9, price: 3800, amenities: ['Restaurant', 'Free WiFi'], distance: '2 km from Hall Bazaar', description: 'City center hotel' },
+        { id: '9', name: 'OYO Flagship Golden Temple', rating: 3.8, price: 3200, amenities: ['Free WiFi', 'AC'], distance: '0.8 km from Golden Temple', description: 'Budget chain hotel' },
+        { id: '10', name: 'Hotel Sawera Grand', rating: 3.7, price: 3000, amenities: ['Restaurant', 'AC'], distance: '3 km from Partition Museum', description: 'Budget hotel' },
+        { id: '11', name: 'Treebo Trend Asia Amritsar', rating: 3.9, price: 3600, amenities: ['Free WiFi', 'Restaurant', 'AC'], distance: '2.2 km from Ram Bagh', description: 'Modern budget hotel' },
+        { id: '12', name: 'Hotel Shiraz Regency', rating: 3.8, price: 3400, amenities: ['Restaurant', 'Free WiFi', 'AC'], distance: '4 km from Gobindgarh Fort', description: 'Heritage hotel' }
       ]
     };
 
@@ -196,10 +182,6 @@ export const HotelRecommendations = ({ tripData, onNext }: HotelRecommendationsP
   };
 
   const handleNext = () => {
-    if (!selectedHotel) {
-      alert('Please select a hotel before proceeding.');
-      return;
-    }
     console.log('Selected hotel:', selectedHotel);
     onNext();
   };
