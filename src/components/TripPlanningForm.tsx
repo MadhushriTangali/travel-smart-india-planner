@@ -13,7 +13,6 @@ import { CulturePage } from '@/components/trip/CulturePage';
 import { CostEstimator } from '@/components/trip/CostEstimator';
 import { TransportModule } from '@/components/trip/TransportModule';
 import { TripSummary } from '@/components/trip/TripSummary';
-import { toast } from '@/hooks/use-toast';
 
 interface TripPlanningFormProps {
   onBack: () => void;
@@ -113,24 +112,6 @@ export const TripPlanningForm = ({ onBack }: TripPlanningFormProps) => {
 
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (!tripData.source_location || !tripData.destination || !tripData.budget) {
-      toast({
-        title: "Missing Information",
-        description: "Please fill in source location, destination, and budget.",
-        variant: "destructive"
-      });
-      return;
-    }
-
-    if (tripData.budget < 1000) {
-      toast({
-        title: "Budget Warning",
-        description: "Your budget seems quite low. Consider increasing it for better options.",
-        variant: "destructive"
-      });
-    }
-
     console.log('Trip planning started with data:', tripData);
     setCurrentStep(1);
   };
@@ -189,7 +170,6 @@ export const TripPlanningForm = ({ onBack }: TripPlanningFormProps) => {
                         className="pl-10"
                         value={tripData.budget || ''}
                         onChange={(e) => setTripData({...tripData, budget: parseInt(e.target.value) || 0})}
-                        required
                       />
                     </div>
                   </div>

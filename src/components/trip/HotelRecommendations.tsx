@@ -313,7 +313,7 @@ export const HotelRecommendations = ({ tripData, onNext }: HotelRecommendationsP
           Hotel Recommendations in {tripData.destination}
         </CardTitle>
         <p className="text-gray-600 font-semibold">
-          Choose your preferred hotel
+          Choose your preferred hotel (optional)
         </p>
       </CardHeader>
       <CardContent className="p-6">
@@ -368,7 +368,7 @@ export const HotelRecommendations = ({ tripData, onNext }: HotelRecommendationsP
         )}
 
         <div className="flex justify-end mt-8">
-          <Button onClick={handleNext} className="bg-gradient-to-r from-orange-500 to-blue-600 hover:from-orange-600 hover:to-blue-700 text-white font-bold px-8 py-3 text-lg" disabled={!selectedHotel}>
+          <Button onClick={handleNext} className="bg-gradient-to-r from-orange-500 to-blue-600 hover:from-orange-600 hover:to-blue-700 text-white font-bold px-8 py-3 text-lg">
             Next: Attractions
           </Button>
         </div>
