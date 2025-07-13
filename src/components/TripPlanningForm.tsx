@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -28,6 +27,67 @@ export interface TripData {
   travel_style: string;
   notes: string;
 }
+
+// Cities with comprehensive real data
+const indianCities = [
+  'Mumbai',
+  'Delhi',
+  'Bangalore',
+  'Chennai',
+  'Kolkata',
+  'Hyderabad',
+  'Pune',
+  'Ahmedabad',
+  'Jaipur',
+  'Surat',
+  'Lucknow',
+  'Kanpur',
+  'Nagpur',
+  'Indore',
+  'Thane',
+  'Bhopal',
+  'Visakhapatnam',
+  'Pimpri-Chinchwad',
+  'Patna',
+  'Vadodara',
+  'Ghaziabad',
+  'Ludhiana',
+  'Agra',
+  'Nashik',
+  'Faridabad',
+  'Meerut',
+  'Rajkot',
+  'Kalyan-Dombivli',
+  'Vasai-Virar',
+  'Varanasi',
+  'Srinagar',
+  'Aurangabad',
+  'Dhanbad',
+  'Amritsar',
+  'Navi Mumbai',
+  'Allahabad',
+  'Ranchi',
+  'Howrah',
+  'Coimbatore',
+  'Jabalpur',
+  'Gwalior',
+  'Vijayawada',
+  'Jodhpur',
+  'Madurai',
+  'Raipur',
+  'Kota',
+  'Guwahati',
+  'Chandigarh',
+  'Solapur',
+  'Hubli-Dharwad',
+  'Tiruchirappalli',
+  'Bareilly',
+  'Mysore',
+  'Tiruppur',
+  'Goa',
+  'Kerala',
+  'Rajasthan'
+].sort();
 
 export const TripPlanningForm = ({ onBack }: TripPlanningFormProps) => {
   const [currentStep, setCurrentStep] = useState(0);
@@ -91,23 +151,29 @@ export const TripPlanningForm = ({ onBack }: TripPlanningFormProps) => {
                 <div className="grid md:grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label htmlFor="source">Source Location</Label>
-                    <Input
-                      id="source"
-                      placeholder="e.g., Mumbai, Delhi, Bangalore"
-                      value={tripData.source_location}
-                      onChange={(e) => setTripData({...tripData, source_location: e.target.value})}
-                      required
-                    />
+                    <Select value={tripData.source_location} onValueChange={(value) => setTripData({...tripData, source_location: value})}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select source city" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {indianCities.map((city) => (
+                          <SelectItem key={city} value={city}>{city}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="destination">Destination City</Label>
-                    <Input
-                      id="destination"
-                      placeholder="e.g., Goa, Kerala, Rajasthan"
-                      value={tripData.destination}
-                      onChange={(e) => setTripData({...tripData, destination: e.target.value})}
-                      required
-                    />
+                    <Select value={tripData.destination} onValueChange={(value) => setTripData({...tripData, destination: value})}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select destination city" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {indianCities.map((city) => (
+                          <SelectItem key={city} value={city}>{city}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </div>
                 </div>
 
