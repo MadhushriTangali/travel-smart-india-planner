@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -61,91 +60,236 @@ export const CulturePage = ({ tripData, onNext }: CulturePageProps) => {
           'Bargain respectfully in traditional markets like Laad Bazaar'
         ]
       },
-      mumbai: {
-        overview: 'Mumbai is India\'s financial capital and the "City of Dreams". It\'s a cosmopolitan metropolis where people from all over India come to pursue their aspirations, creating a vibrant multicultural environment.',
+      chennai: {
+        overview: 'Chennai is the cultural capital of South India, known for classical Carnatic music, Bharatanatyam dance, and Tamil literature. The city perfectly blends ancient Tamil traditions with modern cosmopolitan lifestyle.',
         dressing: [
-          'Casual: Western wear is widely accepted',
-          'Monsoon: Waterproof clothing essential during rains',
-          'Business: Corporate formal attire in business districts',
-          'Traditional: Ethnic wear during festivals like Ganesh Chaturthi'
+          'Traditional: Silk sarees and veshtis for cultural events',
+          'Daily wear: Light cotton clothing due to humid climate',
+          'Business: Formal western attire in IT corridors',
+          'Festivals: Kanchipuram silk sarees and traditional jewelry'
         ],
         festivals: [
-          { name: 'Ganesh Chaturthi', month: 'August-September', description: 'Grand celebration of Lord Ganesha with elaborate processions' },
-          { name: 'Navratri', month: 'September-October', description: 'Nine nights of dance and devotion' },
-          { name: 'Kala Ghoda Arts Festival', month: 'February', description: 'Celebration of arts, culture, and heritage' }
+          { name: 'Pongal', month: 'January', description: 'Tamil harvest festival celebrating nature and agriculture' },
+          { name: 'Navaratri', month: 'September-October', description: 'Nine nights of classical music and dance performances' },
+          { name: 'Chennai Music Season', month: 'December-January', description: 'World\'s largest cultural festival of Indian classical music' }
         ],
         traditions: [
-          'Local train commuting culture and etiquette',
-          'Street food exploration as social activity',
-          'Bollywood film culture and celebrity worship',
-          'Community celebrations in housing societies',
-          'Late-night lifestyle and 24/7 city culture'
+          'Classical Carnatic music concerts and sabhas',
+          'Traditional Bharatanatyam dance performances',
+          'Filter coffee culture and evening beach walks',
+          'Kolam (rangoli) art drawn at house entrances',
+          'Temple visits and religious processions'
         ],
-        language: 'Marathi is the local language, Hindi is widely spoken, English is common in business.',
+        language: 'Tamil is the primary language, English widely spoken in business areas, Hindi understood.',
         etiquette: [
-          'Stand right on escalators, walk left',
-          'Give priority seats to women and elderly in trains',
-          'Don\'t photograph people without permission',
-          'Tip service staff appropriately (10-15%)',
-          'Be patient with traffic and crowds'
+          'Remove shoes before entering temples and homes',
+          'Dress modestly when visiting religious places',
+          'Respect classical music venues with silence during performances',
+          'Try authentic South Indian breakfast at local eateries',
+          'Be mindful of Tamil pride and cultural sensitivities'
         ]
       },
-      delhi: {
-        overview: 'Delhi, the capital of India, is a city where ancient history meets modernity. From Red Fort to Connaught Place, it showcases 1000+ years of Indian history and serves as the political and cultural center.',
+      pune: {
+        overview: 'Pune is known as the "Oxford of the East" and cultural capital of Maharashtra. The city has a rich Maratha heritage and is famous for its educational institutions, IT industry, and vibrant youth culture.',
         dressing: [
-          'Winter: Heavy woolens and jackets (December-February)',
-          'Summer: Light cotton clothing (April-June)',
-          'Traditional: Salwar kameez, kurtas for cultural events',
-          'Formal: Business suits in corporate areas like Gurgaon'
+          'Traditional: Nauvari sarees and dhoti-kurta for festivals',
+          'Daily wear: Casual western and Indo-western attire',
+          'Business: Corporate formal wear in IT hubs',
+          'Monsoon: Light rain gear during heavy rains'
         ],
         festivals: [
-          { name: 'Diwali', month: 'October-November', description: 'Festival of lights celebrated grandly across the city' },
-          { name: 'Dussehra', month: 'September-October', description: 'Victory of good over evil with Ramlila performances' },
-          { name: 'Holi', month: 'March', description: 'Festival of colors celebrated with enthusiasm' }
+          { name: 'Ganesh Chaturthi', month: 'August-September', description: 'Grand celebration with elaborate Ganpati processions' },
+          { name: 'Gudi Padwa', month: 'March-April', description: 'Marathi New Year with traditional decorations' },
+          { name: 'Sawai Gandharva Music Festival', month: 'December', description: 'Classical music festival honoring great musicians' }
         ],
         traditions: [
-          'Street food culture in Old Delhi and Khan Market',
-          'Sunday visits to India Gate and Lodhi Gardens',
-          'Shopping in traditional markets like Chandni Chowk',
-          'Classical music and dance performances',
-          'Political consciousness and debate culture'
+          'Marathi theater and cultural programs',
+          'Traditional bhajan-kirtan singing',
+          'Visiting ashrams and spiritual centers',
+          'Celebrating Maratha warrior heritage',
+          'Educational excellence and student culture'
         ],
-        language: 'Hindi is primary, Punjabi is common, English widely understood in New Delhi areas.',
+        language: 'Marathi is the local language, Hindi and English widely spoken, especially in IT areas.',
         etiquette: [
-          'Dress modestly when visiting Red Fort and Jama Masjid',
-          'Remove shoes before entering temples and mosques',
-          'Be prepared for security checks at monuments',
-          'Bargain in Old Delhi markets but pay fixed prices in malls',
-          'Respect traffic rules as they\'re strictly enforced'
+          'Respect Marathi culture and language',
+          'Be mindful during Ganesh festival processions',
+          'Dress appropriately when visiting spiritual centers',
+          'Try local Maharashtrian cuisine',
+          'Be courteous in educational and IT environments'
         ]
       },
-      goa: {
-        overview: 'Goa is known for its laid-back coastal culture, Portuguese colonial heritage, and vibrant beach lifestyle. It perfectly blends Indian traditions with Portuguese influences, creating a unique Konkani culture.',
+      jaipur: {
+        overview: 'Jaipur, the "Pink City," is the capital of Rajasthan and epitomizes royal Rajasthani culture. Known for magnificent palaces, vibrant traditions, handicrafts, and hospitality.',
         dressing: [
-          'Beach wear: Light, casual clothing and swimwear',
-          'Evening: Smart casual for beach shacks and restaurants',
-          'Church visits: Modest clothing covering shoulders and knees',
-          'Festivals: Traditional Konkani attire and bright colors'
+          'Traditional: Colorful lehengas, bandhani sarees, and pagris',
+          'Royal occasions: Heavy silk with traditional jewelry',
+          'Desert climate: Light cotton during day, warm clothes in winter',
+          'Festivals: Bright colors reflecting Rajasthani vibrancy'
         ],
         festivals: [
-          { name: 'Carnival', month: 'February-March', description: 'Portuguese-influenced celebration with parades and music' },
-          { name: 'Shigmo', month: 'March', description: 'Goan version of Holi with traditional dances' },
-          { name: 'Feast of St. Francis Xavier', month: 'December', description: 'Major Christian pilgrimage and celebration' }
+          { name: 'Teej', month: 'July-August', description: 'Monsoon festival celebrating marital bliss' },
+          { name: 'Diwali', month: 'October-November', description: 'Festival of lights celebrated with great grandeur' },
+          { name: 'Jaipur Literature Festival', month: 'January', description: 'World\'s largest free literary festival' }
         ],
         traditions: [
-          'Siesta culture - afternoon rest during hot hours',
-          'Feni drinking and cashew cultivation',
-          'Beach shack culture with live music',
-          'Catholic and Hindu festival celebrations',
-          'Traditional fishing community customs'
+          'Royal hospitality and "Padharo Mhare Desh" welcome',
+          'Traditional folk music and Kalbeliya dance',
+          'Handicrafts including block printing and jewelry making',
+          'Puppet shows (Kathputli) and folk storytelling',
+          'Camel rides and desert cultural experiences'
         ],
-        language: 'Konkani is local language, Portuguese influence remains, Hindi and English widely spoken.',
+        language: 'Hindi and Rajasthani dialects, English in tourist areas, Marwari widely spoken.',
         etiquette: [
-          'Respect beach cleanliness and local environment',
-          'Dress appropriately when visiting churches',
-          'Be mindful of local fishing activities on beaches',
-          'Negotiate prices respectfully with taxi drivers',
-          'Enjoy responsibly - Goa has relaxed alcohol laws but be sensible'
+          'Dress modestly, especially at religious places',
+          'Bargain respectfully in traditional markets',
+          'Respect royal heritage and monuments',
+          'Try traditional Rajasthani thali',
+          'Be mindful of desert climate and stay hydrated'
+        ]
+      },
+      ahmedabad: {
+        overview: 'Ahmedabad is Gujarat\'s commercial capital with rich textile heritage and Gandhian philosophy. The city blends traditional Gujarati culture with modern business sensibilities.',
+        dressing: [
+          'Traditional: Chaniya choli for women, kurta-dhoti for men',
+          'Business: Formal attire in commercial districts',
+          'Festivals: Bright colors during Navratri celebrations',
+          'Daily wear: Conservative clothing respecting local customs'
+        ],
+        festivals: [
+          { name: 'Navratri', month: 'September-October', description: 'Nine nights of garba and dandiya dancing' },
+          { name: 'Uttarayan', month: 'January', description: 'International kite festival with colorful skies' },
+          { name: 'Gandhi Jayanti', month: 'October', description: 'Mahatma Gandhi\'s birthday celebrated at Sabarmati Ashram' }
+        ],
+        traditions: [
+          'Gujarati thali dining tradition',
+          'Joint family system and business community values',
+          'Garba and dandiya raas folk dances',
+          'Textile and handicraft production',
+          'Jain and Hindu religious practices'
+        ],
+        language: 'Gujarati is primary language, Hindi widely understood, English in business.',
+        etiquette: [
+          'Respect vegetarian food culture',
+          'Dress conservatively, especially during religious festivals',
+          'Participate respectfully in garba celebrations',
+          'Visit Sabarmati Ashram with reverence',
+          'Be mindful of dry state alcohol policies'
+        ]
+      },
+      kochi: {
+        overview: 'Kochi (Cochin) is Kerala\'s commercial capital known as the "Queen of the Arabian Sea." The city showcases a unique blend of Indian, Portuguese, Dutch, and British influences.',
+        dressing: [
+          'Traditional: Kerala sarees (set mundu) and kasavu borders',
+          'Coastal climate: Light cotton and linen clothing',
+          'Monsoon: Waterproof clothing during heavy rains',
+          'Business: Formal wear in marine trade and IT sectors'
+        ],
+        festivals: [
+          { name: 'Onam', month: 'August-September', description: 'Kerala\'s harvest festival with boat races and cultural programs' },
+          { name: 'Cochin Carnival', month: 'December-January', description: 'New Year celebration with Portuguese influence' },
+          { name: 'Ernakulam Shiva Ratri', month: 'February-March', description: 'Grand temple festival with elephants and music' }
+        ],
+        traditions: [
+          'Kathakali and Mohiniyattam classical dance forms',
+          'Traditional Ayurvedic medicine and treatments',
+          'Coconut-based cuisine and spice trading',
+          'Chinese fishing nets and fishing community culture',
+          'Backwater cruises and houseboat experiences'
+        ],
+        language: 'Malayalam is the local language, English widely spoken in business, Hindi understood.',
+        etiquette: [
+          'Respect local Christian, Hindu, and Muslim communities',
+          'Dress modestly when visiting churches and temples',
+          'Try authentic Kerala cuisine with banana leaf serving',
+          'Be mindful of monsoon season travel plans',
+          'Respect fishing community activities at beaches'
+        ]
+      },
+      thiruvananthapuram: {
+        overview: 'Thiruvananthapuram (Trivandrum) is Kerala\'s capital city, known for its rich cultural heritage, classical arts, and being the center of Kerala\'s academic and cultural activities.',
+        dressing: [
+          'Traditional: White mundu with gold border, kasavu sarees',
+          'Formal: Business attire for government and IT sectors',
+          'Temple visits: Conservative traditional clothing',
+          'Coastal weather: Light cotton suitable for humidity'
+        ],
+        festivals: [
+          { name: 'Attukal Pongala', month: 'February-March', description: 'Women\'s festival with millions of participants cooking rice' },
+          { name: 'Navaratri at Padmanabhaswamy', month: 'September-October', description: 'Grand classical music and dance festival' },
+          { name: 'Onam', month: 'August-September', description: 'State festival celebrated with traditional fervor' }
+        ],
+        traditions: [
+          'Classical Carnatic music and temple concerts',
+          'Traditional Kerala architecture with wooden houses',
+          'Ayurvedic treatments and wellness practices',
+          'Government administrative culture',
+          'Academic excellence and research institutions'
+        ],
+        language: 'Malayalam primary language, English in government offices, Tamil understood due to proximity.',
+        etiquette: [
+          'Dress very conservatively for Padmanabhaswamy Temple',
+          'Respect government protocols in capital city',
+          'Participate respectfully in cultural programs',
+          'Try traditional sadya (feast) during festivals',
+          'Be mindful of academic and cultural sensitivities'
+        ]
+      },
+      lucknow: {
+        overview: 'Lucknow, the "City of Nawabs," is renowned for its refined culture, Urdu poetry, classical music, elaborate cuisine, and exemplary etiquette called "Lucknowi tehzeeb."',
+        dressing: [
+          'Traditional: Chikankari kurtas, sherwanis for men, Lucknowi suits for women',
+          'Formal: Business attire with traditional touch',
+          'Cultural events: Elegant traditional wear with intricate embroidery',
+          'Daily wear: Modest clothing respecting local customs'
+        ],
+        festivals: [
+          { name: 'Lucknow Mahotsav', month: 'November-December', description: 'Cultural festival showcasing arts, crafts, and cuisine' },
+          { name: 'Dussehra', month: 'September-October', description: 'Traditional celebration with elaborate Ramlila performances' },
+          { name: 'Diwali', month: 'October-November', description: 'Festival of lights celebrated with traditional grandeur' }
+        ],
+        traditions: [
+          'Lucknowi tehzeeb (refined etiquette and manners)',
+          'Urdu poetry (shayari) and mushaira gatherings',
+          'Classical music and thumri singing',
+          'Chikankari embroidery craftsmanship',
+          'Elaborate hospitality and nawabi culture'
+        ],
+        language: 'Hindi and Urdu widely spoken, refined Lucknowi dialect, English in business areas.',
+        etiquette: [
+          'Practice refined manners and polite conversation',
+          'Appreciate Urdu poetry and cultural programs',
+          'Try authentic Awadhi cuisine with proper etiquette',
+          'Respect historical monuments and heritage sites',
+          'Use respectful language and formal greetings'
+        ]
+      },
+      bhopal: {
+        overview: 'Bhopal, the "City of Lakes," is Madhya Pradesh\'s capital known for its rich history, beautiful lakes, and harmonious blend of Hindu and Islamic cultures.',
+        dressing: [
+          'Traditional: Mix of Hindu and Muslim traditional wear',
+          'Formal: Government and business formal attire',
+          'Cultural events: Traditional MP attire with local crafts',
+          'Lake visits: Comfortable casual wear for outdoor activities'
+        ],
+        festivals: [
+          { name: 'Ijtema', month: 'November', description: 'Large Islamic gathering with religious significance' },
+          { name: 'Diwali', month: 'October-November', description: 'Festival celebrated by Hindu community with lights' },
+          { name: 'Lok Rang', month: 'February', description: 'Folk festival showcasing Madhya Pradesh culture' }
+        ],
+        traditions: [
+          'Harmonious Hindu-Muslim cultural coexistence',
+          'Traditional handicrafts and tribal art',
+          'Lake-centered recreational activities',
+          'Government administrative culture',
+          'MP folk music and dance traditions'
+        ],
+        language: 'Hindi primary language, Urdu understood, English in government and business.',
+        etiquette: [
+          'Respect both Hindu and Islamic customs equally',
+          'Dress modestly when visiting religious places',
+          'Enjoy lake activities while maintaining cleanliness',
+          'Try local MP cuisine and specialties',
+          'Be mindful of government capital protocols'
         ]
       }
     };

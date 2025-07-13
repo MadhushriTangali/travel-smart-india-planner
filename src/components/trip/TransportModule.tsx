@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -30,88 +29,127 @@ export const TransportModule = ({ tripData, onNext }: TransportModuleProps) => {
     const sourceCity = source.toLowerCase();
     const destCity = destination.toLowerCase();
     
-    // Base transport pricing and duration logic based on common Indian routes
+    // Real transport pricing and duration based on Indian travel patterns
     const getRouteInfo = (from: string, to: string) => {
-      const routes: { [key: string]: { distance: number; flightTime: string; trainTime: string; busTime: string } } = {
-        'hyderabad-mumbai': { distance: 710, flightTime: '1h 30m', trainTime: '14h 00m', busTime: '12h 30m' },
-        'mumbai-hyderabad': { distance: 710, flightTime: '1h 30m', trainTime: '14h 00m', busTime: '12h 30m' },
-        'delhi-mumbai': { distance: 1400, flightTime: '2h 15m', trainTime: '17h 30m', busTime: '18h 00m' },
-        'mumbai-delhi': { distance: 1400, flightTime: '2h 15m', trainTime: '17h 30m', busTime: '18h 00m' },
-        'delhi-hyderabad': { distance: 1570, flightTime: '2h 30m', trainTime: '20h 00m', busTime: '22h 00m' },
-        'hyderabad-delhi': { distance: 1570, flightTime: '2h 30m', trainTime: '20h 00m', busTime: '22h 00m' },
-        'mumbai-goa': { distance: 450, flightTime: '1h 15m', trainTime: '12h 00m', busTime: '10h 00m' },
-        'goa-mumbai': { distance: 450, flightTime: '1h 15m', trainTime: '12h 00m', busTime: '10h 00m' },
-        'delhi-goa': { distance: 1860, flightTime: '2h 45m', trainTime: '26h 00m', busTime: '24h 00m' },
-        'goa-delhi': { distance: 1860, flightTime: '2h 45m', trainTime: '26h 00m', busTime: '24h 00m' },
-        'hyderabad-goa': { distance: 630, flightTime: '1h 20m', trainTime: '14h 30m', busTime: '12h 00m' },
-        'goa-hyderabad': { distance: 630, flightTime: '1h 20m', trainTime: '14h 30m', busTime: '12h 00m' }
+      const routes: { [key: string]: { busDuration: string; trainDuration: string; flightDuration: string; busPrice: number; trainPrice: number; flightPrice: number } } = {
+        // Major route combinations with realistic pricing
+        'delhi-mumbai': { busDuration: '18h', trainDuration: '16h', flightDuration: '2h 15m', busPrice: 1200, trainPrice: 1800, flightPrice: 4500 },
+        'mumbai-delhi': { busDuration: '18h', trainDuration: '16h', flightDuration: '2h 15m', busPrice: 1200, trainPrice: 1800, flightPrice: 4500 },
+        'delhi-bangalore': { busDuration: '24h', trainDuration: '34h', flightDuration: '2h 45m', busPrice: 1800, trainPrice: 2200, flightPrice: 5200 },
+        'bangalore-delhi': { busDuration: '24h', trainDuration: '34h', flightDuration: '2h 45m', busPrice: 1800, trainPrice: 2200, flightPrice: 5200 },
+        'mumbai-bangalore': { busDuration: '12h', trainDuration: '24h', flightDuration: '1h 30m', busPrice: 800, trainPrice: 1400, flightPrice: 3800 },
+        'bangalore-mumbai': { busDuration: '12h', trainDuration: '24h', flightDuration: '1h 30m', busPrice: 800, trainPrice: 1400, flightPrice: 3800 },
+        'delhi-chennai': { busDuration: '30h', trainDuration: '28h', flightDuration: '2h 30m', busPrice: 2000, trainPrice: 2500, flightPrice: 5800 },
+        'chennai-delhi': { busDuration: '30h', trainDuration: '28h', flightDuration: '2h 30m', busPrice: 2000, trainPrice: 2500, flightPrice: 5800 },
+        'mumbai-chennai': { busDuration: '14h', trainDuration: '22h', flightDuration: '1h 45m', busPrice: 900, trainPrice: 1600, flightPrice: 4200 },
+        'chennai-mumbai': { busDuration: '14h', trainDuration: '22h', flightDuration: '1h 45m', busPrice: 900, trainPrice: 1600, flightPrice: 4200 },
+        'delhi-kolkata': { busDuration: '20h', trainDuration: '17h', flightDuration: '2h 10m', busPrice: 1400, trainPrice: 1900, flightPrice: 4800 },
+        'kolkata-delhi': { busDuration: '20h', trainDuration: '17h', flightDuration: '2h 10m', busPrice: 1400, trainPrice: 1900, flightPrice: 4800 },
+        'mumbai-goa': { busDuration: '10h', trainDuration: '12h', flightDuration: '1h 15m', busPrice: 600, trainPrice: 800, flightPrice: 3200 },
+        'goa-mumbai': { busDuration: '10h', trainDuration: '12h', flightDuration: '1h 15m', busPrice: 600, trainPrice: 800, flightPrice: 3200 },
+        'bangalore-goa': { busDuration: '8h', trainDuration: '15h', flightDuration: '1h 10m', busPrice: 500, trainPrice: 700, flightPrice: 2800 },
+        'goa-bangalore': { busDuration: '8h', trainDuration: '15h', flightDuration: '1h 10m', busPrice: 500, trainPrice: 700, flightPrice: 2800 },
+        'delhi-jaipur': { busDuration: '5h', trainDuration: '4h 30m', flightDuration: '1h 20m', busPrice: 300, trainPrice: 400, flightPrice: 2500 },
+        'jaipur-delhi': { busDuration: '5h', trainDuration: '4h 30m', flightDuration: '1h 20m', busPrice: 300, trainPrice: 400, flightPrice: 2500 },
+        'mumbai-pune': { busDuration: '3h 30m', trainDuration: '3h', flightDuration: '45m', busPrice: 200, trainPrice: 150, flightPrice: 2200 },
+        'pune-mumbai': { busDuration: '3h 30m', trainDuration: '3h', flightDuration: '45m', busPrice: 200, trainPrice: 150, flightPrice: 2200 },
+        'delhi-lucknow': { busDuration: '8h', trainDuration: '6h', flightDuration: '1h 30m', busPrice: 500, trainPrice: 600, flightPrice: 3000 },
+        'lucknow-delhi': { busDuration: '8h', trainDuration: '6h', flightDuration: '1h 30m', busPrice: 500, trainPrice: 600, flightPrice: 3000 },
+        'mumbai-ahmedabad': { busDuration: '8h', trainDuration: '7h', flightDuration: '1h 20m', busPrice: 400, trainPrice: 500, flightPrice: 2800 },
+        'ahmedabad-mumbai': { busDuration: '8h', trainDuration: '7h', flightDuration: '1h 20m', busPrice: 400, trainPrice: 500, flightPrice: 2800 },
+        'bangalore-chennai': { busDuration: '7h', trainDuration: '5h', flightDuration: '1h 15m', busPrice: 350, trainPrice: 450, flightPrice: 2600 },
+        'chennai-bangalore': { busDuration: '7h', trainDuration: '5h', flightDuration: '1h 15m', busPrice: 350, trainPrice: 450, flightPrice: 2600 },
+        'kochi-bangalore': { busDuration: '12h', trainDuration: '11h', flightDuration: '1h 25m', busPrice: 600, trainPrice: 800, flightPrice: 3200 },
+        'bangalore-kochi': { busDuration: '12h', trainDuration: '11h', flightDuration: '1h 25m', busPrice: 600, trainPrice: 800, flightPrice: 3200 },
+        'thiruvananthapuram-bangalore': { busDuration: '16h', trainDuration: '15h', flightDuration: '1h 30m', busPrice: 800, trainPrice: 1000, flightPrice: 3500 },
+        'bangalore-thiruvananthapuram': { busDuration: '16h', trainDuration: '15h', flightDuration: '1h 30m', busPrice: 800, trainPrice: 1000, flightPrice: 3500 },
+        'hyderabad-bangalore': { busDuration: '8h', trainDuration: '12h', flightDuration: '1h 15m', busPrice: 450, trainPrice: 600, flightPrice: 2800 },
+        'bangalore-hyderabad': { busDuration: '8h', trainDuration: '12h', flightDuration: '1h 15m', busPrice: 450, trainPrice: 600, flightPrice: 2800 },
+        'delhi-bhopal': { busDuration: '10h', trainDuration: '8h', flightDuration: '1h 45m', busPrice: 600, trainPrice: 800, flightPrice: 3200 },
+        'bhopal-delhi': { busDuration: '10h', trainDuration: '8h', flightDuration: '1h 45m', busPrice: 600, trainPrice: 800, flightPrice: 3200 }
       };
 
       const routeKey = `${from}-${to}`;
-      return routes[routeKey] || { distance: 500, flightTime: '1h 30m', trainTime: '10h 00m', busTime: '8h 00m' };
+      return routes[routeKey] || { 
+        busDuration: '8h', trainDuration: '10h', flightDuration: '1h 30m', 
+        busPrice: 500, trainPrice: 800, flightPrice: 3500 
+      };
     };
 
     const routeInfo = getRouteInfo(sourceCity, destCity);
     
-    // Realistic pricing based on distance and transport type
-    const baseBusPrice = Math.floor(routeInfo.distance * 0.8); // ₹0.8 per km for bus
-    const baseTrainPrice = Math.floor(routeInfo.distance * 1.2); // ₹1.2 per km for train
-    const baseFlightPrice = Math.floor(routeInfo.distance * 4); // ₹4 per km for flight
-
     return [
       {
         id: '1',
         type: 'bus',
         name: 'AC Sleeper Bus',
-        price: baseBusPrice + 200,
-        duration: routeInfo.busTime,
+        price: routeInfo.busPrice + 200,
+        duration: routeInfo.busDuration,
         available: true,
         class: 'AC Sleeper'
       },
       {
         id: '2',
         type: 'bus',  
+        name: 'AC Semi-Sleeper',
+        price: routeInfo.busPrice,
+        duration: routeInfo.busDuration,
+        available: true,
+        class: 'AC Semi-Sleeper'
+      },
+      {
+        id: '3',
+        type: 'bus',
         name: 'Non-AC Seater',
-        price: Math.floor(baseBusPrice * 0.7),
-        duration: routeInfo.busTime,
+        price: Math.floor(routeInfo.busPrice * 0.6),
+        duration: routeInfo.busDuration,
         available: true,
         class: 'Non-AC Seater'
       },
       {
-        id: '3',
+        id: '4',
         type: 'train',
         name: '3AC Train',
-        price: baseTrainPrice + 300,
-        duration: routeInfo.trainTime,
+        price: routeInfo.trainPrice + 400,
+        duration: routeInfo.trainDuration,
         available: true,
         class: '3AC'
       },
       {
-        id: '4',
-        type: 'train',
-        name: 'Sleeper Class',
-        price: Math.floor(baseTrainPrice * 0.6),
-        duration: routeInfo.trainTime,
-        available: true,
-        class: 'Sleeper'
-      },
-      {
         id: '5',
-        type: 'flight',
-        name: 'Economy Flight',
-        price: baseFlightPrice,
-        duration: routeInfo.flightTime,
-        available: true,
-        class: 'Economy'
+        type: 'train',
+        name: '2AC Train',
+        price: routeInfo.trainPrice + 800,
+        duration: routeInfo.trainDuration,
+        available: Math.random() > 0.3,
+        class: '2AC'
       },
       {
         id: '6',
         type: 'train',
-        name: '2AC Train',
-        price: baseTrainPrice + 600,
-        duration: routeInfo.trainTime,
-        available: Math.random() > 0.3, // 70% availability
-        class: '2AC'
+        name: 'Sleeper Class',
+        price: Math.floor(routeInfo.trainPrice * 0.5),
+        duration: routeInfo.trainDuration,
+        available: true,
+        class: 'Sleeper'
+      },
+      {
+        id: '7',
+        type: 'flight',
+        name: 'Economy Class',
+        price: routeInfo.flightPrice,
+        duration: routeInfo.flightDuration,
+        available: true,
+        class: 'Economy'
+      },
+      {
+        id: '8',
+        type: 'flight',
+        name: 'Premium Economy',
+        price: Math.floor(routeInfo.flightPrice * 1.4),
+        duration: routeInfo.flightDuration,
+        available: Math.random() > 0.4,
+        class: 'Premium Economy'
       }
     ];
   };

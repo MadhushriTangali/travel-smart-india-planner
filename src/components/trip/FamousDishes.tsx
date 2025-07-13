@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -38,29 +37,69 @@ export const FamousDishes = ({ tripData, onNext }: FamousDishesProps) => {
         { id: '5', name: 'Irani Chai', description: 'Strong tea with milk served with Osmania biscuits', price: 15, category: 'Beverage', spiceLevel: 'None', rating: 4.4, isVegetarian: true },
         { id: '6', name: 'Nihari', description: 'Slow-cooked beef stew with aromatic spices', price: 280, category: 'Main Course', spiceLevel: 'High', rating: 4.7, isVegetarian: false }
       ],
-      mumbai: [
-        { id: '1', name: 'Vada Pav', description: 'Mumbai\'s iconic street food - spiced potato fritter in bread', price: 15, category: 'Street Food', spiceLevel: 'Medium', rating: 4.5, isVegetarian: true },
-        { id: '2', name: 'Pav Bhaji', description: 'Spicy vegetable curry served with buttered bread rolls', price: 80, category: 'Street Food', spiceLevel: 'Medium', rating: 4.6, isVegetarian: true },
-        { id: '3', name: 'Bhel Puri', description: 'Crunchy snack mix with sev, chutneys and vegetables', price: 40, category: 'Chaat', spiceLevel: 'Medium', rating: 4.4, isVegetarian: true },
-        { id: '4', name: 'Bombay Duck Curry', description: 'Local fish curry with coconut and spices', price: 250, category: 'Main Course', spiceLevel: 'High', rating: 4.3, isVegetarian: false },
-        { id: '5', name: 'Solkadhi', description: 'Refreshing drink made with coconut milk and kokum', price: 50, category: 'Beverage', spiceLevel: 'None', rating: 4.2, isVegetarian: true },
-        { id: '6', name: 'Modak', description: 'Steamed dumplings filled with jaggery and coconut', price: 60, category: 'Dessert', spiceLevel: 'None', rating: 4.5, isVegetarian: true }
+      chennai: [
+        { id: '1', name: 'Chettinad Chicken', description: 'Spicy chicken curry with aromatic Chettinad spices', price: 280, category: 'Main Course', spiceLevel: 'High', rating: 4.7, isVegetarian: false },
+        { id: '2', name: 'Dosa', description: 'Crispy fermented crepe made from rice and lentil batter', price: 80, category: 'Main Course', spiceLevel: 'Low', rating: 4.6, isVegetarian: true },
+        { id: '3', name: 'Idli Sambar', description: 'Steamed rice cakes served with lentil curry', price: 60, category: 'Breakfast', spiceLevel: 'Medium', rating: 4.5, isVegetarian: true },
+        { id: '4', name: 'Rasam', description: 'Tangy tamarind-based soup with spices', price: 40, category: 'Soup', spiceLevel: 'Medium', rating: 4.4, isVegetarian: true },
+        { id: '5', name: 'Payasam', description: 'Sweet rice pudding with cardamom and nuts', price: 100, category: 'Dessert', spiceLevel: 'None', rating: 4.3, isVegetarian: true },
+        { id: '6', name: 'Filter Coffee', description: 'Strong coffee brewed in traditional filter', price: 25, category: 'Beverage', spiceLevel: 'None', rating: 4.5, isVegetarian: true }
       ],
-      delhi: [
-        { id: '1', name: 'Butter Chicken', description: 'Creamy tomato-based chicken curry, Delhi\'s pride', price: 320, category: 'Main Course', spiceLevel: 'Medium', rating: 4.7, isVegetarian: false },
-        { id: '2', name: 'Chole Bhature', description: 'Spicy chickpea curry with deep-fried bread', price: 150, category: 'Main Course', spiceLevel: 'Medium', rating: 4.6, isVegetarian: true },
-        { id: '3', name: 'Paranthe Wali Gali Parathas', description: 'Stuffed flatbreads from the famous lane in Old Delhi', price: 80, category: 'Street Food', spiceLevel: 'Medium', rating: 4.5, isVegetarian: true },
-        { id: '4', name: 'Rajma Chawal', description: 'Kidney bean curry with steamed rice', price: 120, category: 'Main Course', spiceLevel: 'Medium', rating: 4.4, isVegetarian: true },
-        { id: '5', name: 'Kulfi Faluda', description: 'Traditional ice cream with vermicelli and rose syrup', price: 70, category: 'Dessert', spiceLevel: 'None', rating: 4.3, isVegetarian: true },
-        { id: '6', name: 'Aloo Tikki Chaat', description: 'Spiced potato patties with tangy chutneys', price: 50, category: 'Chaat', spiceLevel: 'Medium', rating: 4.5, isVegetarian: true }
+      pune: [
+        { id: '1', name: 'Misal Pav', description: 'Spicy sprouted lentil curry with bread rolls', price: 80, category: 'Street Food', spiceLevel: 'High', rating: 4.6, isVegetarian: true },
+        { id: '2', name: 'Puran Poli', description: 'Sweet flatbread stuffed with jaggery and lentil filling', price: 60, category: 'Dessert', spiceLevel: 'None', rating: 4.5, isVegetarian: true },
+        { id: '3', name: 'Bhel Puri', description: 'Crunchy snack mix with chutneys and vegetables', price: 40, category: 'Chaat', spiceLevel: 'Medium', rating: 4.4, isVegetarian: true },
+        { id: '4', name: 'Sabudana Khichdi', description: 'Tapioca pearls cooked with peanuts and spices', price: 70, category: 'Main Course', spiceLevel: 'Low', rating: 4.3, isVegetarian: true },
+        { id: '5', name: 'Modak', description: 'Steamed dumplings filled with jaggery and coconut', price: 80, category: 'Dessert', spiceLevel: 'None', rating: 4.4, isVegetarian: true },
+        { id: '6', name: 'Mastani', description: 'Thick milkshake topped with ice cream and nuts', price: 120, category: 'Beverage', spiceLevel: 'None', rating: 4.2, isVegetarian: true }
       ],
-      goa: [
-        { id: '1', name: 'Fish Curry Rice', description: 'Coconut-based fish curry with steamed rice', price: 220, category: 'Main Course', spiceLevel: 'Medium', rating: 4.7, isVegetarian: false },
-        { id: '2', name: 'Vindaloo', description: 'Spicy and tangy pork curry with vinegar', price: 280, category: 'Main Course', spiceLevel: 'High', rating: 4.6, isVegetarian: false },
-        { id: '3', name: 'Bebinca', description: 'Traditional layered dessert with coconut milk', price: 150, category: 'Dessert', spiceLevel: 'None', rating: 4.5, isVegetarian: true },
-        { id: '4', name: 'Prawn Balchão', description: 'Pickled prawns in spicy tomato sauce', price: 320, category: 'Main Course', spiceLevel: 'High', rating: 4.4, isVegetarian: false },
-        { id: '5', name: 'Cashew Feni', description: 'Traditional Goan spirit made from cashew', price: 200, category: 'Beverage', spiceLevel: 'None', rating: 4.2, isVegetarian: true },
-        { id: '6', name: 'Solkadhi', description: 'Pink drink made with kokum and coconut milk', price: 60, category: 'Beverage', spiceLevel: 'None', rating: 4.3, isVegetarian: true }
+      jaipur: [
+        { id: '1', name: 'Dal Baati Churma', description: 'Traditional Rajasthani meal with lentils, wheat balls, and sweet crumble', price: 200, category: 'Main Course', spiceLevel: 'Medium', rating: 4.7, isVegetarian: true },
+        { id: '2', name: 'Laal Maas', description: 'Fiery red mutton curry with Mathania chilies', price: 380, category: 'Main Course', spiceLevel: 'High', rating: 4.6, isVegetarian: false },
+        { id: '3', name: 'Ghevar', description: 'Round sweet made from flour and soaked in sugar syrup', price: 150, category: 'Dessert', spiceLevel: 'None', rating: 4.5, isVegetarian: true },
+        { id: '4', name: 'Kachori', description: 'Deep-fried pastry filled with spiced lentils', price: 30, category: 'Snack', spiceLevel: 'Medium', rating: 4.4, isVegetarian: true },
+        { id: '5', name: 'Pyaaz Kachori', description: 'Crispy pastry filled with spiced onions', price: 35, category: 'Snack', spiceLevel: 'Medium', rating: 4.3, isVegetarian: true },
+        { id: '6', name: 'Lassi', description: 'Traditional yogurt-based drink served in clay pot', price: 60, category: 'Beverage', spiceLevel: 'None', rating: 4.2, isVegetarian: true }
+      ],
+      ahmedabad: [
+        { id: '1', name: 'Dhokla', description: 'Steamed fermented cake made from chickpea flour', price: 50, category: 'Snack', spiceLevel: 'Low', rating: 4.6, isVegetarian: true },
+        { id: '2', name: 'Thepla', description: 'Spiced flatbread made with fenugreek leaves', price: 40, category: 'Breakfast', spiceLevel: 'Medium', rating: 4.5, isVegetarian: true },
+        { id: '3', name: 'Khandvi', description: 'Rolled gram flour snack with mustard seed tempering', price: 80, category: 'Snack', spiceLevel: 'Low', rating: 4.4, isVegetarian: true },
+        { id: '4', name: 'Gujarati Thali', description: 'Complete meal with various curries, breads, and sweets', price: 300, category: 'Main Course', spiceLevel: 'Medium', rating: 4.7, isVegetarian: true },
+        { id: '5', name: 'Fafda Jalebi', description: 'Crispy chickpea flour strips with sweet spiral pretzels', price: 70, category: 'Snack', spiceLevel: 'Low', rating: 4.3, isVegetarian: true },
+        { id: '6', name: 'Aam Ras', description: 'Sweet mango pulp served as dessert', price: 90, category: 'Dessert', spiceLevel: 'None', rating: 4.2, isVegetarian: true }
+      ],
+      kochi: [
+        { id: '1', name: 'Appam with Stew', description: 'Bowl-shaped rice pancake with coconut vegetable stew', price: 120, category: 'Main Course', spiceLevel: 'Low', rating: 4.6, isVegetarian: true },
+        { id: '2', name: 'Karimeen Fish Curry', description: 'Pearl spot fish cooked in coconut curry', price: 320, category: 'Main Course', spiceLevel: 'Medium', rating: 4.7, isVegetarian: false },
+        { id: '3', name: 'Puttu and Kadala', description: 'Steamed rice cylinders with spiced black chickpeas', price: 80, category: 'Breakfast', spiceLevel: 'Medium', rating: 4.5, isVegetarian: true },
+        { id: '4', name: 'Banana Chips', description: 'Crispy fried banana slices, Kerala specialty', price: 60, category: 'Snack', spiceLevel: 'Low', rating: 4.3, isVegetarian: true },
+        { id: '5', name: 'Payasam', description: 'Traditional sweet pudding made with rice and milk', price: 100, category: 'Dessert', spiceLevel: 'None', rating: 4.4, isVegetarian: true },
+        { id: '6', name: 'Tender Coconut Water', description: 'Fresh coconut water served directly from coconut', price: 30, category: 'Beverage', spiceLevel: 'None', rating: 4.2, isVegetarian: true }
+      ],
+      thiruvananthapuram: [
+        { id: '1', name: 'Sadya', description: 'Traditional vegetarian feast served on banana leaf', price: 250, category: 'Main Course', spiceLevel: 'Medium', rating: 4.8, isVegetarian: true },
+        { id: '2', name: 'Fish Molee', description: 'Mild fish curry cooked in coconut milk', price: 280, category: 'Main Course', spiceLevel: 'Low', rating: 4.6, isVegetarian: false },
+        { id: '3', name: 'Ela Ada', description: 'Rice flour dumpling with jaggery filling wrapped in banana leaf', price: 40, category: 'Dessert', spiceLevel: 'None', rating: 4.5, isVegetarian: true },
+        { id: '4', name: 'Kozhi Varuthathu', description: 'Spicy roasted chicken Kerala style', price: 320, category: 'Main Course', spiceLevel: 'High', rating: 4.4, isVegetarian: false },
+        { id: '5', name: 'Unniyappam', description: 'Sweet rice balls deep-fried in coconut oil', price: 60, category: 'Dessert', spiceLevel: 'None', rating: 4.3, isVegetarian: true },
+        { id: '6', name: 'Sambharam', description: 'Spiced buttermilk drink with curry leaves', price: 25, category: 'Beverage', spiceLevel: 'Low', rating: 4.2, isVegetarian: true }
+      ],
+      lucknow: [
+        { id: '1', name: 'Tunday Kababi', description: 'Legendary minced meat kebabs that melt in mouth', price: 180, category: 'Main Course', spiceLevel: 'Medium', rating: 4.8, isVegetarian: false },
+        { id: '2', name: 'Lucknowi Biryani', description: 'Aromatic rice dish with tender meat and saffron', price: 320, category: 'Main Course', spiceLevel: 'Medium', rating: 4.7, isVegetarian: false },
+        { id: '3', name: 'Basket Chaat', description: 'Crispy potato basket filled with tangy chaat', price: 80, category: 'Chaat', spiceLevel: 'Medium', rating: 4.5, isVegetarian: true },
+        { id: '4', name: 'Kulfi Faluda', description: 'Traditional ice cream with vermicelli and rose syrup', price: 70, category: 'Dessert', spiceLevel: 'None', rating: 4.4, isVegetarian: true },
+        { id: '5', name: 'Sheermal', description: 'Sweet bread flavored with saffron and cardamom', price: 50, category: 'Bread', spiceLevel: 'None', rating: 4.3, isVegetarian: true },
+        { id: '6', name: 'Nimbu Paani', description: 'Fresh lime water with mint and spices', price: 30, category: 'Beverage', spiceLevel: 'Low', rating: 4.2, isVegetarian: true }
+      ],
+      bhopal: [
+        { id: '1', name: 'Bhopali Mutton Korma', description: 'Rich mutton curry with yogurt and aromatic spices', price: 300, category: 'Main Course', spiceLevel: 'Medium', rating: 4.6, isVegetarian: false },
+        { id: '2', name: 'Poha Jalebi', description: 'Flattened rice with onions served with sweet jalebi', price: 60, category: 'Breakfast', spiceLevel: 'Low', rating: 4.5, isVegetarian: true },
+        { id: '3', name: 'Dal Bafla', description: 'Steamed wheat balls served with spiced lentil curry', price: 150, category: 'Main Course', spiceLevel: 'Medium', rating: 4.4, isVegetarian: true },
+        { id: '4', name: 'Bhopali Paan', description: 'Betel leaf preparation with various sweet fillings', price: 40, category: 'After Meal', spiceLevel: 'None', rating: 4.2, isVegetarian: true },
+        { id: '5', name: 'Lavang Lata', description: 'Crispy pastry filled with cardamom-flavored khoya', price: 80, category: 'Dessert', spiceLevel: 'None', rating: 4.3, isVegetarian: true },
+        { id: '6', name: 'Malpua', description: 'Sweet pancake soaked in sugar syrup', price: 70, category: 'Dessert', spiceLevel: 'None', rating: 4.1, isVegetarian: true }
       ]
     };
 
