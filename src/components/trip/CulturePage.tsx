@@ -186,6 +186,226 @@ export const CulturePage = ({ tripData, onNext }: CulturePageProps) => {
         ],
         clothing: 'Casual beach wear acceptable. Light cotton clothes for tropical climate.',
         art_forms: ['Fado music influence', 'Traditional folk dances', 'Azulejo tiles', 'Contemporary art']
+      },
+      hyderabad: {
+        languages: ['Telugu', 'Urdu', 'Hindi', 'English'],
+        festivals: [
+          { name: 'Bonalu', month: 'July/August', description: 'Goddess Mahakali festival with colorful processions' },
+          { name: 'Bathukamma', month: 'September/October', description: 'Floral festival celebrating Goddess Gauri' },
+          { name: 'Ramadan', month: 'Varies', description: 'Month of fasting observed by large Muslim population' }
+        ],
+        traditions: [
+          'Nizami culture and heritage',
+          'Pearls and jewelry craftsmanship',
+          'Irani cafe culture',
+          'Deccan plateau traditions'
+        ],
+        etiquette: [
+          'Respect for both Hindu and Islamic traditions',
+          'Greeting with "Adab" in Urdu is appreciated',
+          'Dress modestly when visiting religious places',
+          'Show respect during prayer times'
+        ],
+        clothing: 'Light cotton clothes for hot climate. Traditional wear during festivals.',
+        art_forms: ['Bidriware', 'Kalamkari painting', 'Qawwali music', 'Classical dance']
+      },
+      varanasi: {
+        languages: ['Hindi', 'Bhojpuri', 'Urdu', 'English', 'Sanskrit'],
+        festivals: [
+          { name: 'Dev Deepawali', month: 'November', description: 'Festival of lights on all ghats of Ganges' },
+          { name: 'Maha Shivaratri', month: 'February/March', description: 'Grand celebration for Lord Shiva' },
+          { name: 'Ganga Mahotsav', month: 'November', description: 'Cultural festival celebrating River Ganges' }
+        ],
+        traditions: [
+          'Ancient spiritual and philosophical traditions',
+          'Classical music and learning center',
+          'Silk weaving heritage',
+          'Ghat culture and Ganga Aarti'
+        ],
+        etiquette: [
+          'Maintain silence and reverence near ghats',
+          'Remove footwear before entering temples',
+          'Respect photography restrictions',
+          'Follow traditional dress codes in religious areas'
+        ],
+        clothing: 'Modest traditional clothing preferred. Light cotton for hot climate.',
+        art_forms: ['Hindustani classical music', 'Banarasi silk weaving', 'Classical dance', 'Sanskrit literature']
+      },
+      pune: {
+        languages: ['Marathi', 'Hindi', 'English'],
+        festivals: [
+          { name: 'Ganesh Chaturthi', month: 'August/September', description: 'Grand Ganesh festival with elaborate decorations' },
+          { name: 'Gudi Padwa', month: 'March/April', description: 'Marathi New Year celebration' },
+          { name: 'Pune Festival', month: 'August', description: 'Cultural festival showcasing local arts' }
+        ],
+        traditions: [
+          'Peshwa era historical heritage',
+          'Educational hub traditions',
+          'IT industry modern culture',
+          'Marathi literary traditions'
+        ],
+        etiquette: [
+          'Learning basic Marathi is appreciated',
+          'Respect for elders and traditional values',
+          'Environmental consciousness',
+          'Traffic rules adherence important'
+        ],
+        clothing: 'Pleasant weather allows varied clothing. Western wear widely accepted.',
+        art_forms: ['Lavani dance', 'Warli painting', 'Marathi theater', 'Classical music']
+      },
+      'hubli-dharwad': {
+        languages: ['Kannada', 'Hindi', 'English', 'Marathi'],
+        festivals: [
+          { name: 'Navratri', month: 'September/October', description: 'Nine-day festival with traditional dances' },
+          { name: 'Karaga', month: 'March/April', description: 'Local festival with community participation' },
+          { name: 'Ugadi', month: 'March/April', description: 'Kannada New Year celebration' }
+        ],
+        traditions: [
+          'North Karnataka cultural heritage',
+          'Cotton and textile industry traditions',
+          'Educational center legacy',
+          'Traditional music and arts'
+        ],
+        etiquette: [
+          'Learning basic Kannada is helpful',
+          'Respect for local customs and traditions',
+          'Conservative dress in traditional areas',
+          'Show respect to elders'
+        ],
+        clothing: 'Comfortable cotton clothes for moderate climate. Traditional wear for festivals.',
+        art_forms: ['Folk music', 'Yakshagana', 'Traditional crafts', 'Classical dance']
+      },
+      lucknow: {
+        languages: ['Hindi', 'Urdu', 'English'],
+        festivals: [
+          { name: 'Lucknow Mahotsav', month: 'November/December', description: 'Cultural festival showcasing Awadhi heritage' },
+          { name: 'Eid celebrations', month: 'Varies', description: 'Grand Eid festivities with traditional food' },
+          { name: 'Dussehra', month: 'September/October', description: 'Traditional celebration with Ramlila' }
+        ],
+        traditions: [
+          'Nawabi culture and etiquette',
+          'Chikan embroidery heritage',
+          'Tehzeeb (refined manners) tradition',
+          'Culinary arts and hospitality'
+        ],
+        etiquette: [
+          'Use of "Aadab" and polite Urdu phrases appreciated',
+          'Refinement in speech and behavior valued',
+          'Respect for cultural heritage',
+          'Traditional dress appreciated'
+        ],
+        clothing: 'Elegant traditional wear preferred. Light fabrics for climate.',
+        art_forms: ['Kathak dance', 'Hindustani music', 'Chikan embroidery', 'Urdu poetry']
+      },
+      mysore: {
+        languages: ['Kannada', 'Tamil', 'Hindi', 'English'],
+        festivals: [
+          { name: 'Mysore Dasara', month: 'September/October', description: 'Grand royal festival with processions' },
+          { name: 'Chamundi Temple Festival', month: 'Various', description: 'Religious festival at hilltop temple' },
+          { name: 'Classical Music Festival', month: 'October', description: 'Celebration of Carnatic music' }
+        ],
+        traditions: [
+          'Royal Wodeyar dynasty heritage',
+          'Sandalwood and silk traditions',
+          'Yoga and wellness culture',
+          'Classical arts patronage'
+        ],
+        etiquette: [
+          'Respect for royal heritage and traditions',
+          'Conservative dress in palace areas',
+          'Show reverence in temples',
+          'Appreciate classical arts'
+        ],
+        clothing: 'Comfortable clothes for pleasant climate. Traditional silk sarees appreciated.',
+        art_forms: ['Bharatanatyam', 'Carnatic music', 'Mysore painting', 'Sandalwood carving']
+      },
+      coimbatore: {
+        languages: ['Tamil', 'English', 'Malayalam', 'Kannada'],
+        festivals: [
+          { name: 'Koniamman Temple Festival', month: 'March/April', description: 'Local deity festival with grand celebrations' },
+          { name: 'Tamil New Year', month: 'April', description: 'Traditional new year with cultural programs' },
+          { name: 'Textile Festival', month: 'January', description: 'Celebration of textile industry heritage' }
+        ],
+        traditions: [
+          'Textile industry heritage',
+          'Kongu region cultural traditions',
+          'Temple architecture and rituals',
+          'Agricultural festival celebrations'
+        ],
+        etiquette: [
+          'Basic Tamil phrases are appreciated',
+          'Respect for temple traditions',
+          'Conservative dress in religious places',
+          'Environmental consciousness important'
+        ],
+        clothing: 'Light cotton clothes for warm climate. Traditional wear for temple visits.',
+        art_forms: ['Bharatanatyam', 'Carnatic music', 'Traditional crafts', 'Temple sculpture']
+      },
+      agra: {
+        languages: ['Hindi', 'Urdu', 'English'],
+        festivals: [
+          { name: 'Taj Mahotsav', month: 'February', description: 'Cultural festival celebrating Mughal heritage' },
+          { name: 'Ram Leela', month: 'September/October', description: 'Traditional performance of Ramayana' },
+          { name: 'Eid celebrations', month: 'Varies', description: 'Festival celebrated with traditional fervor' }
+        ],
+        traditions: [
+          'Mughal architectural heritage',
+          'Marble inlay craftsmanship',
+          'Petha making tradition',
+          'Historical monument preservation'
+        ],
+        etiquette: [
+          'Respect for historical monuments',
+          'Follow photography guidelines',
+          'Dress modestly at religious sites',
+          'Bargaining common in markets'
+        ],
+        clothing: 'Comfortable walking shoes for monuments. Light clothes for hot climate.',
+        art_forms: ['Marble inlay work', 'Mughal architecture', 'Classical music', 'Traditional crafts']
+      },
+      amritsar: {
+        languages: ['Punjabi', 'Hindi', 'English'],
+        festivals: [
+          { name: 'Baisakhi', month: 'April', description: 'Harvest festival and Sikh New Year' },
+          { name: 'Guru Nanak Jayanti', month: 'November', description: 'Birthday of first Sikh Guru' },
+          { name: 'Diwali', month: 'October/November', description: 'Festival of lights with special significance for Sikhs' }
+        ],
+        traditions: [
+          'Sikh religious and cultural heritage',
+          'Punjabi folk traditions',
+          'Golden Temple langar tradition',
+          'Border city patriotic culture'
+        ],
+        etiquette: [
+          'Cover head and remove shoes in Gurudwaras',
+          'Participate respectfully in langar',
+          'Greeting with "Sat Sri Akal"',
+          'Show respect for religious customs'
+        ],
+        clothing: 'Modest clothing required for religious places. Comfortable shoes for walking.',
+        art_forms: ['Bhangra dance', 'Punjabi folk music', 'Gurbani', 'Traditional crafts']
+      },
+      nagpur: {
+        languages: ['Marathi', 'Hindi', 'English'],
+        festivals: [
+          { name: 'Nagpur Orange Festival', month: 'December', description: 'Celebration of famous Nagpur oranges' },
+          { name: 'Dhammachakra Pravartan Day', month: 'October', description: 'Buddhist festival commemorating Dr. Ambedkar' },
+          { name: 'Gudi Padwa', month: 'March/April', description: 'Marathi New Year celebration' }
+        ],
+        traditions: [
+          'Central India cultural hub',
+          'Buddhist heritage and monuments',
+          'Orange cultivation traditions',
+          'Vidarbha region customs'
+        ],
+        etiquette: [
+          'Basic Marathi phrases appreciated',
+          'Respect for Buddhist sites and customs',
+          'Environmental awareness important',
+          'Show respect for local traditions'
+        ],
+        clothing: 'Cotton clothes for hot climate. Comfortable wear for outdoor attractions.',
+        art_forms: ['Marathi theater', 'Folk music', 'Traditional dance', 'Local crafts']
       }
     };
 

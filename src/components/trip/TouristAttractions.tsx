@@ -68,6 +68,66 @@ export const TouristAttractions = ({ tripData, onNext }: TouristAttractionsProps
         { id: '2', name: 'Basilica of Bom Jesus', type: 'Church', rating: 4.5, entry_fee: 'Free', timings: '9:00 AM - 6:30 PM', description: 'UNESCO World Heritage Site housing St. Francis Xavier\'s remains' },
         { id: '3', name: 'Fort Aguada', type: 'Fort', rating: 4.2, entry_fee: '₹25', timings: '9:30 AM - 6:00 PM', description: '17th-century Portuguese fort overlooking the Arabian Sea' },
         { id: '4', name: 'Dudhsagar Falls', type: 'Waterfall', rating: 4.6, entry_fee: '₹30', timings: '6:00 AM - 6:00 PM', description: 'Four-tiered waterfall on the Mandovi River' }
+      ],
+      hyderabad: [
+        { id: '1', name: 'Charminar', type: 'Historical Monument', rating: 4.4, entry_fee: '₹30', timings: '9:30 AM - 5:30 PM', description: 'Iconic 16th-century mosque and monument' },
+        { id: '2', name: 'Golconda Fort', type: 'Fort', rating: 4.5, entry_fee: '₹25', timings: '9:00 AM - 6:30 PM', description: 'Medieval fort known for its acoustics and diamond trade history' },
+        { id: '3', name: 'Hussain Sagar Lake', type: 'Lake', rating: 4.2, entry_fee: 'Free', timings: '24 Hours', description: 'Heart-shaped lake with Buddha statue in the center' },
+        { id: '4', name: 'Ramoji Film City', type: 'Entertainment', rating: 4.3, entry_fee: '₹1200-2000', timings: '9:00 AM - 5:30 PM', description: 'World\'s largest film studio complex' }
+      ],
+      varanasi: [
+        { id: '1', name: 'Kashi Vishwanath Temple', type: 'Temple', rating: 4.6, entry_fee: 'Free', timings: '4:00 AM - 11:00 PM', description: 'Most sacred Hindu temple dedicated to Lord Shiva' },
+        { id: '2', name: 'Dashashwamedh Ghat', type: 'Ghat', rating: 4.5, entry_fee: 'Free', timings: '24 Hours', description: 'Main ghat famous for Ganga Aarti ceremony' },
+        { id: '3', name: 'Sarnath', type: 'Buddhist Site', rating: 4.4, entry_fee: '₹15', timings: '9:00 AM - 5:00 PM', description: 'Place where Buddha gave his first sermon' },
+        { id: '4', name: 'Ramnagar Fort', type: 'Fort', rating: 4.1, entry_fee: '₹15', timings: '9:00 AM - 5:00 PM', description: '18th-century fort and palace complex' }
+      ],
+      pune: [
+        { id: '1', name: 'Shaniwar Wada', type: 'Historical Fort', rating: 4.2, entry_fee: '₹25', timings: '8:00 AM - 6:30 PM', description: 'Historic fortified palace of Peshwa rulers' },
+        { id: '2', name: 'Aga Khan Palace', type: 'Palace', rating: 4.3, entry_fee: '₹25', timings: '9:00 AM - 5:30 PM', description: 'Palace where Mahatma Gandhi was imprisoned' },
+        { id: '3', name: 'Sinhagad Fort', type: 'Hill Fort', rating: 4.4, entry_fee: 'Free', timings: '6:00 AM - 6:00 PM', description: 'Historic hill fort with scenic views' },
+        { id: '4', name: 'Dagdusheth Halwai Ganapati Temple', type: 'Temple', rating: 4.5, entry_fee: 'Free', timings: '5:00 AM - 11:30 PM', description: 'Famous Ganesh temple with rich history' }
+      ],
+      'hubli-dharwad': [
+        { id: '1', name: 'Unkal Lake', type: 'Lake', rating: 4.2, entry_fee: 'Free', timings: '6:00 AM - 7:00 PM', description: 'Scenic lake perfect for boating and relaxation' },
+        { id: '2', name: 'Chandramouleshwara Temple', type: 'Temple', rating: 4.3, entry_fee: 'Free', timings: '6:00 AM - 8:00 PM', description: 'Ancient temple with beautiful Chalukyan architecture' },
+        { id: '3', name: 'Indira Gandhi Glass House Garden', type: 'Garden', rating: 4.1, entry_fee: '₹10', timings: '6:00 AM - 8:00 PM', description: 'Beautiful garden with glass house and variety of plants' },
+        { id: '4', name: 'Nrupatunga Betta', type: 'Hill', rating: 4.0, entry_fee: 'Free', timings: '6:00 AM - 6:00 PM', description: 'Small hill offering panoramic views of twin cities' }
+      ],
+      lucknow: [
+        { id: '1', name: 'Bara Imambara', type: 'Monument', rating: 4.5, entry_fee: '₹50', timings: '6:00 AM - 5:00 PM', description: 'Historic complex with the famous Bhool Bhulaiya maze' },
+        { id: '2', name: 'Chota Imambara', type: 'Monument', rating: 4.3, entry_fee: '₹25', timings: '6:00 AM - 5:00 PM', description: 'Beautiful palace also known as Palace of Lights' },
+        { id: '3', name: 'Rumi Darwaza', type: 'Gateway', rating: 4.4, entry_fee: 'Free', timings: '24 Hours', description: 'Imposing gateway built in Awadhi style' },
+        { id: '4', name: 'British Residency', type: 'Historical Site', rating: 4.2, entry_fee: '₹15', timings: '9:00 AM - 5:00 PM', description: 'Ruins from the 1857 uprising with historical significance' }
+      ],
+      mysore: [
+        { id: '1', name: 'Mysore Palace', type: 'Palace', rating: 4.6, entry_fee: '₹70', timings: '10:00 AM - 5:30 PM', description: 'Magnificent palace known for its illumination' },
+        { id: '2', name: 'Chamundi Hills', type: 'Hill Temple', rating: 4.4, entry_fee: 'Free', timings: '6:00 AM - 8:00 PM', description: 'Sacred hill with Chamundeshwari Temple' },
+        { id: '3', name: 'Brindavan Gardens', type: 'Garden', rating: 4.3, entry_fee: '₹60', timings: '6:30 PM - 8:30 PM', description: 'Musical fountain garden below KRS dam' },
+        { id: '4', name: 'St. Philomena\'s Cathedral', type: 'Church', rating: 4.2, entry_fee: 'Free', timings: '6:00 AM - 6:00 PM', description: 'Neo-Gothic style cathedral with twin spires' }
+      ],
+      coimbatore: [
+        { id: '1', name: 'Marudamalai Temple', type: 'Temple', rating: 4.4, entry_fee: 'Free', timings: '5:30 AM - 9:00 PM', description: 'Hill temple dedicated to Lord Murugan' },
+        { id: '2', name: 'VOC Park and Zoo', type: 'Zoo', rating: 4.1, entry_fee: '₹15', timings: '9:00 AM - 5:30 PM', description: 'Park and zoo with variety of animals and birds' },
+        { id: '3', name: 'Dhyanalinga', type: 'Spiritual Center', rating: 4.5, entry_fee: 'Free', timings: '6:00 AM - 8:00 PM', description: 'Unique meditative space at Isha Yoga Center' },
+        { id: '4', name: 'Monkey Falls', type: 'Waterfall', rating: 4.2, entry_fee: '₹30', timings: '6:00 AM - 6:00 PM', description: 'Scenic waterfall in the Anaimalai Hills' }
+      ],
+      agra: [
+        { id: '1', name: 'Taj Mahal', type: 'UNESCO World Heritage', rating: 4.8, entry_fee: '₹1100', timings: '6:00 AM - 6:30 PM', description: 'World\'s most famous monument of love' },
+        { id: '2', name: 'Agra Fort', type: 'Fort', rating: 4.5, entry_fee: '₹650', timings: '6:00 AM - 6:00 PM', description: 'Massive Mughal fort complex' },
+        { id: '3', name: 'Fatehpur Sikri', type: 'Historical City', rating: 4.4, entry_fee: '₹550', timings: '6:00 AM - 6:00 PM', description: 'Abandoned Mughal city with stunning architecture' },
+        { id: '4', name: 'Itimad-ud-Daulah', type: 'Tomb', rating: 4.3, entry_fee: '₹310', timings: '6:00 AM - 6:00 PM', description: 'Baby Taj with intricate marble work' }
+      ],
+      amritsar: [
+        { id: '1', name: 'Golden Temple', type: 'Religious Site', rating: 4.8, entry_fee: 'Free', timings: '24 Hours', description: 'Most sacred Sikh temple with golden dome' },
+        { id: '2', name: 'Jallianwala Bagh', type: 'Memorial', rating: 4.3, entry_fee: 'Free', timings: '6:30 AM - 7:30 PM', description: 'Memorial of the 1919 massacre' },
+        { id: '3', name: 'Wagah Border', type: 'Border Ceremony', rating: 4.5, entry_fee: 'Free', timings: '4:15 PM - 5:45 PM', description: 'Daily flag lowering ceremony at India-Pakistan border' },
+        { id: '4', name: 'Gobindgarh Fort', type: 'Fort', rating: 4.1, entry_fee: '₹150', timings: '10:00 AM - 10:00 PM', description: 'Historic fort turned cultural destination' }
+      ],
+      nagpur: [
+        { id: '1', name: 'Deekshabhoomi', type: 'Buddhist Monument', rating: 4.4, entry_fee: 'Free', timings: '6:00 AM - 10:00 PM', description: 'Sacred Buddhist monument and stupa' },
+        { id: '2', name: 'Ambazari Lake', type: 'Lake', rating: 4.2, entry_fee: 'Free', timings: '24 Hours', description: 'Largest lake in Nagpur with garden and boating' },
+        { id: '3', name: 'Raman Science Centre', type: 'Science Museum', rating: 4.3, entry_fee: '₹35', timings: '10:30 AM - 8:00 PM', description: 'Interactive science museum and planetarium' },
+        { id: '4', name: 'Dragon Palace Temple', type: 'Temple', rating: 4.1, entry_fee: 'Free', timings: '6:00 AM - 9:00 PM', description: 'Beautiful Buddhist temple with Japanese architecture' }
       ]
     };
 
