@@ -33,17 +33,26 @@ export const CostEstimator = ({ tripData, onNext }: CostEstimatorProps) => {
       const days = getDays(tripData.duration);
       const baseMultiplier = getStyleMultiplier(tripData.travel_style);
       
-      // Only accommodation and transport costs
+      // Calculate accommodation cost (60% of budget)
       const accommodationPerDay = Math.floor((tripData.budget * 0.60) / days) * baseMultiplier;
       const accommodation = accommodationPerDay * days;
       
-      const transport = Math.floor(tripData.budget * 0.40) * baseMultiplier;
+      // Calculate transport cost based on travel style and distance
+      // Base transport cost calculation more realistic
+      let transportCost = 0;
+      if (tripData.travel_style === 'economy') {
+        transportCost = Math.min(tripData.budget * 0.15, 8000); // Max 15% or ₹8000
+      } else if (tripData.travel_style === 'premium') {
+        transportCost = Math.min(tripData.budget * 0.25, 15000); // Max 25% or ₹15000
+      } else {
+        transportCost = Math.min(tripData.budget * 0.20, 12000); // Max 20% or ₹12000
+      }
       
-      const total = Math.floor(accommodation + transport);
+      const total = Math.floor(accommodation + transportCost);
       
       return {
         accommodation: Math.floor(accommodation),
-        transport: Math.floor(transport),
+        transport: Math.floor(transportCost),
         attractions: 0,
         food: 0,
         miscellaneous: 0,
