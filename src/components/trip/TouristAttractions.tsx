@@ -24,23 +24,69 @@ export const TouristAttractions = ({ tripData, onNext }: TouristAttractionsProps
   const [loading, setLoading] = useState(true);
 
   const getAttractionsForCity = (city: string): Attraction[] => {
-    // Return minimal sample attractions - this will be populated with real data in future updates
-    return [
+    const cityLower = city.toLowerCase();
+    
+    const attractionData: { [key: string]: Attraction[] } = {
+      mumbai: [
+        { id: '1', name: 'Gateway of India', type: 'Historical Monument', rating: 4.5, entry_fee: 'Free', timings: '24 Hours', description: 'Iconic arch monument overlooking the Arabian Sea' },
+        { id: '2', name: 'Elephanta Caves', type: 'UNESCO World Heritage Site', rating: 4.3, entry_fee: '₹40', timings: '9:00 AM - 5:30 PM', description: 'Ancient rock-cut caves with Hindu sculptures' },
+        { id: '3', name: 'Marine Drive', type: 'Scenic Boulevard', rating: 4.4, entry_fee: 'Free', timings: '24 Hours', description: 'Beautiful promenade along the coast' },
+        { id: '4', name: 'Chhatrapati Shivaji Terminus', type: 'Railway Station', rating: 4.2, entry_fee: 'Free', timings: '24 Hours', description: 'Victorian Gothic architecture railway terminus' }
+      ],
+      delhi: [
+        { id: '1', name: 'Red Fort', type: 'Historical Monument', rating: 4.4, entry_fee: '₹35', timings: '9:30 AM - 4:30 PM', description: 'Magnificent Mughal fort complex' },
+        { id: '2', name: 'India Gate', type: 'War Memorial', rating: 4.5, entry_fee: 'Free', timings: '24 Hours', description: 'Memorial arch dedicated to Indian soldiers' },
+        { id: '3', name: 'Qutub Minar', type: 'UNESCO World Heritage Site', rating: 4.3, entry_fee: '₹30', timings: '7:00 AM - 5:00 PM', description: 'Tallest brick minaret in the world' },
+        { id: '4', name: 'Lotus Temple', type: 'Religious Site', rating: 4.6, entry_fee: 'Free', timings: '9:00 AM - 5:30 PM', description: 'Baháʼí House of Worship with lotus-shaped architecture' }
+      ],
+      bangalore: [
+        { id: '1', name: 'Lalbagh Botanical Garden', type: 'Garden', rating: 4.4, entry_fee: '₹10', timings: '6:00 AM - 7:00 PM', description: '240-acre botanical garden with diverse plant species' },
+        { id: '2', name: 'Bangalore Palace', type: 'Palace', rating: 4.2, entry_fee: '₹230', timings: '10:00 AM - 5:30 PM', description: 'Tudor-style palace with beautiful architecture' },
+        { id: '3', name: 'Cubbon Park', type: 'Park', rating: 4.3, entry_fee: 'Free', timings: '6:00 AM - 6:00 PM', description: 'Large public park in the heart of the city' },
+        { id: '4', name: 'Tipu Sultan\'s Summer Palace', type: 'Historical Monument', rating: 4.1, entry_fee: '₹15', timings: '8:30 AM - 5:30 PM', description: 'Beautiful example of Indo-Islamic architecture' }
+      ],
+      chennai: [
+        { id: '1', name: 'Marina Beach', type: 'Beach', rating: 4.2, entry_fee: 'Free', timings: '24 Hours', description: 'World\'s second longest urban beach' },
+        { id: '2', name: 'Kapaleeshwarar Temple', type: 'Temple', rating: 4.5, entry_fee: 'Free', timings: '5:30 AM - 10:00 PM', description: 'Ancient Dravidian architecture temple dedicated to Lord Shiva' },
+        { id: '3', name: 'Fort St. George', type: 'Historical Fort', rating: 4.1, entry_fee: '₹15', timings: '9:00 AM - 5:00 PM', description: 'First British fortress in India' },
+        { id: '4', name: 'Government Museum', type: 'Museum', rating: 4.3, entry_fee: '₹15', timings: '9:30 AM - 5:00 PM', description: 'Second oldest museum in India with rich collections' }
+      ],
+      kolkata: [
+        { id: '1', name: 'Victoria Memorial', type: 'Monument', rating: 4.5, entry_fee: '₹30', timings: '10:00 AM - 5:00 PM', description: 'Marble building dedicated to Queen Victoria' },
+        { id: '2', name: 'Howrah Bridge', type: 'Bridge', rating: 4.4, entry_fee: 'Free', timings: '24 Hours', description: 'Iconic cantilever bridge over Hooghly River' },
+        { id: '3', name: 'Dakshineswar Kali Temple', type: 'Temple', rating: 4.6, entry_fee: 'Free', timings: '6:00 AM - 12:30 PM, 3:00 PM - 8:30 PM', description: 'Famous temple dedicated to Goddess Kali' },
+        { id: '4', name: 'Indian Museum', type: 'Museum', rating: 4.2, entry_fee: '₹20', timings: '10:00 AM - 5:00 PM', description: 'Oldest and largest museum in India' }
+      ],
+      jaipur: [
+        { id: '1', name: 'Hawa Mahal', type: 'Palace', rating: 4.4, entry_fee: '₹50', timings: '9:00 AM - 4:30 PM', description: 'Palace of Winds with intricate lattice work' },
+        { id: '2', name: 'Amber Fort', type: 'Fort', rating: 4.6, entry_fee: '₹100', timings: '8:00 AM - 6:00 PM', description: 'Magnificent hilltop fort with stunning architecture' },
+        { id: '3', name: 'City Palace', type: 'Palace', rating: 4.5, entry_fee: '₹130', timings: '9:30 AM - 5:00 PM', description: 'Royal palace complex with museums and courtyards' },
+        { id: '4', name: 'Jantar Mantar', type: 'Observatory', rating: 4.3, entry_fee: '₹50', timings: '9:00 AM - 4:30 PM', description: 'Collection of architectural astronomical instruments' }
+      ],
+      goa: [
+        { id: '1', name: 'Baga Beach', type: 'Beach', rating: 4.3, entry_fee: 'Free', timings: '24 Hours', description: 'Popular beach known for water sports and nightlife' },
+        { id: '2', name: 'Basilica of Bom Jesus', type: 'Church', rating: 4.5, entry_fee: 'Free', timings: '9:00 AM - 6:30 PM', description: 'UNESCO World Heritage Site housing St. Francis Xavier\'s remains' },
+        { id: '3', name: 'Fort Aguada', type: 'Fort', rating: 4.2, entry_fee: '₹25', timings: '9:30 AM - 6:00 PM', description: '17th-century Portuguese fort overlooking the Arabian Sea' },
+        { id: '4', name: 'Dudhsagar Falls', type: 'Waterfall', rating: 4.6, entry_fee: '₹30', timings: '6:00 AM - 6:00 PM', description: 'Four-tiered waterfall on the Mandovi River' }
+      ]
+    };
+
+    return attractionData[cityLower] || [
       {
         id: '1',
-        name: 'Popular Local Attraction',
-        type: 'Tourist Spot',
-        rating: 4.5,
-        entry_fee: '₹50',
+        name: 'Local Tourist Spot',
+        type: 'Tourist Attraction',
+        rating: 4.0,
+        entry_fee: '₹20-100',
         timings: '9:00 AM - 6:00 PM',
-        description: 'Famous local tourist attraction'
+        description: 'Popular local attraction worth visiting'
       },
       {
         id: '2',
-        name: 'Cultural Site',
+        name: 'Cultural Heritage Site',
         type: 'Historical',
-        rating: 4.3,
-        entry_fee: '₹30',
+        rating: 4.2,
+        entry_fee: '₹15-50',
         timings: '10:00 AM - 5:00 PM',
         description: 'Important cultural and historical site'
       }

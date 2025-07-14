@@ -30,24 +30,184 @@ export const CulturePage = ({ tripData, onNext }: CulturePageProps) => {
   const [loading, setLoading] = useState(true);
 
   const getCultureForCity = (city: string): CultureData => {
-    // Return default minimal data - this will be populated with real data in future updates
-    return {
-      languages: ['Hindi', 'English'],
+    const cityLower = city.toLowerCase();
+    
+    const cultureData: { [key: string]: CultureData } = {
+      mumbai: {
+        languages: ['Hindi', 'Marathi', 'English', 'Gujarati'],
+        festivals: [
+          { name: 'Ganesh Chaturthi', month: 'August/September', description: 'Grand celebration of Lord Ganesha with elaborate pandals' },
+          { name: 'Navratri', month: 'September/October', description: 'Nine nights of dance and devotion to Goddess Durga' },
+          { name: 'Gudi Padwa', month: 'March/April', description: 'Marathi New Year celebration' }
+        ],
+        traditions: [
+          'Dabbawalas lunch delivery system',
+          'Mumbai local train culture',
+          'Bollywood film industry heritage',
+          'Street food culture'
+        ],
+        etiquette: [
+          'Stand on left side of escalators',
+          'Give way to people getting off trains first',
+          'Dress modestly when visiting religious places',
+          'Bargaining is common in local markets'
+        ],
+        clothing: 'Cotton clothes recommended due to humidity. Western wear widely accepted.',
+        art_forms: ['Warli painting', 'Bollywood dance', 'Theater (Marathi and Hindi)', 'Street art']
+      },
+      delhi: {
+        languages: ['Hindi', 'Punjabi', 'Urdu', 'English'],
+        festivals: [
+          { name: 'Dussehra', month: 'September/October', description: 'Celebration of good over evil with Ramlila performances' },
+          { name: 'Karva Chauth', month: 'October/November', description: 'Married women fast for husbands\' long life' },
+          { name: 'Lohri', month: 'January', description: 'Punjabi harvest festival celebrated with bonfires' }
+        ],
+        traditions: [
+          'Mughal architectural heritage',
+          'Traditional Delhi 6 market culture',
+          'Punjabi wedding celebrations',
+          'Political and administrative center traditions'
+        ],
+        etiquette: [
+          'Dress conservatively in religious places',
+          'Remove shoes before entering temples and homes',
+          'Use both hands when giving or receiving something',
+          'Avoid pointing feet towards people or religious items'
+        ],
+        clothing: 'Layer clothing for extreme weather. Traditional wear appreciated during festivals.',
+        art_forms: ['Kathak dance', 'Hindustani classical music', 'Urdu poetry', 'Miniature painting']
+      },
+      bangalore: {
+        languages: ['Kannada', 'Tamil', 'Telugu', 'Hindi', 'English'],
+        festivals: [
+          { name: 'Karaga', month: 'March/April', description: 'Unique festival honoring Goddess Draupadi' },
+          { name: 'Mysore Dasara', month: 'September/October', description: 'Grand celebration with royal processions' },
+          { name: 'Ugadi', month: 'March/April', description: 'Telugu and Kannada New Year' }
+        ],
+        traditions: [
+          'Garden city heritage with numerous parks',
+          'IT hub modern work culture',
+          'South Indian classical music and dance',
+          'Coffee culture and filter coffee tradition'
+        ],
+        etiquette: [
+          'Learning basic Kannada phrases is appreciated',
+          'Respect for elders is very important',
+          'Eat with right hand traditionally',
+          'Dress modestly in traditional areas'
+        ],
+        clothing: 'Pleasant weather allows varied clothing. Cotton recommended during summers.',
+        art_forms: ['Bharatanatyam', 'Carnatic music', 'Mysore painting', 'Sandalwood carving']
+      },
+      chennai: {
+        languages: ['Tamil', 'Telugu', 'English', 'Hindi'],
+        festivals: [
+          { name: 'Tamil New Year', month: 'April', description: 'Celebration with traditional kolam and feast' },
+          { name: 'Chennai Music Season', month: 'December/January', description: 'World\'s largest cultural festival of Indian classical music' },
+          { name: 'Marina Beach Festival', month: 'January', description: 'Cultural festival on the famous beach' }
+        ],
+        traditions: [
+          'Classical Tamil literature and poetry',
+          'Traditional temple architecture',
+          'Bharatanatyam dance heritage',
+          'Temple festival processions'
+        ],
+        etiquette: [
+          'Learning basic Tamil is highly appreciated',
+          'Touch feet of elders to show respect',
+          'Dress very modestly in temples',
+          'Remove footwear before entering homes and temples'
+        ],
+        clothing: 'Light cotton clothes for hot humid weather. Traditional wear for temple visits.',
+        art_forms: ['Bharatanatyam', 'Carnatic music', 'Tanjore painting', 'Bronze sculpture']
+      },
+      kolkata: {
+        languages: ['Bengali', 'Hindi', 'English', 'Urdu'],
+        festivals: [
+          { name: 'Durga Puja', month: 'September/October', description: 'Grandest festival with elaborate pandals and cultural programs' },
+          { name: 'Kali Puja', month: 'October/November', description: 'Worship of Goddess Kali with beautiful decorations' },
+          { name: 'Poila Boishakh', month: 'April', description: 'Bengali New Year with cultural programs' }
+        ],
+        traditions: [
+          'Intellectual and cultural capital heritage',
+          'Adda (informal chatting) culture',
+          'Traditional Bengali joint family system',
+          'Rich literary and artistic traditions'
+        ],
+        etiquette: [
+          'Greeting with "Namaskar" is appreciated',
+          'Show respect for elders and scholars',
+          'Participate in cultural discussions',
+          'Dress modestly during religious occasions'
+        ],
+        clothing: 'Cotton clothes for humid weather. Traditional Bengali attire during festivals.',
+        art_forms: ['Rabindra Sangeet', 'Bengali classical dance', 'Patachitra painting', 'Terracotta art']
+      },
+      jaipur: {
+        languages: ['Hindi', 'Rajasthani', 'English'],
+        festivals: [
+          { name: 'Teej', month: 'July/August', description: 'Monsoon festival celebrated by women with swings and songs' },
+          { name: 'Jaipur Literature Festival', month: 'January', description: 'World\'s largest free literary festival' },
+          { name: 'Gangaur', month: 'March/April', description: 'Festival celebrating marital bliss and devotion' }
+        ],
+        traditions: [
+          'Royal Rajput heritage and palace culture',
+          'Traditional puppet shows (Kathputli)',
+          'Block printing and textile crafts',
+          'Camel and horse culture'
+        ],
+        etiquette: [
+          'Greet with folded hands and "Namaste"',
+          'Show respect to elders and traditional customs',
+          'Dress conservatively, especially in rural areas',
+          'Ask permission before photographing people'
+        ],
+        clothing: 'Light cotton for hot weather. Traditional Rajasthani attire appreciated during festivals.',
+        art_forms: ['Kathak dance', 'Folk music', 'Blue pottery', 'Bandhani tie-dye']
+      },
+      goa: {
+        languages: ['Konkani', 'Marathi', 'Hindi', 'English', 'Portuguese'],
+        festivals: [
+          { name: 'Carnival', month: 'February/March', description: 'Colorful street festival with parades and music' },
+          { name: 'Shigmo', month: 'March', description: 'Spring festival with traditional folk dances' },
+          { name: 'Feast of St. Francis Xavier', month: 'December', description: 'Christian festival honoring the patron saint' }
+        ],
+        traditions: [
+          'Portuguese colonial heritage',
+          'Susegad (relaxed) lifestyle',
+          'Beach and sea-faring culture',
+          'Fusion of Indian and Portuguese customs'
+        ],
+        etiquette: [
+          'Relaxed and casual approach to life',
+          'Respect for both Hindu and Christian traditions',
+          'Beach etiquette - dress appropriately',
+          'Environmental consciousness important'
+        ],
+        clothing: 'Casual beach wear acceptable. Light cotton clothes for tropical climate.',
+        art_forms: ['Fado music influence', 'Traditional folk dances', 'Azulejo tiles', 'Contemporary art']
+      }
+    };
+
+    return cultureData[cityLower] || {
+      languages: ['Hindi', 'English', 'Local language'],
       festivals: [
-        { name: 'Diwali', month: 'October/November', description: 'Festival of lights' },
-        { name: 'Holi', month: 'March', description: 'Festival of colors' }
+        { name: 'Diwali', month: 'October/November', description: 'Festival of lights celebrated across India' },
+        { name: 'Local Festival', month: 'Varies', description: 'Regional festival specific to the area' }
       ],
       traditions: [
-        'Local cultural traditions',
-        'Regional customs and practices'
+        'Traditional Indian customs and practices',
+        'Regional cultural heritage',
+        'Local artisan crafts'
       ],
       etiquette: [
-        'Respect local customs', 
+        'Greet with "Namaste" and folded hands',
+        'Remove shoes before entering temples and homes',
         'Dress modestly in religious places',
-        'Remove shoes before entering homes'
+        'Use right hand for eating and greeting'
       ],
-      clothing: 'Casual and comfortable clothing recommended',
-      art_forms: ['Local art forms', 'Traditional crafts']
+      clothing: 'Modest clothing recommended. Traditional wear appreciated during festivals.',
+      art_forms: ['Local folk music', 'Traditional crafts', 'Regional dance forms']
     };
   };
 
