@@ -2,9 +2,12 @@
 import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Progress } from '@/components/ui/progress';
-import { IndianRupee, Calculator, ArrowRight, AlertTriangle } from 'lucide-react';
+import { Calculator, ArrowRight } from 'lucide-react';
 import { TripData } from '@/components/TripPlanningForm';
+import { BudgetOverview } from './BudgetOverview';
+import { CostBreakdown } from './CostBreakdown';
+import { MoneySavingTips } from './MoneySavingTips';
+import { CostEstimatorSkeleton } from './CostEstimatorSkeleton';
 
 interface CostBreakdown {
   accommodation: number;
@@ -73,7 +76,7 @@ export const CostEstimator = ({ tripData, onNext }: CostEstimatorProps) => {
   };
 
   const getBudgetStatus = () => {
-    if (!costBreakdown) return { status: 'calculating', message: 'Calculating...' };
+    if (!costBreakdown) return { status: 'calculating', message: 'Calculating...', color: 'text-gray-600' };
     
     if (costBreakdown.total <= tripData.budget) {
       return { 
@@ -97,20 +100,7 @@ export const CostEstimator = ({ tripData, onNext }: CostEstimatorProps) => {
   };
 
   if (loading) {
-    return (
-      <Card>
-        <CardHeader>
-          <CardTitle>Calculating Trip Costs...</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="animate-pulse space-y-4">
-            <div className="bg-gray-200 h-6 rounded"></div>
-            <div className="bg-gray-200 h-20 rounded"></div>
-            <div className="bg-gray-200 h-40 rounded"></div>
-          </div>
-        </CardContent>
-      </Card>
-    );
+    return <CostEstimatorSkeleton />;
   }
 
   if (!costBreakdown) return null;
@@ -133,84 +123,18 @@ export const CostEstimator = ({ tripData, onNext }: CostEstimatorProps) => {
         </p>
       </CardHeader>
       <CardContent className="space-y-6">
-        {/* Budget Overview */}
-        <Card className="border-2 border-blue-200">
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between mb-4">
-              <div>
-                <h3 className="text-lg font-semibold">Your Budget</h3>
-                <p className="text-2xl font-bold text-blue-600">₹{tripData.budget.toLocaleString()}</p>
-              </div>
-              <div className="text-right">
-                <h3 className="text-lg font-semibold">Estimated Cost</h3>
-                <p className="text-2xl font-bold text-gray-800">₹{costBreakdown.total.toLocaleString()}</p>
-              </div>
-            </div>
-            
-            <Progress 
-              value={Math.min((costBreakdown.total / tripData.budget) * 100, 100)} 
-              className="mb-2"
-            />
-            
-            <div className={`flex items-center gap-2 ${budgetStatus.color}`}>
-              {budgetStatus.status === 'warning' || budgetStatus.status === 'exceed' ? (
-                <AlertTriangle className="h-4 w-4" />
-              ) : null}
-              <p className="text-sm font-medium">{budgetStatus.message}</p>
-            </div>
-          </CardContent>
-        </Card>
+        <BudgetOverview 
+          userBudget={tripData.budget}
+          estimatedCost={costBreakdown.total}
+          budgetStatus={budgetStatus}
+        />
 
-        {/* Cost Breakdown */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-lg">Cost Breakdown</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {costItems.map((item, index) => (
-                <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                  <div className="flex items-center gap-3">
-                    <span className="text-2xl">{item.icon}</span>
-                    <span className="font-medium">{item.label}</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <IndianRupee className="h-4 w-4 text-gray-500" />
-                    <span className="font-semibold">{item.amount.toLocaleString()}</span>
-                  </div>
-                </div>
-              ))}
-              
-              <div className="border-t pt-4">
-                <div className="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
-                  <span className="font-bold text-lg">Total Estimated Cost</span>
-                  <div className="flex items-center gap-1">
-                    <IndianRupee className="h-5 w-5 text-blue-600" />
-                    <span className="font-bold text-xl text-blue-600">
-                      {costBreakdown.total.toLocaleString()}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+        <CostBreakdown 
+          costItems={costItems}
+          totalCost={costBreakdown.total}
+        />
 
-        {/* Money-Saving Tips */}
-        <Card className="bg-green-50 border-green-200">
-          <CardHeader>
-            <CardTitle className="text-lg text-green-800">💡 Money-Saving Tips</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ul className="text-sm text-green-700 space-y-1">
-              <li>• Book accommodations in advance for better rates</li>
-              <li>• Try local street food instead of hotel restaurants</li>
-              <li>• Use public transport or shared rides</li>
-              <li>• Look for combo tickets for multiple attractions</li>
-              <li>• Travel during off-season for lower prices</li>
-            </ul>
-          </CardContent>
-        </Card>
+        <MoneySavingTips />
 
         <div className="flex justify-end">
           <Button onClick={onNext} className="bg-gradient-to-r from-orange-500 to-blue-600">
