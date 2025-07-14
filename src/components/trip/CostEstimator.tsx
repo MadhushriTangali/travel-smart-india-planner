@@ -30,26 +30,20 @@ export const CostEstimator = ({ tripData, onNext }: CostEstimatorProps) => {
       const days = getDays(tripData.duration);
       const baseMultiplier = getStyleMultiplier(tripData.travel_style);
       
-      // More accurate cost calculations
-      const accommodationPerDay = Math.floor((tripData.budget * 0.40) / days) * baseMultiplier;
+      // Only accommodation and transport costs
+      const accommodationPerDay = Math.floor((tripData.budget * 0.60) / days) * baseMultiplier;
       const accommodation = accommodationPerDay * days;
       
-      const transport = Math.floor(tripData.budget * 0.25) * baseMultiplier;
-      const attractions = Math.floor(tripData.budget * 0.15) * baseMultiplier;
+      const transport = Math.floor(tripData.budget * 0.40) * baseMultiplier;
       
-      const foodPerDay = Math.floor((tripData.budget * 0.15) / days) * baseMultiplier;
-      const food = foodPerDay * days;
-      
-      const miscellaneous = Math.floor(tripData.budget * 0.05) * baseMultiplier;
-      
-      const total = Math.floor(accommodation + transport + attractions + food + miscellaneous);
+      const total = Math.floor(accommodation + transport);
       
       return {
         accommodation: Math.floor(accommodation),
         transport: Math.floor(transport),
-        attractions: Math.floor(attractions),
-        food: Math.floor(food),
-        miscellaneous: Math.floor(miscellaneous),
+        attractions: 0,
+        food: 0,
+        miscellaneous: 0,
         total
       };
     };
@@ -124,10 +118,7 @@ export const CostEstimator = ({ tripData, onNext }: CostEstimatorProps) => {
   const budgetStatus = getBudgetStatus();
   const costItems = [
     { label: 'Accommodation', amount: costBreakdown.accommodation, icon: '🏨' },
-    { label: 'Transport', amount: costBreakdown.transport, icon: '🚂' },
-    { label: 'Attractions', amount: costBreakdown.attractions, icon: '🎯' },
-    { label: 'Food & Dining', amount: costBreakdown.food, icon: '🍽️' },
-    { label: 'Miscellaneous', amount: costBreakdown.miscellaneous, icon: '💰' }
+    { label: 'Transport', amount: costBreakdown.transport, icon: '🚂' }
   ];
 
   return (
